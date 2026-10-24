@@ -201,6 +201,9 @@ def fallback_analysis(c: Candidate) -> dict:
         "chaos": lambda: f"{f['possession_changes_per_min']} possession changes per minute: neither side has control.",
         "hard_pass": lambda: f"{f['passer']} completed a {f['pass_length_m']} m pass rated {f['pass_difficulty']}/100.",
         "sprint": lambda: f"{f['player']} hit {f['speed_kmh']} km/h, above the sprint threshold.",
+        "missed_option": lambda: (f"{f['team']} were on the front foot, but {f['passer']} played it back; "
+                                  f"{f['open_teammate']} looked free ahead (estimated positions)."),
+        "fan_request": lambda: f"Fans asked: {f['fan_question']}",
     }[c.kind]()
     return {"angle": c.title, "why_now": why, "key_facts": list(f)}
 
@@ -233,6 +236,12 @@ def fallback_graphic(c: Candidate) -> dict:
             "player": f["passer"], "distance": f"{round(f['pass_length_m'])} m",
             "difficulty": f"{f['pass_difficulty']}/100",
             "caption": f"Found {f['receiver']}" + (" under pressure" if f["under_pressure"] else "")}}
+    elif c.kind == "missed_option":
+        g = {"template": "lower_third", "slots": {
+            "headline": f"Decision Lens: {f['passer']}",
+            "body": f"#{f['passer_number']} played back; #{f['open_teammate_number']} {f['open_teammate']} was free ahead (estimate)"}}
+    elif c.kind == "fan_request":
+        g = {"template": "lower_third", "slots": {"headline": "You asked", "body": f["answer_short"]}}
     else:
         g = {"template": "player_tag", "slots": {
             "player": f["player"], "stat_label": "Top speed", "stat_value": f"{f['speed_kmh']} km/h",
@@ -283,7 +292,7 @@ class MomentScout(Executor):
         age = self.clock() - c.t
         if c.kind != "goal" and age > 240:
             job.status, job.dropped_reason = "dropped", f"stale: {int(age // 60)} match minutes old"
-        elif any(r.kind == c.kind and r.team == c.team and c.t - r.t < 600 for r in self.recent() if r.id != c.id):
+        elif c.kind != "fan_request" and any(r.kind == c.kind and r.team == c.team and c.t - r.t < 600 for r in self.recent() if r.id != c.id):
             job.status, job.dropped_reason = "dropped", "similar graphic already proposed in last 10 min"
         await self.notify("trace", {"id": c.id, "agent": "MomentScout",
                                     "detail": job.dropped_reason or f"accepted (priority {c.priority})"})

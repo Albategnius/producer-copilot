@@ -92,6 +92,24 @@
         <p class="feed-desc" id="feed-desc"></p>
       </div>
 
+      <div class="panel fan-panel" id="fan-panel">
+        <div class="panel-head">
+          <h2>Fan app · Ask the Match <span class="badge-new">AI agent</span></h2>
+          <span class="muted small">Answers only from the live match, up to this minute. Any language.</span>
+        </div>
+        <div class="chips" id="fan-chips">
+          <button type="button" class="chip-q">What happened in the last 5 minutes?</button>
+          <button type="button" class="chip-q">Who has made the best decisions so far?</button>
+          <button type="button" class="chip-q">How is Northgate's number 9 playing?</button>
+          <button type="button" class="chip-q">Kenapa Riverside kalah dominan?</button>
+        </div>
+        <form class="ask-form" id="ask-form" autocomplete="off">
+          <input id="ask-input" type="text" maxlength="300" placeholder="Ask about any minute, player or team…" aria-label="Ask a question about the match">
+          <button class="btn primary" type="submit" id="ask-btn">Ask</button>
+        </form>
+        <ol class="answers" id="answers" aria-live="polite"></ol>
+      </div>
+
       <div class="panel agents-panel">
         <div class="panel-head">
           <h2>Agent team</h2>
@@ -103,6 +121,7 @@
       <div class="panel tabs-panel">
         <div class="tabs" role="tablist" aria-label="Match details">
           <button role="tab" type="button" aria-selected="true" data-tab="stats">Match stats</button>
+          <button role="tab" type="button" aria-selected="false" data-tab="lens">Decision Lens</button>
           <button role="tab" type="button" aria-selected="false" data-tab="events">Event log</button>
           <button role="tab" type="button" aria-selected="false" data-tab="package">Studio package</button>
           <button role="tab" type="button" aria-selected="false" data-tab="audit">Audit log</button>
@@ -112,6 +131,13 @@
           <div class="statgrid" id="statbars"></div>
           <div class="lineups" id="lineups"></div>
           <p class="muted small">All figures are computed in code from synthetic events. xG and speeds are values of the synthetic simulation, not real tracking data.</p>
+        </div>
+        <div class="tab" data-pane="lens" hidden>
+          <p class="muted small lens-note">Was each pass the best choice? Every pass is compared with the options the passer had, using a simplified expected-threat model. Teammate positions are <b>estimated from the formation</b>, not tracked, so treat these as indicators.</p>
+          <div class="lens-grid">
+            <div><h3>Moments</h3><ol class="lens-flags" id="lens-flags"><li class="muted">Flags appear as the match is played.</li></ol></div>
+            <div><h3>Vision score</h3><div id="vision-board" class="vision-board"><p class="muted small">Players need 8 rated passes.</p></div></div>
+          </div>
         </div>
         <div class="tab" data-pane="events" hidden><ol class="ticker" id="ticker"></ol></div>
         <div class="tab" data-pane="package" hidden>
@@ -151,5 +177,6 @@
   <script src="/static/sound.js"></script>
   <script src="/static/commentary.js"></script>
   <script src="/static/app.js"></script>
+  <script src="/static/fan.js"></script>
 </body>
 </html>

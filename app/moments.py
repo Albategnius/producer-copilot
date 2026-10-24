@@ -19,6 +19,8 @@ PRIORITY = {
     "chaos": 45,
     "hard_pass": 40,
     "sprint": 30,
+    "fan_request": 65,
+    "missed_option": 35,
 }
 
 

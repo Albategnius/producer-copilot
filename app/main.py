@@ -25,7 +25,9 @@ from .agents import adapt_feeds, build_gateway, run_graphic_pipeline, studio_pac
 from .factcheck import check_graphic  # noqa: E402
 from .generator import generate_match  # noqa: E402
 from .moments import Candidate, MomentDetector  # noqa: E402
-from .stats import MatchState  # noqa: E402
+from .stats import MatchState, attacking_x  # noqa: E402
+from .decisions import DecisionLens  # noqa: E402
+from .fan import answer_question, facts_for_graphic  # noqa: E402
 from .templates import FEEDS, TEMPLATES  # noqa: E402
 from . import tts  # noqa: E402
 
@@ -71,6 +73,9 @@ class Session:
         self.meta = self.match["meta"]
         self.state = MatchState(self.meta)
         self.detector = MomentDetector(self.state)
+        self.lens = DecisionLens(self.meta)
+        self.asks: dict[str, dict] = {}
+        self.ask_times: list[float] = []
         self.idx = 0
         self.running = False
         self.on_break = False
@@ -124,14 +129,17 @@ class Session:
             self.idx += 1
             await self.broadcast("match_event", ev)
             await self.expire_stale()
-            for c in self.detector.check(ev):
-                self.candidates[c.id] = c
-                self.suggestions[c.id] = {"id": c.id, "candidate": c.to_dict(), "status": "queued", "trace": []}
-                await self.broadcast("suggestion", self.suggestions[c.id])
-                await self.queue.put((-c.priority, c.t, next(self._seq), c.id))
+            new = list(self.detector.check(ev))
+            flag = self._decision(ev)
+            if flag:
+                await self.broadcast("decision", flag)
+                if flag["kind"] == "missed_option" and self.detector._cool(f"missed_option:{flag['team']}", 480):
+                    new.append(self._decision_candidate(flag))
+            for c in new:
+                await self.enqueue(c)
             if loop.time() - last_stats > 0.4 or ev["type"] in ("goal", "half_end", "full_time"):
                 last_stats = loop.time()
-                await self.broadcast("stats", self.state.snapshot())
+                await self.broadcast("stats", self.stats_payload())
             if ev["type"] in ("half_end", "full_time"):
                 asyncio.create_task(self.make_package("half_time" if ev["type"] == "half_end" else "full_time"))
             if ev["type"] == "half_end":
@@ -151,6 +159,33 @@ class Session:
                 sug["status"], sug["dropped_reason"] = "dropped", "expired: full time"
                 await self.broadcast("suggestion", sug)
         await self.broadcast("status", self.status())
+
+    async def enqueue(self, c: Candidate) -> None:
+        self.candidates[c.id] = c
+        self.suggestions[c.id] = {"id": c.id, "candidate": c.to_dict(), "status": "queued", "trace": []}
+        await self.broadcast("suggestion", self.suggestions[c.id])
+        await self.queue.put((-c.priority, c.t, next(self._seq), c.id))
+
+    def stats_payload(self) -> dict:
+        return {**self.state.snapshot(), "vision": self.lens.leaderboard()}
+
+    def _decision(self, ev: dict) -> dict | None:
+        """Decision Lens: rate each pass against the estimated options the passer had."""
+        if ev["type"] != "pass":
+            return None
+        own_momentum = self.state.momentum().value * (1 if ev["team"] == self.state.home else -1)
+        attacking = attacking_x(self.meta, ev["team"], ev["x"]) >= 55 or own_momentum >= 15
+        return self.lens.observe(ev, attacking)
+
+    def _decision_candidate(self, f: dict) -> Candidate:
+        return self.detector._make(
+            "missed_option", f["team"], f["player_id"], f"Decision Lens - {f['player']}",
+            {"passer": f["player"], "passer_number": f["number"], "receiver": f["receiver"],
+             "open_teammate": f["open_player"], "open_teammate_number": f["open_number"],
+             "decision_quality_pct": f["decision_quality_pct"],
+             "chosen_option_threat": round(f["chosen_threat"], 2), "best_option_threat": round(f["best_threat"], 2),
+             "attacking_moment": True, "positions_estimated_from_formation": True},
+            [f["event_id"]])
 
     async def _workers(self) -> None:
         # Several moments are drafted in parallel so the desk keeps pace with the match.
@@ -192,6 +227,38 @@ class Session:
             if job.status == "pending":
                 self.log("proposed", cid, f"{job.graphic['template']} after {len(job.attempts)} draft(s)", actor="agents")
             await self.broadcast("suggestion", sug)
+
+    # --- fans ---------------------------------------------------------------
+
+    async def ask(self, question: str) -> dict:
+        now = time.monotonic()
+        self.ask_times = [t for t in self.ask_times if now - t < 60]
+        if len(self.ask_times) >= ASKS_PER_MINUTE:
+            raise HTTPException(429, "Too many questions this minute. Try again shortly.")
+        self.ask_times.append(now)
+        result = await answer_question(self.gw, self.state, self.lens, question)
+        qid = f"q{len(self.asks) + 1:03d}"
+        self.asks[qid] = {"id": qid, "question": question, **result, "requested": None}
+        self.log("fan_question", None, f"{question[:80]} -> {result['source']}", actor="fan")
+        await self.broadcast("audit", self.audit[-1])
+        return {k: v for k, v in self.asks[qid].items() if k != "facts"}
+
+    async def fan_request(self, qid: str) -> dict:
+        a = self.asks.get(qid)
+        if not a:
+            raise HTTPException(404, "unknown question")
+        if not a["verified"]:
+            raise HTTPException(409, "Only verified answers can be requested on screen.")
+        if a["requested"]:
+            return {"suggestion_id": a["requested"]}
+        title = "Fan request: " + (a["question"][:48] + ("…" if len(a["question"]) > 48 else ""))
+        c = self.detector._make("fan_request", a["team"], a["player_id"], title,
+                                facts_for_graphic(a["question"], a), [])
+        a["requested"] = c.id
+        self.log("fan_request", c.id, a["question"][:80], actor="fan")
+        await self.enqueue(c)
+        await self.broadcast("audit", self.audit[-1])
+        return {"suggestion_id": c.id}
 
     async def expire_stale(self) -> None:
         """A live graphic loses its value fast: retire pending ideas once the moment has passed."""
@@ -312,7 +379,8 @@ class Session:
                 "finished": self.idx >= len(self.match["events"]), "half_time_break": self.on_break}
 
     def full_state(self) -> dict:
-        return {"meta": self.meta, "status": self.status(), "stats": self.state.snapshot(),
+        return {"meta": self.meta, "status": self.status(), "stats": self.stats_payload(),
+                "decisions": self.lens.flags[-40:],
                 "recent_events": self.state.events[-40:], "suggestions": list(self.suggestions.values()),
                 "overlays": self.overlays, "audit": self.audit, "packages": self.packages,
                 "templates": TEMPLATES, "feeds": FEEDS}
@@ -329,6 +397,7 @@ MAX_SESSIONS = int(os.getenv("MAX_SESSIONS", "40"))
 IDLE_SECONDS = int(os.getenv("SESSION_IDLE_S", "1800"))
 WORKERS = int(os.getenv("AGENT_WORKERS", "3"))
 HALFTIME_S = float(os.getenv("HALFTIME_BREAK_S", "8"))  # real seconds of half-time break
+ASKS_PER_MINUTE = int(os.getenv("FAN_ASKS_PER_MINUTE", "8"))
 STALE_S = int(os.getenv("STALE_MATCH_S", "360"))            # 6 match minutes for most moments
 STALE_GOAL_S = int(os.getenv("STALE_GOAL_MATCH_S", "600"))  # 10 for goals
 SESSIONS: dict[str, Session] = {}
@@ -402,6 +471,25 @@ async def index():
 async def health():
     return {"status": "ok", "model": GATEWAY.mode, "voice": f"azure-neural ({tts.VOICE})" if tts.enabled() else "browser",
             "sessions": len(SESSIONS), "synthetic_data_only": True}
+
+
+class AskBody(BaseModel):
+    question: str
+
+
+@app.post("/api/ask")
+async def ask(body: AskBody, sid: str = Query("default")):
+    """Ask the Match: a fan question answered by a tool-using agent, fact-checked against the live match."""
+    q = " ".join(body.question.split())[:300]
+    if len(q) < 3:
+        raise HTTPException(400, "Ask a question about the match.")
+    return await get_session(sid).ask(q)
+
+
+@app.post("/api/ask/{qid}/request")
+async def fan_request(qid: str, sid: str = Query("default")):
+    """Turn a verified fan answer into a graphic proposal in the producer's queue."""
+    return await get_session(sid).fan_request(qid)
 
 
 class SpeakBody(BaseModel):

@@ -120,5 +120,12 @@ const Commentary = (() => {
     setTimeout(() => say(`${pick(["Let's take a look at the numbers.", "On screen now.", "Here's the graphic."])} ${text}`, P.BIG), 600);
   }
 
-  return { bind, onEvent, onAir };
+  function onDecision(f) {
+    if (!ctx || f.kind !== "missed_option") return;
+    say(pick([`Oh, he's gone backwards there. ${surname(f.open_player)} was free ahead!`,
+      `${surname(f.player)} plays it safe... ${surname(f.open_player)} wanted that one!`,
+      `Back it goes. ${surname(f.open_player)} was calling for it in space!`]), P.PLAY);
+  }
+
+  return { bind, onEvent, onAir, onDecision };
 })();

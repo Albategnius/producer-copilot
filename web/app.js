@@ -5,7 +5,7 @@ const S = {
   suggestions: new Map(), overlays: [], events: [],
   feed: "main", editing: new Set(), expanded: new Set(), screenTimer: null, started: false,
   hoverLock: false, dirty: false,
-  agentState: {}, players: new Map(),
+  agentState: {}, players: new Map(), decisions: [], ghost: null,
 };
 
 const AGENTS = [
@@ -157,6 +157,15 @@ function renderPitch() {
       possession_change: "wins the ball", kickoff: "kicks off", pressure: "presses" }[last.type] || "";
     now = `<span class="sw" style="background:${c}"></span><b>${shirt(last.player_id, last.player)}</b> ${esc(verb)}${passed ? ` <b>${shirt(last.receiver_id, last.receiver)}</b>` : ""}`;
   }
+  const g = S.ghost;
+  if (g && g.until > performance.now()) {
+    // Decision Lens: the forward option the passer did not take (estimated position).
+    const c = "#FFB547";
+    marks += `<line x1="${g.from_x}" y1="${g.from_y}" x2="${g.open_x}" y2="${g.open_y}" stroke="${c}" stroke-width=".6" stroke-dasharray="1.6 1" filter="url(#glow)"/>
+      <circle cx="${g.open_x}" cy="${g.open_y}" r="2.4" fill="none" stroke="${c}" stroke-width=".45" stroke-dasharray="1 .6"/>
+      <text x="${g.open_x}" y="${g.open_y + 0.7}" text-anchor="middle" font-size="2" font-weight="800" fill="${c}">${g.open_number}</text>
+      <text x="${g.open_x}" y="${g.open_y - 3.4}" text-anchor="middle" font-size="1.9" font-weight="700" fill="${c}">open?</text>`;
+  }
   $("pitch").innerHTML = pitchLines() + marks;
   $("ball-now").innerHTML = now;
   $("ball-now").hidden = !now;
@@ -181,7 +190,47 @@ function renderStats() {
 
 function renderLineups() {
   $("lineups").innerHTML = S.meta.teams.map((t) => `<div class="lineup"><h3><span class="sw" style="background:${t.color}"></span>${esc(t.name)}</h3><ol>${
-    t.players.map((p) => `<li><span class="num" style="--teamc:${t.color}">${p.number}</span><span>${esc(p.name)}</span><span class="muted small">${esc(p.role)}</span></li>`).join("")}</ol></div>`).join("");
+    t.players.map((p) => { const v = (S.stats?.vision || []).find((r) => r.player_id === p.id);
+      return `<li><span class="num" style="--teamc:${t.color}">${p.number}</span><span>${esc(p.name)}</span><span class="muted small">${esc(p.role)}${v ? ` · vision ${v.vision_score_pct}%` : ""}</span></li>`; }).join("")}</ol></div>`).join("");
+}
+
+// --- Decision Lens -------------------------------------------------------------
+
+function lensLine(f) {
+  return f.kind === "missed_option"
+    ? `<b>#${f.number} ${esc(f.player)}</b> played back to ${esc(f.receiver || "a teammate")} while <b>#${f.open_number} ${esc(f.open_player)}</b> looked free ahead`
+    : `<b>#${f.number} ${esc(f.player)}</b> picked the brave option: forward to ${esc(f.receiver || "a teammate")}`;
+}
+
+function renderLens() {
+  const flags = S.decisions.slice(-14).reverse();
+  if (flags.length) {
+    $("lens-flags").innerHTML = flags.map((f) => `<li class="lf ${f.kind}"><span class="m">${f.minute}'</span>
+      <span>${lensLine(f)} <span class="q">decision quality ${f.decision_quality_pct}%</span></span></li>`).join("");
+  }
+  const board = S.stats?.vision || [];
+  if (board.length) {
+    const row = (r) => `<li><span class="num" style="--teamc:${team(r.team).color}">${r.number}</span><span>${esc(r.player)}</span>
+      <span class="bar"><span style="width:${r.vision_score_pct}%;background:${team(r.team).color}"></span></span><b>${r.vision_score_pct}%</b></li>`;
+    $("vision-board").innerHTML = `<p class="muted small">Average decision quality per pass (best option = 100%).</p>
+      <h4>Best decision makers</h4><ol>${board.slice(0, 5).map(row).join("")}</ol>
+      <h4>Most conservative</h4><ol>${board.slice(-3).reverse().map(row).join("")}</ol>`;
+  }
+}
+
+function onDecision(f) {
+  S.decisions.push(f); if (S.decisions.length > 80) S.decisions.shift();
+  if (f.kind === "missed_option") {
+    S.ghost = { ...f, until: performance.now() + 6000 };
+    setTimeout(renderPitch, 6100);
+    renderPitch();
+    const li = document.createElement("li");
+    li.className = "lens";
+    li.innerHTML = `<span class="m">${f.minute}'</span><span>Decision Lens: ${lensLine(f)}</span>`;
+    $("ticker").prepend(li);
+  }
+  Commentary.onDecision(f);
+  renderLens();
 }
 
 function tickerLine(e) {
@@ -351,7 +400,7 @@ function topPendingId() {
 
 function fullCard(sug, isTop) {
   const c = sug.candidate;
-  let html = `<div class="card-head"><span class="min">${c.minute}'</span><span class="title">${esc(c.title)}</span>
+  let html = `<div class="card-head"><span class="min">${c.minute}'</span><span class="title">${titleOf(c)}</span>
     <span class="chip">${esc(c.kind.replace(/_/g, " "))}</span></div>`;
   if (sug.analysis) html += `<p class="why"><b>Why now:</b> ${esc(sug.analysis.why_now)}</p>`;
   if (sug.graphic) html += gfxHTML(sug.graphic.template, sug.graphic.slots, { team: c.team, momentum: (c.facts.momentum_now || 0) * (c.team === S.meta.home ? 1 : -1) });
@@ -373,9 +422,11 @@ function fullCard(sug, isTop) {
   return html;
 }
 
+const titleOf = (c) => (c.kind === "fan_request" ? "📣 " : c.kind === "missed_option" ? "🔍 " : "") + esc(c.title);
+
 function compactCard(sug) {
   const c = sug.candidate;
-  return `<div class="card-head"><span class="min">${c.minute}'</span><span class="title">${esc(c.title)}</span>
+  return `<div class="card-head"><span class="min">${c.minute}'</span><span class="title">${titleOf(c)}</span>
     <span class="chip status-pending">Waiting</span></div>`;
 }
 
@@ -464,6 +515,7 @@ function loadFull(state) {
     feeds: state.feeds, overlays: state.overlays, events: state.recent_events });
   S.started = state.status.running || state.status.progress > 0;
   S.players = new Map(state.meta.teams.flatMap((t) => t.players.map((p) => [p.id, p])));
+  S.decisions = state.decisions || []; S.ghost = null;
   S.suggestions = new Map(state.suggestions.map((s) => [s.id, s]));
   S.editing.clear(); S.expanded.clear(); S.agentState = {};
   $("ticker").innerHTML = ""; $("audit").innerHTML = ""; $("screen-gfx").innerHTML = ""; $("onair").hidden = true; $("strip-empty").hidden = false; $("onair-strip").classList.remove("live");
@@ -471,7 +523,7 @@ function loadFull(state) {
   state.audit.forEach(addAudit);
   state.recent_events.forEach(addTicker);
   if (state.packages.length) renderPackage(state.packages[state.packages.length - 1]);
-  renderLineups(); renderFeedTabs(); renderBreak(); renderScorebug(); renderStats(); renderPitch(); renderStatus(); renderPipeline(); renderQueue();
+  renderLineups(); renderLens(); renderFeedTabs(); renderBreak(); renderScorebug(); renderStats(); renderPitch(); renderStatus(); renderPipeline(); renderQueue();
 }
 
 function connect() {
@@ -484,7 +536,9 @@ function connect() {
     soundFor(e);
     Commentary.onEvent(e);
   });
-  on("stats", (st) => { S.stats = st; renderScorebug(); renderStats(); renderBreak(); });
+  on("stats", (st) => { S.stats = st; renderScorebug(); renderStats(); renderBreak(); if (!$("lens-flags").closest("[hidden]")) renderLens();
+    if (!$("lineups").closest("[hidden]") && performance.now() - (S.lineupsAt || 0) > 3000) { S.lineupsAt = performance.now(); renderLineups(); } });
+  on("decision", onDecision);
   on("suggestion", upsert);
   on("trace", (t) => { const s = S.suggestions.get(t.id); if (s) { s.trace = [...(s.trace || []), t]; } onTrace(t); renderQueue(); });
   on("overlays", (ovs) => {
