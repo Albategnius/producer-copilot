@@ -25,7 +25,9 @@ FAN_INSTRUCTIONS = (
     "stating any fact, and use only numbers that appear in tool results. You only know what has happened up "
     "to the current minute: never predict the future or invent events. Keep answers under 70 words, warm "
     "and plain; explain jargon in a few words (xG = chance quality). Decision Lens results are estimates "
-    "based on formation positions, say so when you use them. Reply in the same language as the question. "
+    "based on formation positions, say so when you use them. If a question contains a claim, check it against "
+    "the tool results and correct it plainly when it is wrong (start with 'No'). Name players with their team. "
+    "Reply in the same language as the question. "
     "If asked about real clubs, real players, betting or anything outside this match, say you can only "
     "talk about this match."
 )
@@ -139,7 +141,7 @@ class MatchTools:
         result = {"team": self.s.teams[tid]["name"], "totals": self.s.totals(tid),
                   "last_5_minutes": {k: v.value for k, v in w.items()},
                   "scorers": scorers,
-                  "best_decision_makers": [{"player": f"#{r['number']} {r['player']}", "vision_score_pct": r["vision_score_pct"]} for r in best_vision]}
+                  "best_decision_makers": [{"player": f"#{r['number']} {r['player']} ({self.s.teams[r['team']]['short']})", "vision_score_pct": r["vision_score_pct"]} for r in best_vision]}
         self.team_hint = tid
         return self._record("team_report", {"team": team}, result)
 
@@ -150,8 +152,8 @@ class MatchTools:
         board = [r for r in self.lens.leaderboard() if not tid or r["team"] == tid]
         result = {"method": "Simplified expected-threat model; teammate positions estimated from formation, not tracking data.",
                   "recent_flags": [self._flag_line(f) for f in flags][-6:],
-                  "best_vision": [{"player": f"#{r['number']} {r['player']}", "vision_score_pct": r["vision_score_pct"]} for r in board[:3]],
-                  "lowest_vision": [{"player": f"#{r['number']} {r['player']}", "vision_score_pct": r["vision_score_pct"]} for r in board[-3:]]}
+                  "best_vision": [{"player": f"#{r['number']} {r['player']} ({self.s.teams[r['team']]['short']})", "vision_score_pct": r["vision_score_pct"]} for r in board[:3]],
+                  "lowest_vision": [{"player": f"#{r['number']} {r['player']} ({self.s.teams[r['team']]['short']})", "vision_score_pct": r["vision_score_pct"]} for r in board[-3:]]}
         if tid:
             self.team_hint = tid
         return self._record("decision_lens", {"player": player, "team": team}, result)
