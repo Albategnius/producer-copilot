@@ -134,6 +134,7 @@ const Sound = (() => {
         if (!opts.interrupt && performance.now() - asked > 1500) { URL.revokeObjectURL(url); return; }
         const a = new Audio(url);
         a.volume = 1;
+        route(a);
         current = a;
         a.onended = a.onerror = () => { URL.revokeObjectURL(url); if (current === a) current = null; };
         await a.play();
@@ -151,6 +152,21 @@ const Sound = (() => {
     const ex = level >= 3 ? 2 : level === 2 ? 1 : 0;
     u.rate = [1.08, 1.16, 1.22][ex]; u.pitch = [1, 1.08, 1.18][ex]; u.volume = 1;
     window.speechSynthesis.speak(u);
+  }
+
+  // Voices play through the same graph as the crowd, so a recording can take one clean mix.
+  function route(audioEl) {
+    if (!ctx) return;
+    try { ctx.createMediaElementSource(audioEl).connect(master); } catch (_) { /* plays directly */ }
+  }
+
+  let recDest = null;
+  function recordStream() {
+    init();
+    if (!ctx) return null;
+    if (!recDest) { recDest = ctx.createMediaStreamDestination(); master.connect(recDest); }
+    ctx.resume();
+    return recDest.stream;
   }
 
   function setRunning(isRunning, finished = false) {
@@ -172,7 +188,7 @@ const Sound = (() => {
     get enabled() { return enabled; },
     get voice() { return voice; },
     wantedByDefault: () => pref("pc_sound", true),
-    setEnabled, setVoice, setRunning, swell, whistle, sting, speak, isSpeaking,
+    setEnabled, setVoice, setRunning, swell, whistle, sting, speak, isSpeaking, route, recordStream,
     setNeural: (on) => { neural = !!on; },
     get neural() { return neural; },
   };

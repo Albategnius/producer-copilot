@@ -27,7 +27,7 @@ const Demo = (() => {
   const panel = el("div", "demo-panel", `<b>Demo tour</b><span id="demo-status" class="muted small">Preparing narration…</span>
     <button class="btn primary" type="button" id="demo-record" disabled>● Record demo</button>
     <button class="btn ghost" type="button" id="demo-play" disabled>▶ Play without recording</button>
-    <span class="muted small">Tip: full-screen this window first (F11 / ⌃⌘F). In the share dialog pick <b>this tab</b> and keep <b>tab audio</b> on.</span>`);
+    <span class="muted small">Tip: full-screen this window first (F11 / ⌃⌘F), then in the share dialog choose <b>this tab</b>. Sound is recorded from the app directly.</span>`);
   const caption = el("div", "demo-caption");
   const cursor = el("div", "demo-cursor");
   const card = el("div", "demo-card");
@@ -73,6 +73,7 @@ const Demo = (() => {
       setTimeout(done, LINES[key].length * 80 + 2500);   // never hang if audio fails to report its end
       if (clips[key]) {
         const a = new Audio(clips[key]);
+        Sound.route(a);
         a.onended = done; a.onerror = done;
         a.play().catch(done);
       } else if ("speechSynthesis" in window) {
@@ -250,9 +251,12 @@ const Demo = (() => {
     if (record) {
       try {
         stream = await navigator.mediaDevices.getDisplayMedia({
-          video: { frameRate: 30, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: true,
-          preferCurrentTab: true, selfBrowserSurface: "include", systemAudio: "include" });
+          video: { frameRate: 30, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false,
+          preferCurrentTab: true, selfBrowserSurface: "include" });
       } catch (_) { busy = false; status("Recording cancelled."); return; }
+      // Sound comes straight from the app's own audio mix (narrator, commentator, crowd), not from tab capture.
+      const mix = Sound.recordStream();
+      if (mix) stream = new MediaStream([...stream.getVideoTracks(), ...mix.getAudioTracks()]);
       const type = ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm"].find((t) => MediaRecorder.isTypeSupported(t));
       rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 8_000_000 });
       rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
