@@ -5,11 +5,10 @@
 // "Record demo" captures this tab with its audio and downloads the video when the tour ends.
 const Demo = (() => {
   const LINES = {
-    intro: "Live TV graphics get a few seconds to be right, and one wrong number on air is a real problem. This is Producer Co-pilot: an AI graphics desk for live football, where AI agents propose and a human producer decides.",
-    agents: "A team of agents built on Microsoft Agent Framework watches the live match feed. MomentScout spots a moment, StatsAnalyst explains why it matters, and GraphicsProducer writes the graphic, using GPT-5 mini on Microsoft Foundry.",
+    intro: "Live TV graphics get seconds to be right, and one wrong number on air is a real problem. Producer Co-pilot is an AI graphics desk where agents propose and a human producer decides.",
+    agents: "Agents built on Microsoft Agent Framework watch the live match. They spot the moment, explain why it matters and write the graphic, using GPT-5 mini on Microsoft Foundry.",
     check: "Before anything reaches the producer, a deterministic Fact Checker verifies every number. In test mode we planted a wrong number: the checker caught it and sent the draft back until it was right.",
     approve: "The producer approves with one key, and it airs instantly. Then the FeedAdapter agent rewrites it for TV, a fan app and the club's own channel, and every version is checked again.",
-    voice: "And when it matters, the commentator calls it, in an Azure AI Speech neural voice.",
     ask: "Fans get Ask the Match: an agent that answers from the live data through tools. It only knows what has happened so far, it works in any language, and every number is checked.",
     request: "A fan can even ask for it on screen. The request lands in the producer's queue, and the producer still decides.",
     lens: "Decision Lens rates every pass against the options the player had, using expected threat. It flags missed forward options and brave passes, and gives every player a vision score.",
@@ -137,22 +136,22 @@ const Demo = (() => {
     document.querySelector("[data-tab=stats]")?.click();
     document.querySelector("[data-feed=main]")?.click();
 
-    // 1. Title
+    // 1. Title (the match kicks off behind it, so the agents are already at work)
     showCard("intro");
+    let goalScene = false;
+    const watch = setInterval(() => {               // rest just before the first goal so the goal scene catches it
+      if (!goalScene && S.status?.running && S.stats?.t >= PAUSE_BEFORE_GOAL) control({ action: "pause" });
+    }, 150);
+    S.started = true;
+    await control({ action: "start" });
     await say("intro");
     hideCard();
 
-    // 2. Start the match; the agents get to work
-    await click("#btn-play");
-    if (!S.status?.running) await control({ action: "start" });
-    let goalScene = false;
-    const watch = setInterval(() => {               // rest just before the first goal so the voice scene catches it
-      if (!goalScene && S.status?.running && S.stats?.t >= PAUSE_BEFORE_GOAL) control({ action: "pause" });
-    }, 150);
+    // 2. The agents get to work
     const agents = say("agents");
-    await sleep(3500);
+    await sleep(2500);
     await scrollToEl(".agents-panel", 380);
-    await sleep(4500);
+    await sleep(4000);
     await scrollToEl(".monitor-panel");
     await agents;
 
@@ -171,11 +170,11 @@ const Demo = (() => {
     await sleep(1800);
     await scrollToEl(".onair-strip", 420);
     await approved;
-    await waitFor(() => [...S.suggestions.values()].some((s) => s.status === "approved" && !s.feeds_pending), 12000);
+    await waitFor(() => [...S.suggestions.values()].some((s) => s.status === "approved" && !s.feeds_pending), 10000);
     await click("[data-feed=casual]");
-    await sleep(2200);
+    await sleep(1600);
     await click("[data-feed=club]");
-    await sleep(2200);
+    await sleep(1600);
     await click("[data-feed=main]");
 
     // 5. Goal: the commentator takes over
@@ -183,10 +182,12 @@ const Demo = (() => {
     goalScene = true;
     Sound.setVoice(true);
     await control({ speed: 15, action: "start" });
+    caption.textContent = "Live commentary: Azure AI Speech neural voice";
+    caption.classList.add("show");
     await waitFor(() => S.stats?.t >= GOAL_T + 2, 20000);
-    await sleep(7000);
+    await sleep(6000);
+    caption.classList.remove("show");
     Sound.setVoice(false);
-    await say("voice");
 
     // 6. Ask the Match
     await scrollToEl("#fan-panel");
