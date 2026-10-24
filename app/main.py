@@ -495,6 +495,7 @@ async def fan_request(qid: str, sid: str = Query("default")):
 class SpeakBody(BaseModel):
     text: str
     level: int = 1
+    narrator: bool = False
 
 
 @app.post("/api/tts")
@@ -503,7 +504,7 @@ async def speak(body: SpeakBody):
     if not tts.enabled():
         raise HTTPException(404, "neural voice not configured")
     try:
-        audio = await tts.synthesize(body.text, body.level)
+        audio = await tts.synthesize(body.text, body.level, body.narrator)
     except tts.TTSLimit as exc:
         raise HTTPException(429, str(exc)) from exc
     except Exception as exc:  # network or service error: the browser falls back to its own voice

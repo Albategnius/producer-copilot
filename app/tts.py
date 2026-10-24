@@ -18,6 +18,7 @@ import httpx
 KEY = os.getenv("SPEECH_KEY", "")
 REGION = os.getenv("SPEECH_REGION", "")
 VOICE = os.getenv("SPEECH_VOICE", "en-US-DavisNeural")
+NARRATOR = os.getenv("SPEECH_NARRATOR_VOICE", "en-US-AndrewMultilingualNeural")  # calm voice for the demo tour
 MAX_CHARS = 240
 PER_MINUTE = int(os.getenv("TTS_PER_MINUTE", "90"))
 DAILY_CHARS = int(os.getenv("TTS_DAILY_CHARS", "150000"))
@@ -50,6 +51,11 @@ def _body(text: str, level: int) -> str:
     return f'<prosody rate="{rate}" pitch="{pitch}">{escape(text)}</prosody>'
 
 
+def _narration_ssml(text: str) -> str:
+    return ('<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
+            f'<voice name="{NARRATOR}"><prosody rate="+6%">{escape(text)}</prosody></voice></speak>')
+
+
 def _ssml(text: str, level: int) -> str:
     style, degree, _, _ = STYLES.get(level, STYLES[1])
     return ('<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" '
@@ -62,10 +68,10 @@ class TTSLimit(Exception):
     pass
 
 
-async def synthesize(text: str, level: int) -> bytes:
+async def synthesize(text: str, level: int, narrator: bool = False) -> bytes:
     text = " ".join(str(text).split())[:MAX_CHARS]
     level = max(0, min(3, int(level)))
-    key = hashlib.sha256(f"{VOICE}|{level}|{text}".encode()).hexdigest()[:24]
+    key = hashlib.sha256(f"{NARRATOR if narrator else VOICE}|{level}|{narrator}|{text}".encode()).hexdigest()[:24]
     if key in _cache:
         _cache.move_to_end(key)
         return _cache[key]
@@ -87,7 +93,7 @@ async def synthesize(text: str, level: int) -> bytes:
             headers={"Ocp-Apim-Subscription-Key": KEY, "Content-Type": "application/ssml+xml",
                      "X-Microsoft-OutputFormat": "audio-24khz-48kbitrate-mono-mp3",
                      "User-Agent": "producer-copilot"},
-            content=_ssml(text, level).encode())
+            content=(_narration_ssml(text) if narrator else _ssml(text, level)).encode())
         r.raise_for_status()
     audio = r.content
     _cache[key] = audio
