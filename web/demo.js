@@ -7,12 +7,12 @@ const Demo = (() => {
   const LINES = {
     intro: "Live TV graphics get seconds to be right, and one wrong number on air is a real problem. Producer Co-pilot is an AI graphics desk where agents propose and a human producer decides.",
     agents: "Agents built on Microsoft Agent Framework watch the live match. They spot the moment, explain why it matters and write the graphic, using GPT-5 mini on Microsoft Foundry.",
-    check: "Before anything reaches the producer, a deterministic Fact Checker verifies every number. In test mode we planted a wrong number: the checker caught it and sent the draft back until it was right.",
-    approve: "The producer approves with one key, and it airs instantly. Then the FeedAdapter agent rewrites it for TV, a fan app and the club's own channel, and every version is checked again.",
+    check: "A deterministic Fact Checker verifies every number. In test mode we planted a wrong one: it was caught and sent back until the draft was right.",
+    approve: "One key approves it, and it airs instantly. The FeedAdapter agent then rewrites it for TV, a fan app and the club's channel, each version checked again.",
     ask: "Fans get Ask the Match: an agent that answers from the live data through tools. It only knows what has happened so far, it works in any language, and every number is checked.",
     request: "A fan can even ask for it on screen. The request lands in the producer's queue, and the producer still decides.",
-    lens: "Decision Lens rates every pass against the options the player had, using expected threat. It flags missed forward options and brave passes, and gives every player a vision score.",
-    outro: "Producer Co-pilot. Built with Agent Framework, Microsoft Foundry, Azure AI Speech and Azure Container Apps. Try it live.",
+    lens: "Decision Lens rates every pass against the player's options using expected threat, flagging missed forward options and brave passes, with a vision score per player.",
+    outro: "Producer Co-pilot. Built with Agent Framework, Microsoft Foundry, Azure AI Speech and Container Apps.",
   };
   const QUESTION = "What happened around minute 9?";
   const GOAL_T = 530;          // first goal of the seeded demo match (9')
@@ -107,7 +107,7 @@ const Demo = (() => {
     const input = document.querySelector(selector);
     await pointAt(input);
     input.focus();
-    for (const ch of text) { input.value += ch; await sleep(35); }
+    for (const ch of text) { input.value += ch; await sleep(25); }
   }
   function scrollToEl(selector, offset = 96) {
     const t = document.querySelector(selector);
@@ -170,7 +170,7 @@ const Demo = (() => {
     await sleep(1800);
     await scrollToEl(".onair-strip", 420);
     await approved;
-    await waitFor(() => [...S.suggestions.values()].some((s) => s.status === "approved" && !s.feeds_pending), 10000);
+    await waitFor(() => [...S.suggestions.values()].some((s) => s.status === "approved" && !s.feeds_pending), 4000);
     await click("[data-feed=casual]");
     await sleep(1600);
     await click("[data-feed=club]");
@@ -185,7 +185,7 @@ const Demo = (() => {
     caption.textContent = "Live commentary: Azure AI Speech neural voice";
     caption.classList.add("show");
     await waitFor(() => S.stats?.t >= GOAL_T + 2, 20000);
-    await sleep(6000);
+    await sleep(5000);
     caption.classList.remove("show");
     Sound.setVoice(false);
 
@@ -219,7 +219,7 @@ const Demo = (() => {
     await control({ action: "pause" });
     showCard("outro");
     await say("outro");
-    await sleep(1200);
+    await sleep(500);
     Sound.setVoice(voicePref);
     return (performance.now() - t0) / 1000;
   }
