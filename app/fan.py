@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 import re
 from typing import Annotated, Any
 
@@ -246,8 +247,11 @@ async def answer_question(gw: Any, state: MatchState, lens: DecisionLens, questi
     tools = MatchTools(state, lens)
     source, issues, answer = "fallback (no model configured)", [], ""
     if getattr(gw, "client", None):
+        # Fans expect a chat-speed reply: lighter reasoning than the graphics agents (GPT-5 family).
+        effort = os.getenv("FAN_REASONING_EFFORT", "minimal").strip()
+        options = {**(gw.default_options or {}), "reasoning_effort": effort} if gw.default_options and effort else gw.default_options
         agent = Agent(client=gw.client, name="AskTheMatch", instructions=FAN_INSTRUCTIONS,
-                      tools=tools.as_agent_tools(), default_options=gw.default_options)
+                      tools=tools.as_agent_tools(), default_options=options)
         prompt = question
         for _ in range(2):
             try:

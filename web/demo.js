@@ -16,7 +16,7 @@ const Demo = (() => {
   };
   const QUESTION = "What happened around minute 9?";
   const GOAL_T = 530;          // first goal of the seeded demo match (9')
-  const PAUSE_BEFORE_GOAL = 470;
+  const PAUSE_BEFORE_GOAL = 505;
 
   const clips = {};
   let busy = false, voicePref = true;
@@ -86,7 +86,7 @@ const Demo = (() => {
   // --- cursor + actions ---------------------------------------------------------------
 
   function center(target) { const r = target.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; }
-  async function pointAt(target, ms = 700) {
+  async function pointAt(target, ms = 500) {
     if (!target) return;
     const [x, y] = center(target);
     cursor.style.transitionDuration = `${ms}ms`;
@@ -124,8 +124,14 @@ const Demo = (() => {
 
   // --- the tour -------------------------------------------------------------------------
 
+  let t0 = 0;
+  const times = [];
+  const mark = (name) => times.push([name, ((performance.now() - t0) / 1000).toFixed(1)]);
+  window.DEMO_TIMES = times;
+
   async function tour() {
-    const t0 = performance.now();
+    t0 = performance.now();
+    times.length = 0;
     voicePref = Sound.voice;
     Sound.setVoice(false);                       // the narrator talks; the commentator gets the goal
     window.scrollTo({ top: 0 });
@@ -148,6 +154,7 @@ const Demo = (() => {
     hideCard();
 
     // 2. The agents get to work
+    mark("agents");
     const agents = say("agents");
     await sleep(2500);
     await scrollToEl(".agents-panel", 380);
@@ -156,28 +163,31 @@ const Demo = (() => {
     await agents;
 
     // 3. Fact Checker
+    mark("wait-first-card");
     await waitFor(() => pending().length > 0, 45000);
+    mark("check");
     const checked = say("check");
     await pointAt(document.querySelector(".card.pending.top .verify"));
     await sleep(1200);
     await click(".card.pending.top details summary");
     await checked;
 
-    // 4. Approve -> on air -> three feeds
+    // 4. Approve -> on air -> three feeds (switching feeds while the narrator explains them)
+    mark("approve");
     const approved = say("approve");
-    await sleep(600);
+    await sleep(400);
     await click(".card.pending.top [data-act=approve]");
-    await sleep(1800);
+    await sleep(900);
     await scrollToEl(".onair-strip", 420);
-    await approved;
-    await waitFor(() => [...S.suggestions.values()].some((s) => s.status === "approved" && !s.feeds_pending), 4000);
+    await sleep(2200);
     await click("[data-feed=casual]");
-    await sleep(1600);
+    await sleep(1700);
     await click("[data-feed=club]");
-    await sleep(1600);
+    await approved;
     await click("[data-feed=main]");
 
     // 5. Goal: the commentator takes over
+    mark("goal");
     await scrollToEl(".monitor-panel");
     goalScene = true;
     Sound.setVoice(true);
@@ -190,14 +200,17 @@ const Demo = (() => {
     Sound.setVoice(false);
 
     // 6. Ask the Match
+    mark("ask");
     await scrollToEl("#fan-panel");
     const ask = say("ask");
     await typeInto("#ask-input", QUESTION);
     const before = document.querySelectorAll(".answer:not(.pending)").length;
     await click("#ask-btn");
     await ask;
+    mark("ask-wait-answer");
     await waitFor(() => document.querySelectorAll(".answer:not(.pending)").length > before, 30000);
-    await sleep(1500);
+    mark("answer");
+    await sleep(900);
 
     // 7. Fan request -> producer queue
     const req = say("request");
@@ -207,6 +220,7 @@ const Demo = (() => {
     await req;
 
     // 8. Decision Lens
+    mark("lens");
     await scrollToEl(".tabs-panel");
     const lens = say("lens");
     await click("[data-tab=lens]");
@@ -215,12 +229,14 @@ const Demo = (() => {
     await lens;
 
     // 9. Close
+    mark("outro");
     clearInterval(watch);
     await control({ action: "pause" });
     showCard("outro");
     await say("outro");
     await sleep(500);
     Sound.setVoice(voicePref);
+    mark("end");
     return (performance.now() - t0) / 1000;
   }
 
