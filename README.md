@@ -21,6 +21,8 @@ A live graphics producer has a few seconds to decide what goes on screen. Under 
 | **Explain** | The `StatsAnalyst` agent writes the "why now" for each moment: pressing, rhythm, game state, control vs chaos. |
 | **Render** | The `GraphicsProducer` agent fills one of five broadcast templates within strict character limits. Approved graphics appear in the on-air preview and on `GET /api/overlays` as timed cues (`t_in`, `t_out`, template, slots, source events). |
 | **Personalize** | The `FeedAdapter` agent rewrites each approved graphic for TV, a fan app for newcomers (plain words, no jargon) and a chosen club's own channel (first-person, partisan). Each version is fact-checked line by line and gets its own on-screen look. |
+| **Ask the Match** | A fan-app agent answers fans' questions ("what happened at minute 30?", "who is making the best decisions?") in their own language by calling tools over the live match, so it knows nothing beyond the current minute. Every number is fact-checked. A verified answer can be sent to the producer as an on-screen **fan request**. |
+| **Decision Lens** | Every pass is rated against the passer's other options with a simplified expected-threat model: missed forward options during attacking moments, brave forward passes, and a vision score per player. Teammate positions are estimated from the formation (event data has no off-ball tracking), and the UI says so. |
 | **Commentate** | Play-by-play and colour commentary built from the live events and computed stats, spoken by an Azure AI Speech neural voice whose style follows the moment: chat, excited, shouting for goals. |
 
 ## The agent team
@@ -48,6 +50,7 @@ The pipeline is a [Microsoft Agent Framework](https://github.com/microsoft/agent
 - **GraphicsProducer** (LLM agent) picks a template and writes the slots.
 - **FactChecker** (deterministic executor) rejects any number that isn't in the facts and any slot over its character limit, then sends its reasons back to the `GraphicsProducer`. After 3 rejected drafts it substitutes a verified template, so the queue never stalls.
 - **FeedAdapter** (LLM agent) creates the fan-app and club versions after approval, while the approved TV version is already on air. Each line is fact-checked; rejected lines go back to the agent once with the checker's reasons, and any line that still fails keeps the approved wording.
+- **AskTheMatch** (LLM agent with five function tools: match overview, events by minute, player, team, Decision Lens) answers fans. Numbers in its answers must come from tool results; a failed answer gets one repair round, then a deterministic answer. Numbers a fan types can never reach a graphic.
 - **StudioPackage** (LLM agent) builds a ranked half-time and full-time rundown plus a presenter script. The script's numbers are checked as well.
 
 The human producer stays in control. Edits made by hand are fact-checked too, and every proposal, edit, approval and rejection is written to the audit log.
@@ -73,7 +76,9 @@ The human producer stays in control. Edits made by hand are fact-checked too, an
 4. **Your decisions** lists graphics waiting for you, highest priority first. Read *Why now*, check the verification line, then **✓ Approve** (`A`), **Edit**, or **Reject** (`R`). Cards never move while your pointer is over the list.
 5. Approved graphics air at once in the strip under the pitch, so the pitch stays clear. Switch **TV / Fan app / Club channel** to see each feed's look, and read all three texts side by side under **Feed versions**.
 6. At half-time the replay rests briefly behind a studio card with the first-half numbers; the half-time and full-time rundowns appear under **Studio package** (**Build rundown now** makes one at any moment).
-7. Open the settings (gear icon) to turn on **Fault test**, choose the club for the club channel, or switch the commentator voice off.
+7. In **Fan app · Ask the Match**, ask anything about the match (any language) or tap a suggestion. Press **📺 Request this on screen** on a verified answer: a 📣 fan request appears in your decision queue.
+8. Open **Decision Lens** to see missed options and brave passes, and the vision score per player; a missed option also shows on the pitch as an amber "open?" marker.
+9. Open the settings (gear icon) to turn on **Fault test**, choose the club for the club channel, or switch the commentator voice off.
 
 Every visitor gets their own console (match, queue and audit log), so several judges can test the public demo at the same time without affecting each other.
 
@@ -134,6 +139,8 @@ uv run python -m app.generator --seed 1    # writes data/match_1.json
 | POST | `/api/suggestions/{id}/approve` | Approve, optionally with edited `slots` (these are fact-checked) |
 | POST | `/api/suggestions/{id}/reject` | Reject with a reason |
 | GET | `/api/overlays?feed=main` | Timed overlay cues for a graphics engine |
+| POST | `/api/ask` | `{question}` → fact-checked fan answer with the tools it used |
+| POST | `/api/ask/{id}/request` | Send a verified fan answer to the producer queue as a fan request |
 | POST | `/api/tts` | `{text, level}` → MP3 commentary line from Azure AI Speech (capped; 404 when not configured) |
 | GET | `/api/health` | Model and voice mode |
 | GET | `/api/audit` | Audit log |
@@ -152,6 +159,7 @@ The tests cover how realistic and deterministic the generated data is, that ever
 - The data is synthetic and event-level only. There is no video and no automatic event tagging from video.
 - Possession is measured by time between possession changes, a simplification of real possession models.
 - At 30× and 60× the model cannot draft every moment in time; stale moments are dropped by design. 5× and 15× keep pace.
+- Decision Lens uses estimated teammate positions and a simplified xT grid; it is an indicator, not a scouting verdict.
 - The commentator speaks from templates filled with live data (no model in the loop), so its wording repeats over a long match. Without Azure AI Speech configured it falls back to the browser's built-in voice.
 
 ## Credits
