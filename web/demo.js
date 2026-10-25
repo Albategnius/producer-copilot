@@ -12,6 +12,7 @@ const Demo = (() => {
     ask: "Fans get Ask the Match: an agent that answers from the live data through tools. It only knows what has happened so far, it works in any language, and every number is checked.",
     request: "A fan can even ask for it on screen. The request lands in the producer's queue, and the producer still decides.",
     lens: "Decision Lens rates every pass against the player's options using expected threat, flagging missed forward options and brave passes, with a vision score per player.",
+    fulltime: "Fast-forward to full time. Substitutions come through live, and every player gets a match rating. The Man of the Match is the top rating, built partly on the Decision Lens score, so the two always agree.",
     outro: "Producer Co-pilot. Built with Agent Framework, Microsoft Foundry, Azure AI Speech and Container Apps.",
   };
   const QUESTION = "What happened around minute 9?";
@@ -220,8 +221,9 @@ const Demo = (() => {
     await pointAt([...document.querySelectorAll("#queue .card")].find((c) => c.textContent.includes("Fan request")) || document.querySelector("#queue"));
     await req;
 
-    // 8. Decision Lens
+    // 8. Decision Lens (the match fast-forwards from here, so the next scene reaches full time)
     mark("lens");
+    await control({ speed: 240 });
     await scrollToEl(".tabs-panel");
     const lens = say("lens");
     await click("[data-tab=lens]");
@@ -229,7 +231,25 @@ const Demo = (() => {
     await pointAt(document.querySelector("#vision-board"));
     await lens;
 
-    // 9. Close
+    // 9. Fast-forward to full time: substitutions, ratings, Man of the Match
+    mark("fulltime");
+    const ft = say("fulltime");
+    await click("[data-tab=stats]");
+    await scrollToEl("#lineups", 140);
+    await waitFor(() => (S.stats?.subs || []).length >= 3, 15000);
+    await pointAt([...document.querySelectorAll("#lineups .subtag")].pop());
+    await waitFor(() => S.stats?.finished, 25000);
+    await scrollToEl(".monitor-panel");
+    await pointAt(document.querySelector(".br-motm"));
+    await ft;
+    await sleep(1200);
+    await scrollToEl(".tabs-panel");
+    await click("[data-tab=lens]");
+    await sleep(500);
+    await pointAt(document.querySelector(".motm-card"));
+    await sleep(2200);
+
+    // 10. Close
     mark("outro");
     clearInterval(watch);
     await control({ action: "pause" });

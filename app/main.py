@@ -153,7 +153,8 @@ class Session:
                 self.on_break = True
                 await self.broadcast("status", self.status())
                 waited = 0.0
-                while waited < HALFTIME_S:
+                # The break scales with replay speed: a fast-forward should not stall on a long pause.
+                while waited < HALFTIME_S * min(1.0, 15.0 / self.speed):
                     await asyncio.sleep(0.25)
                     if self.running:
                         waited += 0.25
