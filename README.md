@@ -6,6 +6,8 @@ Built for the Microsoft x Premier League **Inside the Game** developer hackathon
 
 **Live demo (Azure Container Apps):** https://producer-copilot.politefield-ec1b9bf6.southeastasia.azurecontainerapps.io — no login or install needed. Press **Start match**.
 
+**Demo video (1:50):** https://youtu.be/Qa-qIftD4d4 (also in the repo at [`docs/producer-copilot-demo.mp4`](docs/producer-copilot-demo.mp4))
+
 ![Producer Console](docs/console.png)
 
 ## The problem
@@ -76,7 +78,7 @@ The human producer stays in control. Edits made by hand are fact-checked too, an
 3. The **Agent team** strip shows which agent is working and whether the Fact Checker passed or rejected a draft.
 4. **Your decisions** lists graphics waiting for you, highest priority first. Read *Why now*, check the verification line, then **✓ Approve** (`A`), **Edit**, or **Reject** (`R`). Cards never move while your pointer is over the list.
 5. Approved graphics air at once in the strip under the pitch, so the pitch stays clear. Switch **TV / Fan app / Club channel** to see each feed's look, and read all three texts side by side under **Feed versions**.
-6. At half-time the replay rests briefly behind a studio card with the first-half numbers; the half-time and full-time rundowns appear under **Studio package** (**Build rundown now** makes one at any moment).
+6. After every goal the replay pauses for a few seconds: the clock stops, the ball and players freeze, and a GOAL! card shows the scorer, minute and new score before play restarts. At half-time the replay rests briefly behind a studio card with the first-half numbers; the half-time and full-time rundowns appear under **Studio package** (**Build rundown now** makes one at any moment).
 7. In **Fan app · Ask the Match**, ask anything about the match (any language) or tap a suggestion. Press **📺 Request this on screen** on a verified answer: a 📣 fan request appears in your decision queue.
 8. Open **Decision Lens** to see missed options and brave passes, and the vision score per player; a missed option also shows on the pitch as an amber "open?" marker.
 9. Open the settings (gear icon) to turn on **Fault test**, choose the club for the club channel, or switch the commentator voice off.
