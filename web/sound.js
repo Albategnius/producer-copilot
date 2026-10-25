@@ -90,6 +90,53 @@ const Sound = (() => {
     });
   }
 
+  // Opening music for the demo title sequence: an original ~5 s cue. Strings and an airy choir swell
+  // over a rising cymbal, a timpani hit with a brass chord as the title lands, then a fade under the narrator.
+  function opening() {
+    if (!ctx || !enabled) return;
+    const t0 = ctx.currentTime + 0.05, HIT = 2.15, END = 5.6;
+    const bus = ctx.createGain(); bus.gain.value = 0.9; bus.connect(master);
+    const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    // Simple hall: a few feedback-free delayed copies.
+    [0.045, 0.083, 0.131].forEach((d, i) => { const dl = ctx.createDelay(); dl.delayTime.value = d; const g = ctx.createGain(); g.gain.value = 0.22 - i * 0.05; bus.connect(dl).connect(g).connect(master); });
+
+    function voice(midi, type, from, to, peak, filterFrom, filterTo, detune = 7, formants = null) {
+      const g = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = 0.8;
+      lp.frequency.setValueAtTime(filterFrom, t0 + from); lp.frequency.exponentialRampToValueAtTime(filterTo, t0 + Math.min(to, from + 2.2));
+      g.gain.setValueAtTime(0, t0 + from); g.gain.linearRampToValueAtTime(peak, t0 + from + Math.min(1.6, (to - from) * 0.5));
+      g.gain.setValueAtTime(peak, t0 + to - 0.6); g.gain.linearRampToValueAtTime(0, t0 + to);
+      let out = lp;
+      if (formants) { const mix = ctx.createGain(); mix.gain.value = 1; formants.forEach((f) => { const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = f; bp.Q.value = 6; lp.connect(bp).connect(mix); }); out = mix; }
+      out.connect(g).connect(bus);
+      [-detune, detune].forEach((d) => { const o = ctx.createOscillator(); o.type = type; o.frequency.value = hz(midi); o.detune.value = d; o.connect(lp); o.start(t0 + from); o.stop(t0 + to + 0.05); });
+    }
+    // Rise: D minor strings + choir
+    [50, 57, 62, 65].forEach((m) => voice(m, "sawtooth", 0, HIT + 0.25, 0.028, 250, 2600));
+    [74, 77].forEach((m) => voice(m, "sawtooth", 0.4, HIT + 0.3, 0.05, 900, 3000, 9, [800, 1150]));
+    // Hit: B-flat major brass-like stab resolving to F major, fading under the narration
+    [46, 53, 58, 62, 65].forEach((m) => voice(m, "sawtooth", HIT, HIT + 1.4, 0.05, 2800, 1200, 5));
+    [41, 48, 53, 57, 60, 65].forEach((m) => voice(m, "sawtooth", HIT + 1.1, END, 0.032, 1400, 700, 6));
+    [72, 77].forEach((m) => voice(m, "triangle", HIT + 1.1, END, 0.03, 3000, 2000, 4, [800, 1150]));
+    // Cymbal swell (rising noise) into the hit, and a crash after it
+    const sw = ctx.createBufferSource(); sw.buffer = noiseBuffer(HIT + 0.2);
+    const swf = ctx.createBiquadFilter(); swf.type = "highpass"; swf.frequency.setValueAtTime(2500, t0); swf.frequency.exponentialRampToValueAtTime(7000, t0 + HIT);
+    const swg = ctx.createGain(); swg.gain.setValueAtTime(0.0001, t0); swg.gain.exponentialRampToValueAtTime(0.16, t0 + HIT - 0.02); swg.gain.linearRampToValueAtTime(0, t0 + HIT + 0.05);
+    sw.connect(swf).connect(swg).connect(bus); sw.start(t0);
+    const cr = ctx.createBufferSource(); cr.buffer = noiseBuffer(2.4);
+    const crf = ctx.createBiquadFilter(); crf.type = "highpass"; crf.frequency.value = 3500;
+    const crg = ctx.createGain(); crg.gain.setValueAtTime(0.2, t0 + HIT); crg.gain.exponentialRampToValueAtTime(0.0005, t0 + HIT + 2.3);
+    cr.connect(crf).connect(crg).connect(bus); cr.start(t0 + HIT);
+    // Timpani: a low sine with a falling pitch, plus a soft mallet click
+    [0, 0.09].forEach((off, i) => {
+      const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine";
+      o.frequency.setValueAtTime(i ? 58 : 74, t0 + HIT + off); o.frequency.exponentialRampToValueAtTime(40, t0 + HIT + off + 1.2);
+      g.gain.setValueAtTime(0, t0 + HIT + off); g.gain.linearRampToValueAtTime(i ? 0.22 : 0.38, t0 + HIT + off + 0.01); g.gain.exponentialRampToValueAtTime(0.001, t0 + HIT + off + 1.5);
+      o.connect(g).connect(bus); o.start(t0 + HIT + off); o.stop(t0 + HIT + off + 1.6);
+    });
+    // Duck the whole cue when the narrator starts (~3.9 s)
+    bus.gain.setValueAtTime(0.9, t0 + 3.7); bus.gain.linearRampToValueAtTime(0.35, t0 + 4.3);
+  }
+
   let chosenVoice = null;
   function pickVoice() {
     const voices = window.speechSynthesis.getVoices();
@@ -188,7 +235,7 @@ const Sound = (() => {
     get enabled() { return enabled; },
     get voice() { return voice; },
     wantedByDefault: () => pref("pc_sound", true),
-    setEnabled, setVoice, setRunning, swell, whistle, sting, speak, isSpeaking, route, recordStream,
+    setEnabled, setVoice, setRunning, swell, whistle, sting, opening, speak, isSpeaking, route, recordStream,
     setNeural: (on) => { neural = !!on; },
     get neural() { return neural; },
   };

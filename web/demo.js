@@ -30,22 +30,63 @@ const Demo = (() => {
     <button class="btn ghost" type="button" id="demo-play" disabled>▶ Play without recording</button>
     <span class="muted small">Tip: full-screen this window first (F11 / ⌃⌘F), then in the share dialog choose <b>this tab</b>. Sound is recorded from the app directly.</span>`);
   const caption = el("div", "demo-caption");
-  const cursor = el("div", "demo-cursor");
+  const cursor = el("div", "demo-cursor", `<span class="ripple"></span><svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M1 1 L1 19.5 L5.6 15.4 L8.7 22.4 L12.1 20.9 L9 14 L15.2 14 Z" fill="#fff" stroke="#0b0f1a" stroke-width="1.4" stroke-linejoin="round"/></svg>`);
   const card = el("div", "demo-card");
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const status = (t) => { const s = document.getElementById("demo-status"); if (s) s.textContent = t; };
 
   function showCard(kind) {
-    card.innerHTML = kind === "intro"
-      ? `<div class="dc-inner"><span class="dc-dot"></span><h1>Producer Co-pilot</h1><p>AI agents propose. You decide what goes on air.</p>
-         <div class="dc-tags"><span>Multi-agent</span><span>Fact-checked</span><span>Live</span></div>
-         <small>Microsoft × Premier League · Inside the Game hackathon · synthetic match data</small></div>`
-      : `<div class="dc-inner"><span class="dc-dot"></span><h1>Producer Co-pilot</h1><p>AI proposes, every number is checked, you decide.</p>
+    card.classList.toggle("opening", kind === "intro");
+    if (kind === "intro") { opening(); return; }
+    card.innerHTML = `<div class="dc-inner"><span class="dc-dot"></span><h1>Producer Co-pilot</h1><p>AI proposes, every number is checked, you decide.</p>
          <div class="dc-tags"><span>Microsoft Agent Framework</span><span>Microsoft Foundry</span><span>Azure AI Speech</span><span>Azure Container Apps</span></div>
          <small>Try it live: ${location.host}</small></div>`;
     card.classList.add("show");
   }
-  const hideCard = () => card.classList.remove("show");
+  const hideCard = () => { card.classList.remove("show"); setTimeout(() => { if (!card.classList.contains("show")) { cancelAnimationFrame(opRaf); } }, 900); };
+
+  // --- opening: an original broadcast-style title sequence --------------------------------------
+  // Light rays turn, starlight streams in towards the centre, a pitch outline draws itself, a flash,
+  // then the title. The music is synthesised live in Web Audio (see Sound.opening), so it is recorded too.
+  let opRaf = 0;
+  function opening() {
+    card.innerHTML = `<div class="op"><div class="op-rays"></div><canvas></canvas>
+      <svg class="op-pitch" viewBox="0 0 1050 680" aria-hidden="true">
+        <defs><linearGradient id="opStroke" x1="0" x2="1"><stop offset="0" stop-color="#5d8dff"/><stop offset=".5" stop-color="#e8f0ff"/><stop offset="1" stop-color="#5d8dff"/></linearGradient></defs>
+        <rect x="10" y="10" width="1030" height="660" rx="6" pathLength="1"/><line x1="525" y1="10" x2="525" y2="670" pathLength="1"/>
+        <circle cx="525" cy="340" r="92" pathLength="1" class="late"/>
+        <rect x="10" y="168" width="165" height="344" pathLength="1" class="late"/><rect x="875" y="168" width="165" height="344" pathLength="1" class="late"/>
+      </svg>
+      <div class="op-glow"></div><div class="op-flash"></div>
+      <div class="op-title"><h1>Producer Co-pilot</h1><div class="op-line"></div><p>AI agents propose · You decide</p>
+        <small>Microsoft × Premier League · Inside the Game hackathon</small></div></div>`;
+    card.classList.add("show");
+    Sound.opening?.();
+    const cv = card.querySelector("canvas"), g = cv.getContext("2d");
+    const W = cv.width = innerWidth * devicePixelRatio, H = cv.height = innerHeight * devicePixelRatio;
+    const cx = W / 2, cy = H * 0.46, R = Math.hypot(W, H) * 0.6;
+    const stars = Array.from({ length: 420 }, () => ({ a: Math.random() * Math.PI * 2, r: R * (0.35 + Math.random() * 0.75),
+      v: 0.006 + Math.random() * 0.012, s: 0.6 + Math.random() * 1.8, tw: Math.random() * 6 }));
+    const start = performance.now();
+    const frame = (now) => {
+      const t = (now - start) / 1000;
+      g.fillStyle = "rgba(2, 4, 11, 0.32)"; g.fillRect(0, 0, W, H);           // short trails
+      const pull = t < 2.15 ? 1 + t * 1.4 : 0;                                 // stream inwards, then burst outwards
+      for (const p of stars) {
+        if (t < 2.15) { p.r *= 1 - p.v * pull; p.a += 0.004 * pull; }
+        else { p.r += (R * 0.02 + p.r * 0.05) * p.s * 0.6; }
+        if (p.r < 6) p.r = R * (0.6 + Math.random() * 0.5);
+        const x = cx + Math.cos(p.a) * p.r, y = cy + Math.sin(p.a) * p.r * 0.62;
+        const alpha = Math.min(1, 0.35 + 0.65 * Math.abs(Math.sin(t * 3 + p.tw))) * (t > 2.15 ? Math.max(0, 1 - (t - 2.15) / 1.4) : 1);
+        g.fillStyle = `rgba(${200 + p.s * 25 | 0}, ${215 + p.s * 15 | 0}, 255, ${alpha})`;
+        g.beginPath(); g.arc(x, y, p.s * devicePixelRatio, 0, Math.PI * 2); g.fill();
+      }
+      if (t < 7) opRaf = requestAnimationFrame(frame);
+    };
+    g.fillStyle = "#02040b"; g.fillRect(0, 0, W, H);
+    opRaf = requestAnimationFrame(frame);
+  }
 
   // --- narration --------------------------------------------------------------------
 
@@ -192,8 +233,9 @@ const Demo = (() => {
     }, 150);
     S.started = true;
     await control({ action: "start" });
+    await sleep(3900);                            // the opening plays; the title lands at ~2.2 s
     const intro = say("intro");
-    await sleep(2600);
+    await sleep(900);
     hideCard();
     await intro;
 
