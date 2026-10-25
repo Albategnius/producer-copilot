@@ -488,3 +488,5 @@ body.demo-running .toasts { bottom: 110px; }
 .rating-list b { text-align: right; font-variant-numeric: tabular-nums; }
 .br-motm { text-align: center; font-size: .9rem; color: #ffe2b0; border-top: 1px solid rgba(255, 255, 255, .07); padding-top: 6px; }
 .ticker li.sub span:last-child { color: #bfe9ff; }
+.demo-stage { transform-origin: 0 0; transition: transform .8s cubic-bezier(.3, .8, .3, 1); will-change: transform; }
+body.demo-running { overflow-x: hidden; }

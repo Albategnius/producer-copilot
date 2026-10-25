@@ -111,7 +111,46 @@ const Demo = (() => {
     input.focus();
     for (const ch of text) { input.value += ch; await sleep(25); }
   }
-  function scrollToEl(selector, offset = 96) {
+  // --- camera: zoom into the part the narrator is explaining -------------------------------
+  // The app (top bar, timeline, layout) moves inside one stage; captions, cursor and cards stay outside it.
+  let stage = null, cam = { x: 0, y: 0, s: 1 };
+  function buildStage() {
+    if (stage) return;
+    stage = el("div", "demo-stage");
+    const parts = [".topbar", ".timeline", ".layout"].map((q) => document.querySelector(q));
+    parts[0].before(stage);
+    parts.forEach((p) => stage.appendChild(p));
+  }
+  function dropStage() {
+    if (!stage) return;
+    [...stage.children].forEach((c) => stage.before(c));
+    stage.remove(); stage = null; cam = { x: 0, y: 0, s: 1 };
+  }
+  async function zoom(target, maxScale = 1.8) {
+    const t = typeof target === "string" ? document.querySelector(target) : target;
+    if (!t || !stage) return;
+    const r = t.getBoundingClientRect();
+    const origin = { x: -window.scrollX, y: -window.scrollY };              // stage's untransformed top-left on screen
+    const q = { x: (r.left + r.width / 2 - origin.x - cam.x) / cam.s, y: (r.top + r.height / 2 - origin.y - cam.y) / cam.s };
+    const w = r.width / cam.s, h = r.height / cam.s;
+    const s = Math.max(1.15, Math.min(maxScale, (0.82 * innerWidth) / w, (0.68 * innerHeight) / h));
+    const v = { x: innerWidth / 2, y: innerHeight / 2 - 40 };                  // a little above centre, clear of captions
+    cam = { x: v.x - origin.x - s * q.x, y: v.y - origin.y - s * q.y, s };
+    stage.style.transform = `translate(${cam.x}px, ${cam.y}px) scale(${s})`;
+    await sleep(850);
+  }
+  async function unzoom() {
+    if (!stage || cam.s === 1) return;
+    cam = { x: 0, y: 0, s: 1 };
+    stage.style.transform = "none";
+    await sleep(750);
+  }
+
+  async function scrollToEl(selector, offset = 96) {
+    await unzoom();
+    return scrollPlain(selector, offset);
+  }
+  function scrollPlain(selector, offset = 96) {
     const t = document.querySelector(selector);
     if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - offset, behavior: "smooth" });
     return sleep(700);
@@ -144,7 +183,8 @@ const Demo = (() => {
     document.querySelector("[data-tab=stats]")?.click();
     document.querySelector("[data-feed=main]")?.click();
 
-    // 1. Title (the match kicks off behind it, so the agents are already at work)
+    // 1. Title: a short card, then the narrator continues over the live console
+    buildStage();
     showCard("intro");
     let goalScene = false;
     const watch = setInterval(() => {               // rest just before the first goal so the goal scene catches it
@@ -152,15 +192,17 @@ const Demo = (() => {
     }, 150);
     S.started = true;
     await control({ action: "start" });
-    await say("intro");
+    const intro = say("intro");
+    await sleep(2600);
     hideCard();
+    await intro;
 
     // 2. The agents get to work
     mark("agents");
     const agents = say("agents");
-    await sleep(2500);
-    await scrollToEl(".agents-panel", 380);
-    await sleep(4000);
+    await scrollToEl(".agents-panel", 300);
+    await zoom(".agents-panel", 1.7);
+    await sleep(5200);
     await scrollToEl(".monitor-panel");
     await agents;
 
@@ -169,23 +211,27 @@ const Demo = (() => {
     await waitFor(() => pending().length > 0, 45000);
     mark("check");
     const checked = say("check");
-    await pointAt(document.querySelector(".card.pending.top .verify"));
-    await sleep(1200);
     await click(".card.pending.top details summary");
+    await zoom(".card.pending.top", 1.7);
+    await pointAt(document.querySelector(".card.pending.top .verify"));
     await checked;
+    await unzoom();
 
     // 4. Approve -> on air -> three feeds (switching feeds while the narrator explains them)
     mark("approve");
     const approved = say("approve");
-    await sleep(400);
     await click(".card.pending.top [data-act=approve]");
-    await sleep(900);
+    await sleep(700);
     await scrollToEl(".onair-strip", 420);
-    await sleep(2200);
+    await zoom(".monitor-panel", 1.3);
+    await sleep(1200);
     await click("[data-feed=casual]");
-    await sleep(1700);
+    await sleep(1500);
     await click("[data-feed=club]");
+    await sleep(900);
+    await zoom("#feed-compare", 1.8);
     await approved;
+    await unzoom();
     await click("[data-feed=main]");
 
     // 5. Goal: the commentator takes over
@@ -196,16 +242,19 @@ const Demo = (() => {
     await control({ speed: 15, action: "start" });
     caption.textContent = "Live commentary: Azure AI Speech neural voice";
     caption.classList.add("show");
+    await zoom(".monitor", 1.35);
     await waitFor(() => S.stats?.t >= GOAL_T + 2, 20000);
-    await sleep(5000);
+    await sleep(4500);
     caption.classList.remove("show");
     Sound.setVoice(false);
+    await unzoom();
 
     // 6. Ask the Match (the match speeds up from here so the closing scenes reach full time)
     mark("ask");
     await control({ speed: 120 });
     await scrollToEl("#fan-panel");
     const ask = say("ask");
+    await zoom("#fan-panel", 1.6);
     await typeInto("#ask-input", QUESTION);
     const before = document.querySelectorAll(".answer:not(.pending)").length;
     await click("#ask-btn");
@@ -213,14 +262,19 @@ const Demo = (() => {
     mark("ask-wait-answer");
     await waitFor(() => document.querySelectorAll(".answer:not(.pending)").length > before, 30000);
     mark("answer");
-    await sleep(900);
+    await zoom(".answer", 1.9);
+    await sleep(700);
 
     // 7. Fan request -> producer queue
     const req = say("request");
     await click(".answer [data-request]");
-    await sleep(1500);
-    await pointAt([...document.querySelectorAll("#queue .card")].find((c) => c.textContent.includes("Fan request")) || document.querySelector("#queue"));
+    await sleep(600);
+    await unzoom();
+    const fanCard = [...document.querySelectorAll("#queue .card")].find((c) => c.textContent.includes("Fan request"));
+    if (fanCard) await zoom(fanCard, 1.8);
+    await pointAt(fanCard || document.querySelector("#queue"));
     await req;
+    await unzoom();
 
     // 8. Decision Lens (the match fast-forwards from here, so the next scene reaches full time)
     mark("lens");
@@ -228,27 +282,32 @@ const Demo = (() => {
     await scrollToEl(".tabs-panel");
     const lens = say("lens");
     await click("[data-tab=lens]");
-    await sleep(2500);
+    await sleep(400);
+    await zoom(".lens-grid", 1.5);
     await pointAt(document.querySelector("#vision-board"));
     await lens;
+    await unzoom();
 
-    // 9. Fast-forward to full time: substitutions, ratings, Man of the Match
+    // 9. Full time: substitutions, ratings, Man of the Match
     mark("fulltime");
     const ft = say("fulltime");
     await click("[data-tab=stats]");
     await scrollToEl("#lineups", 140);
     await waitFor(() => (S.stats?.subs || []).length >= 3, 15000);
+    await zoom("#lineups", 1.45);
     await pointAt([...document.querySelectorAll("#lineups .subtag")].pop());
     await waitFor(() => S.stats?.finished, 25000);
     await scrollToEl(".monitor-panel");
+    await zoom("#break-card", 1.7);
     await pointAt(document.querySelector(".br-motm"));
     await ft;
-    await sleep(1200);
+    await unzoom();
     await scrollToEl(".tabs-panel");
     await click("[data-tab=lens]");
-    await sleep(400);
-    await pointAt(document.querySelector(".motm-card"));
-    await sleep(1200);
+    await sleep(300);
+    await zoom(".motm-card", 2);
+    await sleep(1800);
+    await unzoom();
 
     // 10. Close
     mark("outro");
@@ -258,6 +317,7 @@ const Demo = (() => {
     await say("outro");
     await sleep(500);
     Sound.setVoice(voicePref);
+    dropStage();
     mark("end");
     return (performance.now() - t0) / 1000;
   }
@@ -288,6 +348,7 @@ const Demo = (() => {
     let secs = 0;
     try { secs = await tour(); } finally {
       document.body.classList.remove("demo-running");
+      dropStage();
       hideCard(); caption.classList.remove("show");
       panel.classList.remove("hidden");
       busy = false;
