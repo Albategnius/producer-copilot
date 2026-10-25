@@ -95,7 +95,7 @@ const Sound = (() => {
   function opening() {
     if (!ctx || !enabled) return;
     const t0 = ctx.currentTime + 0.05, HIT = 2.15, END = 5.6;
-    const bus = ctx.createGain(); bus.gain.value = 0.9; bus.connect(master);
+    const bus = ctx.createGain(); bus.gain.value = 1.4; bus.connect(master);
     const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
     // Simple hall: a few feedback-free delayed copies.
     [0.045, 0.083, 0.131].forEach((d, i) => { const dl = ctx.createDelay(); dl.delayTime.value = d; const g = ctx.createGain(); g.gain.value = 0.22 - i * 0.05; bus.connect(dl).connect(g).connect(master); });
@@ -134,7 +134,7 @@ const Sound = (() => {
       o.connect(g).connect(bus); o.start(t0 + HIT + off); o.stop(t0 + HIT + off + 1.6);
     });
     // Duck the whole cue when the narrator starts (~3.9 s)
-    bus.gain.setValueAtTime(0.9, t0 + 3.7); bus.gain.linearRampToValueAtTime(0.35, t0 + 4.3);
+    bus.gain.setValueAtTime(1.4, t0 + 3.7); bus.gain.linearRampToValueAtTime(0.5, t0 + 4.3);
   }
 
   let chosenVoice = null;
