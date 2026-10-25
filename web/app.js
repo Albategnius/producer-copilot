@@ -51,6 +51,7 @@ function toast(text, warn = false) {
   el.className = "toast" + (warn ? " warn" : "");
   el.textContent = text;
   $("toasts").appendChild(el);
+  while ($("toasts").children.length > 3) $("toasts").firstChild.remove();   // never bury the screen in toasts
   setTimeout(() => el.remove(), 4200);
 }
 
