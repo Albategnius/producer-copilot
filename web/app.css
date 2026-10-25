@@ -490,3 +490,18 @@ body.demo-running .toasts { bottom: 110px; }
 .ticker li.sub span:last-child { color: #bfe9ff; }
 .demo-stage { transform-origin: 0 0; transition: transform .8s cubic-bezier(.3, .8, .3, 1); will-change: transform; }
 body.demo-running { overflow-x: hidden; }
+
+/* ---------- GOAL! pop-up during the celebration pause ---------- */
+.goal-pop { position: absolute; inset: 0; z-index: 4; display: grid; place-content: center; justify-items: center; gap: 10px; pointer-events: none;
+  background: radial-gradient(60% 55% at 50% 50%, color-mix(in srgb, var(--teamc) 45%, transparent), rgba(5, 8, 16, .55) 75%); }
+.goal-pop.pop .gp-burst { animation: goalBurst .9s cubic-bezier(.2, 1.4, .3, 1) both; }
+.goal-pop.pop .gp-who, .goal-pop.pop .gp-score { animation: gfxIn .5s .35s ease-out both; }
+.gp-burst { font-size: clamp(3rem, 10vw, 7.5rem); font-weight: 900; letter-spacing: .02em; color: #fff; font-style: italic;
+  text-shadow: 0 6px 0 color-mix(in srgb, var(--teamc) 70%, #000), 0 0 40px var(--teamc); font-variation-settings: "wdth" 75; }
+.gp-who { display: flex; align-items: center; gap: 10px; font-size: clamp(1rem, 2.4vw, 1.6rem); font-weight: 800; color: #fff;
+  background: rgba(5, 8, 16, .8); padding: 8px 16px; border-radius: 999px; border: 2px solid var(--teamc); }
+.gp-who .num { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--teamc); font-size: .95rem; }
+.gp-score { font-size: clamp(.95rem, 2vw, 1.3rem); color: #fff; font-weight: 700; }
+.gp-score b { background: #fff; color: #0B1020; padding: 2px 10px; border-radius: 6px; margin: 0 6px; }
+@keyframes goalBurst { 0% { transform: scale(.3) rotate(-6deg); opacity: 0; } 60% { transform: scale(1.12) rotate(2deg); opacity: 1; } 100% { transform: scale(1) rotate(0); } }
+@media (prefers-reduced-motion: reduce) { .goal-pop.pop .gp-burst, .goal-pop.pop .gp-who, .goal-pop.pop .gp-score { animation: none; } }

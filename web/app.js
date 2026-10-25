@@ -71,6 +71,20 @@ function renderScorebug() {
   $("timeline-fill").style.width = `${Math.min(100, (S.stats.t / (94 * 60)) * 100)}%`;
 }
 
+// GOAL! pop-up over the pitch while play stops for the celebration.
+function showGoalPop(e) {
+  const t = team(e.team), p = player(e.player_id), h = team(S.meta.home), a = team(S.meta.away), sc = e.score || S.stats.score;
+  const el = $("goal-pop");
+  el.style.setProperty("--teamc", t.color);
+  el.innerHTML = `<div class="gp-burst">GOAL!</div>
+    <div class="gp-who">${p ? `<span class="num">${p.number}</span>` : ""}${esc(e.player)} <span class="muted">${esc(t.short)} · ${e.minute}'</span></div>
+    <div class="gp-score">${esc(h.short)} <b>${sc[h.id]}–${sc[a.id]}</b> ${esc(a.short)}</div>`;
+  el.hidden = false;
+  el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
+  clearTimeout(S.goalTimer);
+  S.goalTimer = setTimeout(() => { el.hidden = true; }, 6000);   // safety: the status update normally hides it first
+}
+
 // Half-time and full-time cards over the pitch, like the studio break.
 function renderBreak() {
   if (!S.meta || !S.stats) return;
@@ -564,7 +578,7 @@ function connect() {
   on("match_event", (e) => {
     S.events.push(e); if (S.events.length > 60) S.events.shift();
     addTicker(e); renderPitch();
-    if (e.type === "goal") toast(`Goal! ${team(e.team).short} — ${player(e.player_id) ? `#${player(e.player_id).number} ` : ""}${e.player}`);
+    if (e.type === "goal") showGoalPop(e);
     soundFor(e);
     Commentary.onEvent(e);
     if (e.type === "substitution") { toast(`🔁 ${team(e.team).short}: ${e.player_off} off, ${e.player_on} on`); renderLineups(); }
@@ -591,6 +605,7 @@ function connect() {
   on("status", (st) => {
     const wasBreak = !!S.status?.half_time_break;
     S.status = st; renderStatus(); renderScorebug(); renderBreak();
+    if (!st.goal_celebration && !$("goal-pop").hidden) setTimeout(() => { if (!S.status?.goal_celebration) $("goal-pop").hidden = true; }, 600);
     if (wasBreak && !st.half_time_break) toast("Second half under way");
   });
   on("reset", loadFull);

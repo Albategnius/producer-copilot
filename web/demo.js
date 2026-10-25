@@ -243,7 +243,7 @@ const Demo = (() => {
     caption.textContent = "Live commentary: Azure AI Speech neural voice";
     caption.classList.add("show");
     await zoom(".monitor", 1.35);
-    await waitFor(() => S.stats?.t >= GOAL_T + 2, 20000);
+    await waitFor(() => S.stats?.t >= GOAL_T, 20000);    // the goal pop-up and celebration pause start here
     await sleep(4500);
     caption.classList.remove("show");
     Sound.setVoice(false);

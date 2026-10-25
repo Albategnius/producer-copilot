@@ -80,6 +80,7 @@ class Session:
         self.idx = 0
         self.running = False
         self.on_break = False
+        self.celebrating: str | None = None
         self.club = self.meta["home"]
         self.suggestions: dict[str, dict] = {}
         self.candidates: dict[str, Candidate] = {}
@@ -148,6 +149,13 @@ class Session:
                 await self.broadcast("stats", self.stats_payload())
             if ev["type"] in ("half_end", "full_time"):
                 asyncio.create_task(self.make_package("half_time" if ev["type"] == "half_end" else "full_time"))
+            if ev["type"] == "goal":
+                # Celebration: play stops for a moment before the restart, as on TV.
+                self.celebrating = ev["id"]
+                await self.broadcast("status", self.status())
+                await self._rest(GOAL_PAUSE_S)
+                self.celebrating = None
+                await self.broadcast("status", self.status())
             if ev["type"] == "half_end":
                 # A real half-time break: the replay rests while the studio shows the first-half picture.
                 self.on_break = True
@@ -166,6 +174,14 @@ class Session:
                 sug["status"], sug["dropped_reason"] = "dropped", "expired: full time"
                 await self.broadcast("suggestion", sug)
         await self.broadcast("status", self.status())
+
+    async def _rest(self, seconds: float) -> None:
+        """Pause the replay for real seconds (scaled down at high replay speeds); paused time doesn't count."""
+        waited = 0.0
+        while waited < seconds * min(1.0, 15.0 / self.speed):
+            await asyncio.sleep(0.25)
+            if self.running:
+                waited += 0.25
 
     async def enqueue(self, c: Candidate) -> None:
         self.candidates[c.id] = c
@@ -404,7 +420,8 @@ class Session:
         return {"running": self.running, "speed": self.speed, "inject_faults": self.inject_faults,
                 "club": self.club, "mode": self.gw.mode, "seed": self.seed,
                 "progress": self.idx / max(1, len(self.match["events"])),
-                "finished": self.idx >= len(self.match["events"]), "half_time_break": self.on_break}
+                "finished": self.idx >= len(self.match["events"]), "half_time_break": self.on_break,
+                "goal_celebration": self.celebrating}
 
     def full_state(self) -> dict:
         return {"meta": self.meta, "status": self.status(), "stats": self.stats_payload(),
@@ -424,6 +441,7 @@ SEED = int(os.getenv("MATCH_SEED", "1"))
 MAX_SESSIONS = int(os.getenv("MAX_SESSIONS", "40"))
 IDLE_SECONDS = int(os.getenv("SESSION_IDLE_S", "1800"))
 WORKERS = int(os.getenv("AGENT_WORKERS", "3"))
+GOAL_PAUSE_S = float(os.getenv("GOAL_PAUSE_S", "4"))  # real seconds of goal celebration at 15x
 HALFTIME_S = float(os.getenv("HALFTIME_BREAK_S", "8"))  # real seconds of half-time break
 ASKS_PER_MINUTE = int(os.getenv("FAN_ASKS_PER_MINUTE", "8"))
 STALE_S = int(os.getenv("STALE_MATCH_S", "360"))            # 6 match minutes for most moments
