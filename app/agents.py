@@ -191,6 +191,14 @@ def _fit(text: str, limit: int) -> str:
     return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
 
 
+def _fit_clauses(text: str, limit: int) -> str:
+    """Shorten a comma-separated list by whole clauses, so a number is never cut in half."""
+    parts = [p.strip() for p in str(text).split(",")]
+    while len(parts) > 1 and len(", ".join(parts)) > limit:
+        parts.pop()
+    return ", ".join(parts)[:limit]
+
+
 def fallback_analysis(c: Candidate) -> dict:
     f = c.facts
     why = {
@@ -204,6 +212,8 @@ def fallback_analysis(c: Candidate) -> dict:
         "missed_option": lambda: (f"{f['team']} were on the front foot, but {f['passer']} played it back; "
                                   f"{f['open_teammate']} looked free ahead (estimated positions)."),
         "fan_request": lambda: f"Fans asked: {f['fan_question']}",
+        "substitution": lambda: f"{f['team']} change it: {f['player_off']} makes way for {f['player_on']} ({f['position']}).",
+        "man_of_match": lambda: f"{f['player']} is Man of the Match with a {f['match_rating']} rating: {f['why']}.",
     }[c.kind]()
     return {"angle": c.title, "why_now": why, "key_facts": list(f)}
 
@@ -240,6 +250,14 @@ def fallback_graphic(c: Candidate) -> dict:
         g = {"template": "lower_third", "slots": {
             "headline": f"Decision Lens: {f['passer']}",
             "body": f"#{f['passer_number']} played back; #{f['open_teammate_number']} {f['open_teammate']} was free ahead (estimate)"}}
+    elif c.kind == "substitution":
+        g = {"template": "lower_third", "slots": {
+            "headline": f"Substitution - {f['team']}",
+            "body": f"OFF #{f['player_off_number']} {f['player_off']}   ON #{f['player_on_number']} {f['player_on']}"}}
+    elif c.kind == "man_of_match":
+        g = {"template": "player_tag", "slots": {
+            "player": f["player"], "stat_label": "Man of the Match", "stat_value": str(f["match_rating"]),
+            "context": _fit_clauses(f["why"], TEMPLATES["player_tag"]["slots"]["context"])}}
     elif c.kind == "fan_request":
         g = {"template": "lower_third", "slots": {"headline": "You asked", "body": f["answer_short"]}}
     else:
@@ -292,7 +310,7 @@ class MomentScout(Executor):
         age = self.clock() - c.t
         if c.kind != "goal" and age > 240:
             job.status, job.dropped_reason = "dropped", f"stale: {int(age // 60)} match minutes old"
-        elif c.kind != "fan_request" and any(r.kind == c.kind and r.team == c.team and c.t - r.t < 600 for r in self.recent() if r.id != c.id):
+        elif c.kind not in ("fan_request", "substitution", "man_of_match") and any(r.kind == c.kind and r.team == c.team and c.t - r.t < 600 for r in self.recent() if r.id != c.id):
             job.status, job.dropped_reason = "dropped", "similar graphic already proposed in last 10 min"
         await self.notify("trace", {"id": c.id, "agent": "MomentScout",
                                     "detail": job.dropped_reason or f"accepted (priority {c.priority})"})

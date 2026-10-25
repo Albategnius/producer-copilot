@@ -26,7 +26,8 @@
       "base_y": 34,
       "passing": 0.89,
       "finishing": 0.51,
-      "pace": 0.5
+      "pace": 0.5,
+      "bench": false
      },
      {
       "id": "RIV-2",
@@ -38,7 +39,8 @@
       "base_y": 10,
       "passing": 0.73,
       "finishing": 0.46,
-      "pace": 0.91
+      "pace": 0.91,
+      "bench": false
      },
      {
       "id": "RIV-5",
@@ -50,7 +52,8 @@
       "base_y": 26,
       "passing": 0.56,
       "finishing": 0.53,
-      "pace": 0.57
+      "pace": 0.57,
+      "bench": false
      },
      {
       "id": "RIV-6",
@@ -62,7 +65,8 @@
       "base_y": 42,
       "passing": 0.73,
       "finishing": 0.49,
-      "pace": 0.49
+      "pace": 0.49,
+      "bench": false
      },
      {
       "id": "RIV-3",
@@ -74,7 +78,8 @@
       "base_y": 58,
       "passing": 0.68,
       "finishing": 0.21,
-      "pace": 0.86
+      "pace": 0.86,
+      "bench": false
      },
      {
       "id": "RIV-4",
@@ -86,7 +91,8 @@
       "base_y": 34,
       "passing": 0.7,
       "finishing": 0.29,
-      "pace": 0.57
+      "pace": 0.57,
+      "bench": false
      },
      {
       "id": "RIV-8",
@@ -98,7 +104,8 @@
       "base_y": 22,
       "passing": 0.64,
       "finishing": 0.38,
-      "pace": 0.6
+      "pace": 0.6,
+      "bench": false
      },
      {
       "id": "RIV-10",
@@ -110,7 +117,8 @@
       "base_y": 46,
       "passing": 0.64,
       "finishing": 0.29,
-      "pace": 0.58
+      "pace": 0.58,
+      "bench": false
      },
      {
       "id": "RIV-7",
@@ -122,7 +130,8 @@
       "base_y": 10,
       "passing": 0.56,
       "finishing": 0.89,
-      "pace": 0.83
+      "pace": 0.83,
+      "bench": false
      },
      {
       "id": "RIV-9",
@@ -134,7 +143,8 @@
       "base_y": 34,
       "passing": 0.8,
       "finishing": 0.85,
-      "pace": 0.75
+      "pace": 0.75,
+      "bench": false
      },
      {
       "id": "RIV-11",
@@ -146,7 +156,73 @@
       "base_y": 58,
       "passing": 0.84,
       "finishing": 0.85,
-      "pace": 0.96
+      "pace": 0.96,
+      "bench": false
+     },
+     {
+      "id": "RIV-12",
+      "name": "A. Madsen",
+      "team": "RIV",
+      "number": 12,
+      "role": "LW",
+      "base_x": 80,
+      "base_y": 58,
+      "passing": 0.84,
+      "finishing": 0.85,
+      "pace": 0.96,
+      "bench": true
+     },
+     {
+      "id": "RIV-14",
+      "name": "I. Berry",
+      "team": "RIV",
+      "number": 14,
+      "role": "DM",
+      "base_x": 45,
+      "base_y": 34,
+      "passing": 0.7,
+      "finishing": 0.29,
+      "pace": 0.57,
+      "bench": true
+     },
+     {
+      "id": "RIV-15",
+      "name": "R. Siering",
+      "team": "RIV",
+      "number": 15,
+      "role": "LCB",
+      "base_x": 24,
+      "base_y": 42,
+      "passing": 0.73,
+      "finishing": 0.49,
+      "pace": 0.49,
+      "bench": true
+     },
+     {
+      "id": "RIV-16",
+      "name": "E. Cundari",
+      "team": "RIV",
+      "number": 16,
+      "role": "SUB",
+      "base_x": 0.0,
+      "base_y": 0.0,
+      "passing": 0.0,
+      "finishing": 0.0,
+      "pace": 0.0,
+      "bench": true
+     },
+     {
+      "id": "RIV-19",
+      "name": "L. Delaunay",
+      "team": "RIV",
+      "number": 19,
+      "role": "SUB",
+      "base_x": 0.0,
+      "base_y": 0.0,
+      "passing": 0.0,
+      "finishing": 0.0,
+      "pace": 0.0,
+      "bench": true
      }
     ]
    },
@@ -166,7 +242,8 @@
       "base_y": 34,
       "passing": 0.93,
       "finishing": 0.36,
-      "pace": 0.74
+      "pace": 0.74,
+      "bench": false
      },
      {
       "id": "NGT-2",
@@ -178,7 +255,8 @@
       "base_y": 10,
       "passing": 0.85,
       "finishing": 0.36,
-      "pace": 0.87
+      "pace": 0.87,
+      "bench": false
      },
      {
       "id": "NGT-5",
@@ -190,7 +268,8 @@
       "base_y": 26,
       "passing": 0.9,
       "finishing": 0.51,
-      "pace": 0.7
+      "pace": 0.7,
+      "bench": false
      },
      {
       "id": "NGT-6",
@@ -202,7 +281,8 @@
       "base_y": 42,
       "passing": 0.82,
       "finishing": 0.24,
-      "pace": 0.47
+      "pace": 0.47,
+      "bench": false
      },
      {
       "id": "NGT-3",
@@ -214,7 +294,8 @@
       "base_y": 58,
       "passing": 0.75,
       "finishing": 0.21,
-      "pace": 0.66
+      "pace": 0.66,
+      "bench": false
      },
      {
       "id": "NGT-4",
@@ -226,7 +307,8 @@
       "base_y": 34,
       "passing": 0.62,
       "finishing": 0.4,
-      "pace": 0.79
+      "pace": 0.79,
+      "bench": false
      },
      {
       "id": "NGT-8",
@@ -238,7 +320,8 @@
       "base_y": 22,
       "passing": 0.92,
       "finishing": 0.42,
-      "pace": 0.56
+      "pace": 0.56,
+      "bench": false
      },
      {
       "id": "NGT-10",
@@ -250,7 +333,8 @@
       "base_y": 46,
       "passing": 0.78,
       "finishing": 0.38,
-      "pace": 0.51
+      "pace": 0.51,
+      "bench": false
      },
      {
       "id": "NGT-7",
@@ -262,7 +346,8 @@
       "base_y": 10,
       "passing": 0.86,
       "finishing": 0.89,
-      "pace": 0.94
+      "pace": 0.94,
+      "bench": false
      },
      {
       "id": "NGT-9",
@@ -274,7 +359,8 @@
       "base_y": 34,
       "passing": 0.86,
       "finishing": 0.67,
-      "pace": 0.96
+      "pace": 0.96,
+      "bench": false
      },
      {
       "id": "NGT-11",
@@ -286,7 +372,73 @@
       "base_y": 58,
       "passing": 0.7,
       "finishing": 0.79,
-      "pace": 0.96
+      "pace": 0.96,
+      "bench": false
+     },
+     {
+      "id": "NGT-13",
+      "name": "Z. Weller",
+      "team": "NGT",
+      "number": 13,
+      "role": "ST",
+      "base_x": 88,
+      "base_y": 34,
+      "passing": 0.86,
+      "finishing": 0.67,
+      "pace": 0.96,
+      "bench": true
+     },
+     {
+      "id": "NGT-14",
+      "name": "O. Willems",
+      "team": "NGT",
+      "number": 14,
+      "role": "DM",
+      "base_x": 45,
+      "base_y": 34,
+      "passing": 0.62,
+      "finishing": 0.4,
+      "pace": 0.79,
+      "bench": true
+     },
+     {
+      "id": "NGT-15",
+      "name": "J. van den Wittenboer",
+      "team": "NGT",
+      "number": 15,
+      "role": "LCM",
+      "base_x": 55,
+      "base_y": 46,
+      "passing": 0.78,
+      "finishing": 0.38,
+      "pace": 0.51,
+      "bench": true
+     },
+     {
+      "id": "NGT-18",
+      "name": "M. Lord",
+      "team": "NGT",
+      "number": 18,
+      "role": "SUB",
+      "base_x": 0.0,
+      "base_y": 0.0,
+      "passing": 0.0,
+      "finishing": 0.0,
+      "pace": 0.0,
+      "bench": true
+     },
+     {
+      "id": "NGT-20",
+      "name": "M. Smart",
+      "team": "NGT",
+      "number": 20,
+      "role": "SUB",
+      "base_x": 0.0,
+      "base_y": 0.0,
+      "passing": 0.0,
+      "finishing": 0.0,
+      "pace": 0.0,
+      "bench": true
      }
     ]
    }
@@ -18946,6 +19098,21 @@
    "t": 3853.5,
    "minute": 65,
    "period": 2,
+   "type": "substitution",
+   "team": "NGT",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
+   "player_off_id": "NGT-9",
+   "player_off": "T. Becker",
+   "player_on_id": "NGT-13",
+   "player_on": "Z. Weller",
+   "role": "ST"
+  },
+  {
+   "id": "e01161",
+   "t": 3853.5,
+   "minute": 65,
+   "period": 2,
    "type": "pressure",
    "team": "NGT",
    "player_id": "NGT-7",
@@ -18955,7 +19122,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01161",
+   "id": "e01162",
    "t": 3854.2,
    "minute": 65,
    "period": 2,
@@ -18973,7 +19140,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01162",
+   "id": "e01163",
    "t": 3857.4,
    "minute": 65,
    "period": 2,
@@ -18986,7 +19153,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01163",
+   "id": "e01164",
    "t": 3858.1,
    "minute": 65,
    "period": 2,
@@ -19004,7 +19171,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01164",
+   "id": "e01165",
    "t": 3861.6,
    "minute": 65,
    "period": 2,
@@ -19017,7 +19184,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01165",
+   "id": "e01166",
    "t": 3862.2,
    "minute": 65,
    "period": 2,
@@ -19035,7 +19202,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01166",
+   "id": "e01167",
    "t": 3865.4,
    "minute": 65,
    "period": 2,
@@ -19048,7 +19215,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01167",
+   "id": "e01168",
    "t": 3866.2,
    "minute": 65,
    "period": 2,
@@ -19063,7 +19230,7 @@
    "speed_kmh": 28.9
   },
   {
-   "id": "e01168",
+   "id": "e01169",
    "t": 3871.1,
    "minute": 65,
    "period": 2,
@@ -19081,7 +19248,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01169",
+   "id": "e01170",
    "t": 3884.4,
    "minute": 65,
    "period": 2,
@@ -19094,7 +19261,7 @@
    "y": 43.6
   },
   {
-   "id": "e01170",
+   "id": "e01171",
    "t": 3884.4,
    "minute": 65,
    "period": 2,
@@ -19107,7 +19274,7 @@
    "on_player_id": "NGT-4"
   },
   {
-   "id": "e01171",
+   "id": "e01172",
    "t": 3885.4,
    "minute": 65,
    "period": 2,
@@ -19125,7 +19292,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01172",
+   "id": "e01173",
    "t": 3889.2,
    "minute": 65,
    "period": 2,
@@ -19138,7 +19305,7 @@
    "y": 51.0
   },
   {
-   "id": "e01173",
+   "id": "e01174",
    "t": 3890.0,
    "minute": 65,
    "period": 2,
@@ -19156,7 +19323,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01174",
+   "id": "e01175",
    "t": 3893.2,
    "minute": 65,
    "period": 2,
@@ -19174,7 +19341,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01175",
+   "id": "e01176",
    "t": 3896.7,
    "minute": 65,
    "period": 2,
@@ -19189,7 +19356,7 @@
    "speed_kmh": 28.5
   },
   {
-   "id": "e01176",
+   "id": "e01177",
    "t": 3901.4,
    "minute": 66,
    "period": 2,
@@ -19202,7 +19369,7 @@
    "on_player_id": "RIV-9"
   },
   {
-   "id": "e01177",
+   "id": "e01178",
    "t": 3902.1,
    "minute": 66,
    "period": 2,
@@ -19220,7 +19387,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01178",
+   "id": "e01179",
    "t": 3905.2,
    "minute": 66,
    "period": 2,
@@ -19238,7 +19405,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01179",
+   "id": "e01180",
    "t": 3908.0,
    "minute": 66,
    "period": 2,
@@ -19256,7 +19423,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01180",
+   "id": "e01181",
    "t": 3910.8,
    "minute": 66,
    "period": 2,
@@ -19269,7 +19436,7 @@
    "on_player_id": "RIV-9"
   },
   {
-   "id": "e01181",
+   "id": "e01182",
    "t": 3912.0,
    "minute": 66,
    "period": 2,
@@ -19284,7 +19451,7 @@
    "speed_kmh": 27.2
   },
   {
-   "id": "e01182",
+   "id": "e01183",
    "t": 3916.7,
    "minute": 66,
    "period": 2,
@@ -19299,7 +19466,7 @@
    "speed_kmh": 32.6
   },
   {
-   "id": "e01183",
+   "id": "e01184",
    "t": 3919.9,
    "minute": 66,
    "period": 2,
@@ -19312,7 +19479,7 @@
    "on_player_id": "RIV-9"
   },
   {
-   "id": "e01184",
+   "id": "e01185",
    "t": 3921.1,
    "minute": 66,
    "period": 2,
@@ -19330,7 +19497,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01185",
+   "id": "e01186",
    "t": 3942.9,
    "minute": 66,
    "period": 2,
@@ -19343,7 +19510,7 @@
    "y": 31.1
   },
   {
-   "id": "e01186",
+   "id": "e01187",
    "t": 3942.9,
    "minute": 66,
    "period": 2,
@@ -19361,7 +19528,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01187",
+   "id": "e01188",
    "t": 3946.6,
    "minute": 66,
    "period": 2,
@@ -19374,7 +19541,7 @@
    "y": 56.5
   },
   {
-   "id": "e01188",
+   "id": "e01189",
    "t": 3947.8,
    "minute": 66,
    "period": 2,
@@ -19392,7 +19559,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01189",
+   "id": "e01190",
    "t": 3951.4,
    "minute": 66,
    "period": 2,
@@ -19405,7 +19572,7 @@
    "on_player_id": "RIV-11"
   },
   {
-   "id": "e01190",
+   "id": "e01191",
    "t": 3952.4,
    "minute": 66,
    "period": 2,
@@ -19419,7 +19586,7 @@
    "on_player_id": "RIV-11"
   },
   {
-   "id": "e01191",
+   "id": "e01192",
    "t": 3952.4,
    "minute": 66,
    "period": 2,
@@ -19432,7 +19599,7 @@
    "y": 49.6
   },
   {
-   "id": "e01192",
+   "id": "e01193",
    "t": 3954.5,
    "minute": 66,
    "period": 2,
@@ -19450,7 +19617,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01193",
+   "id": "e01194",
    "t": 3958.4,
    "minute": 66,
    "period": 2,
@@ -19468,20 +19635,35 @@
    "under_pressure": false
   },
   {
-   "id": "e01194",
+   "id": "e01195",
+   "t": 3962.1,
+   "minute": 67,
+   "period": 2,
+   "type": "substitution",
+   "team": "RIV",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
+   "player_off_id": "RIV-11",
+   "player_off": "H. van den Nuwenhuijzen",
+   "player_on_id": "RIV-12",
+   "player_on": "A. Madsen",
+   "role": "LW"
+  },
+  {
+   "id": "e01196",
    "t": 3962.1,
    "minute": 67,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 82.7,
    "y": 53.9,
    "on_player_id": "NGT-5"
   },
   {
-   "id": "e01195",
+   "id": "e01197",
    "t": 3962.9,
    "minute": 67,
    "period": 2,
@@ -19499,7 +19681,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01196",
+   "id": "e01198",
    "t": 3966.3,
    "minute": 67,
    "period": 2,
@@ -19517,7 +19699,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01197",
+   "id": "e01199",
    "t": 3969.9,
    "minute": 67,
    "period": 2,
@@ -19530,7 +19712,7 @@
    "y": 67.0
   },
   {
-   "id": "e01198",
+   "id": "e01200",
    "t": 3971.1,
    "minute": 67,
    "period": 2,
@@ -19543,7 +19725,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01199",
+   "id": "e01201",
    "t": 3972.3,
    "minute": 67,
    "period": 2,
@@ -19555,13 +19737,13 @@
    "y": 67.0,
    "end_x": 77.9,
    "end_y": 58.0,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": true
   },
   {
-   "id": "e01200",
+   "id": "e01202",
    "t": 3976.6,
    "minute": 67,
    "period": 2,
@@ -19571,17 +19753,17 @@
    "player": "J. Hagen",
    "x": 77.9,
    "y": 58.0,
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01201",
+   "id": "e01203",
    "t": 3977.3,
    "minute": 67,
    "period": 2,
    "type": "carry",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 77.9,
    "y": 58.0,
    "end_x": 82.9,
@@ -19589,7 +19771,7 @@
    "speed_kmh": 28.7
   },
   {
-   "id": "e01202",
+   "id": "e01204",
    "t": 3980.7,
    "minute": 67,
    "period": 2,
@@ -19599,10 +19781,10 @@
    "player": "J. Hagen",
    "x": 82.9,
    "y": 55.6,
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01203",
+   "id": "e01205",
    "t": 3981.7,
    "minute": 67,
    "period": 2,
@@ -19613,10 +19795,10 @@
    "x": 82.9,
    "y": 55.6,
    "outcome": "won",
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01204",
+   "id": "e01206",
    "t": 3981.7,
    "minute": 67,
    "period": 2,
@@ -19629,7 +19811,7 @@
    "y": 55.6
   },
   {
-   "id": "e01205",
+   "id": "e01207",
    "t": 3984.0,
    "minute": 67,
    "period": 2,
@@ -19647,20 +19829,20 @@
    "under_pressure": false
   },
   {
-   "id": "e01206",
+   "id": "e01208",
    "t": 3987.0,
    "minute": 67,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 76.2,
    "y": 67.0,
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01207",
+   "id": "e01209",
    "t": 3987.8,
    "minute": 67,
    "period": 2,
@@ -19675,7 +19857,7 @@
    "speed_kmh": 24.7
   },
   {
-   "id": "e01208",
+   "id": "e01210",
    "t": 3991.5,
    "minute": 67,
    "period": 2,
@@ -19688,7 +19870,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01209",
+   "id": "e01211",
    "t": 3992.6,
    "minute": 67,
    "period": 2,
@@ -19706,7 +19888,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01210",
+   "id": "e01212",
    "t": 3995.0,
    "minute": 67,
    "period": 2,
@@ -19721,7 +19903,7 @@
    "speed_kmh": 36.5
   },
   {
-   "id": "e01211",
+   "id": "e01213",
    "t": 3998.0,
    "minute": 67,
    "period": 2,
@@ -19739,7 +19921,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01212",
+   "id": "e01214",
    "t": 4001.9,
    "minute": 67,
    "period": 2,
@@ -19757,7 +19939,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01213",
+   "id": "e01215",
    "t": 4004.8,
    "minute": 67,
    "period": 2,
@@ -19775,7 +19957,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01214",
+   "id": "e01216",
    "t": 4007.7,
    "minute": 67,
    "period": 2,
@@ -19793,7 +19975,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01215",
+   "id": "e01217",
    "t": 4010.1,
    "minute": 67,
    "period": 2,
@@ -19806,7 +19988,7 @@
    "on_player_id": "NGT-7"
   },
   {
-   "id": "e01216",
+   "id": "e01218",
    "t": 4010.7,
    "minute": 67,
    "period": 2,
@@ -19824,7 +20006,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01217",
+   "id": "e01219",
    "t": 4014.5,
    "minute": 67,
    "period": 2,
@@ -19837,54 +20019,54 @@
    "y": 29.1
   },
   {
-   "id": "e01218",
+   "id": "e01220",
    "t": 4015.8,
    "minute": 67,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 16.0,
    "y": 29.1,
    "on_player_id": "RIV-5"
   },
   {
-   "id": "e01219",
+   "id": "e01221",
    "t": 4016.9,
    "minute": 67,
    "period": 2,
    "type": "tackle",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 16.0,
    "y": 29.1,
    "outcome": "won",
    "on_player_id": "RIV-5"
   },
   {
-   "id": "e01220",
+   "id": "e01222",
    "t": 4016.9,
    "minute": 67,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "reason": "tackle",
    "x": 16.0,
    "y": 29.1
   },
   {
-   "id": "e01221",
+   "id": "e01223",
    "t": 4019.3,
    "minute": 67,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 16.0,
    "y": 29.1,
    "end_x": 10.0,
@@ -19892,14 +20074,14 @@
    "speed_kmh": 27.6
   },
   {
-   "id": "e01222",
+   "id": "e01224",
    "t": 4023.8,
    "minute": 68,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 10.0,
    "y": 29.4,
    "end_x": 3.6,
@@ -19907,14 +20089,14 @@
    "speed_kmh": 30.9
   },
   {
-   "id": "e01223",
+   "id": "e01225",
    "t": 4028.7,
    "minute": 68,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 3.6,
    "y": 34.7,
    "end_x": 2.0,
@@ -19922,14 +20104,14 @@
    "speed_kmh": 36.5
   },
   {
-   "id": "e01224",
+   "id": "e01226",
    "t": 4031.7,
    "minute": 68,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 2.0,
    "y": 29.0,
    "end_x": 2.0,
@@ -19937,14 +20119,14 @@
    "speed_kmh": 32.7
   },
   {
-   "id": "e01225",
+   "id": "e01227",
    "t": 4034.9,
    "minute": 68,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 2.0,
    "y": 27.6,
    "end_x": 2.0,
@@ -19955,7 +20137,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01226",
+   "id": "e01228",
    "t": 4038.3,
    "minute": 68,
    "period": 2,
@@ -19967,20 +20149,20 @@
    "y": 12.6,
    "end_x": 2.3,
    "end_y": 16.5,
-   "receiver_id": "NGT-9",
-   "receiver": "T. Becker",
+   "receiver_id": "NGT-13",
+   "receiver": "Z. Weller",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01227",
+   "id": "e01229",
    "t": 4040.4,
    "minute": 68,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 2.3,
    "y": 16.5,
    "end_x": 2.0,
@@ -19988,14 +20170,14 @@
    "speed_kmh": 33.6
   },
   {
-   "id": "e01228",
+   "id": "e01230",
    "t": 4044.8,
    "minute": 68,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 2.0,
    "y": 9.2,
    "end_x": 13.6,
@@ -20006,7 +20188,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01229",
+   "id": "e01231",
    "t": 4047.5,
    "minute": 68,
    "period": 2,
@@ -20019,7 +20201,7 @@
    "on_player_id": "NGT-11"
   },
   {
-   "id": "e01230",
+   "id": "e01232",
    "t": 4048.3,
    "minute": 68,
    "period": 2,
@@ -20036,7 +20218,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01231",
+   "id": "e01233",
    "t": 4066.7,
    "minute": 68,
    "period": 2,
@@ -20049,20 +20231,20 @@
    "y": 34
   },
   {
-   "id": "e01232",
+   "id": "e01234",
    "t": 4066.7,
    "minute": 68,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 6.0,
    "y": 34.0,
    "on_player_id": "RIV-1"
   },
   {
-   "id": "e01233",
+   "id": "e01235",
    "t": 4067.5,
    "minute": 68,
    "period": 2,
@@ -20080,7 +20262,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01234",
+   "id": "e01236",
    "t": 4071.2,
    "minute": 68,
    "period": 2,
@@ -20093,7 +20275,7 @@
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01235",
+   "id": "e01237",
    "t": 4071.8,
    "minute": 68,
    "period": 2,
@@ -20106,7 +20288,7 @@
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01236",
+   "id": "e01238",
    "t": 4111.4,
    "minute": 69,
    "period": 2,
@@ -20121,7 +20303,7 @@
    "speed_kmh": 30.3
   },
   {
-   "id": "e01237",
+   "id": "e01239",
    "t": 4114.1,
    "minute": 69,
    "period": 2,
@@ -20139,7 +20321,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01238",
+   "id": "e01240",
    "t": 4116.4,
    "minute": 69,
    "period": 2,
@@ -20152,7 +20334,7 @@
    "on_player_id": "RIV-8"
   },
   {
-   "id": "e01239",
+   "id": "e01241",
    "t": 4117.3,
    "minute": 69,
    "period": 2,
@@ -20170,7 +20352,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01240",
+   "id": "e01242",
    "t": 4120.6,
    "minute": 69,
    "period": 2,
@@ -20183,7 +20365,7 @@
    "y": 14.0
   },
   {
-   "id": "e01241",
+   "id": "e01243",
    "t": 4121.9,
    "minute": 69,
    "period": 2,
@@ -20201,7 +20383,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01242",
+   "id": "e01244",
    "t": 4124.9,
    "minute": 69,
    "period": 2,
@@ -20219,7 +20401,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01243",
+   "id": "e01245",
    "t": 4127.4,
    "minute": 69,
    "period": 2,
@@ -20237,7 +20419,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01244",
+   "id": "e01246",
    "t": 4129.6,
    "minute": 69,
    "period": 2,
@@ -20250,7 +20432,7 @@
    "y": 1.0
   },
   {
-   "id": "e01245",
+   "id": "e01247",
    "t": 4131.0,
    "minute": 69,
    "period": 2,
@@ -20263,7 +20445,7 @@
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01246",
+   "id": "e01248",
    "t": 4131.9,
    "minute": 69,
    "period": 2,
@@ -20277,7 +20459,7 @@
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01247",
+   "id": "e01249",
    "t": 4131.9,
    "minute": 69,
    "period": 2,
@@ -20290,7 +20472,7 @@
    "y": 1.0
   },
   {
-   "id": "e01248",
+   "id": "e01250",
    "t": 4133.4,
    "minute": 69,
    "period": 2,
@@ -20308,7 +20490,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01249",
+   "id": "e01251",
    "t": 4135.7,
    "minute": 69,
    "period": 2,
@@ -20326,7 +20508,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01250",
+   "id": "e01252",
    "t": 4138.8,
    "minute": 69,
    "period": 2,
@@ -20344,7 +20526,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01251",
+   "id": "e01253",
    "t": 4142.1,
    "minute": 70,
    "period": 2,
@@ -20357,20 +20539,20 @@
    "y": 31.7
   },
   {
-   "id": "e01252",
+   "id": "e01254",
    "t": 4143.0,
    "minute": 70,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 17.1,
    "y": 31.7,
    "on_player_id": "RIV-1"
   },
   {
-   "id": "e01253",
+   "id": "e01255",
    "t": 4144.1,
    "minute": 70,
    "period": 2,
@@ -20388,7 +20570,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01254",
+   "id": "e01256",
    "t": 4147.2,
    "minute": 70,
    "period": 2,
@@ -20406,7 +20588,22 @@
    "under_pressure": false
   },
   {
-   "id": "e01255",
+   "id": "e01257",
+   "t": 4151.8,
+   "minute": 70,
+   "period": 2,
+   "type": "substitution",
+   "team": "RIV",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
+   "player_off_id": "RIV-4",
+   "player_off": "L. Jones",
+   "player_on_id": "RIV-14",
+   "player_on": "I. Berry",
+   "role": "DM"
+  },
+  {
+   "id": "e01258",
    "t": 4151.8,
    "minute": 70,
    "period": 2,
@@ -20419,7 +20616,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01256",
+   "id": "e01259",
    "t": 4152.4,
    "minute": 70,
    "period": 2,
@@ -20437,7 +20634,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01257",
+   "id": "e01260",
    "t": 4155.1,
    "minute": 70,
    "period": 2,
@@ -20455,7 +20652,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01258",
+   "id": "e01261",
    "t": 4157.2,
    "minute": 70,
    "period": 2,
@@ -20468,7 +20665,7 @@
    "y": 67.0
   },
   {
-   "id": "e01259",
+   "id": "e01262",
    "t": 4157.9,
    "minute": 70,
    "period": 2,
@@ -20486,7 +20683,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01260",
+   "id": "e01263",
    "t": 4161.1,
    "minute": 70,
    "period": 2,
@@ -20504,7 +20701,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01261",
+   "id": "e01264",
    "t": 4163.9,
    "minute": 70,
    "period": 2,
@@ -20522,7 +20719,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01262",
+   "id": "e01265",
    "t": 4167.2,
    "minute": 70,
    "period": 2,
@@ -20540,7 +20737,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01263",
+   "id": "e01266",
    "t": 4191.9,
    "minute": 70,
    "period": 2,
@@ -20553,7 +20750,7 @@
    "y": 53.7
   },
   {
-   "id": "e01264",
+   "id": "e01267",
    "t": 4191.9,
    "minute": 70,
    "period": 2,
@@ -20566,7 +20763,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01265",
+   "id": "e01268",
    "t": 4192.7,
    "minute": 70,
    "period": 2,
@@ -20584,7 +20781,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01266",
+   "id": "e01269",
    "t": 4195.9,
    "minute": 70,
    "period": 2,
@@ -20602,7 +20799,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01267",
+   "id": "e01270",
    "t": 4199.1,
    "minute": 70,
    "period": 2,
@@ -20620,7 +20817,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01268",
+   "id": "e01271",
    "t": 4202.6,
    "minute": 71,
    "period": 2,
@@ -20638,7 +20835,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01269",
+   "id": "e01272",
    "t": 4206.0,
    "minute": 71,
    "period": 2,
@@ -20656,7 +20853,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01270",
+   "id": "e01273",
    "t": 4209.5,
    "minute": 71,
    "period": 2,
@@ -20671,7 +20868,7 @@
    "speed_kmh": 24.0
   },
   {
-   "id": "e01271",
+   "id": "e01274",
    "t": 4214.1,
    "minute": 71,
    "period": 2,
@@ -20689,7 +20886,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01272",
+   "id": "e01275",
    "t": 4218.0,
    "minute": 71,
    "period": 2,
@@ -20702,7 +20899,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01273",
+   "id": "e01276",
    "t": 4218.7,
    "minute": 71,
    "period": 2,
@@ -20720,7 +20917,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01274",
+   "id": "e01277",
    "t": 4221.9,
    "minute": 71,
    "period": 2,
@@ -20738,7 +20935,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01275",
+   "id": "e01278",
    "t": 4238.8,
    "minute": 71,
    "period": 2,
@@ -20751,7 +20948,7 @@
    "y": 53.4
   },
   {
-   "id": "e01276",
+   "id": "e01279",
    "t": 4238.8,
    "minute": 71,
    "period": 2,
@@ -20764,7 +20961,7 @@
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01277",
+   "id": "e01280",
    "t": 4239.6,
    "minute": 71,
    "period": 2,
@@ -20782,7 +20979,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01278",
+   "id": "e01281",
    "t": 4242.3,
    "minute": 71,
    "period": 2,
@@ -20795,7 +20992,7 @@
    "y": 52.7
   },
   {
-   "id": "e01279",
+   "id": "e01282",
    "t": 4243.7,
    "minute": 71,
    "period": 2,
@@ -20813,7 +21010,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01280",
+   "id": "e01283",
    "t": 4266.3,
    "minute": 72,
    "period": 2,
@@ -20826,7 +21023,7 @@
    "y": 22.3
   },
   {
-   "id": "e01281",
+   "id": "e01284",
    "t": 4266.3,
    "minute": 72,
    "period": 2,
@@ -20839,7 +21036,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01282",
+   "id": "e01285",
    "t": 4266.9,
    "minute": 72,
    "period": 2,
@@ -20857,7 +21054,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01283",
+   "id": "e01286",
    "t": 4270.8,
    "minute": 72,
    "period": 2,
@@ -20870,7 +21067,7 @@
    "on_player_id": "NGT-3"
   },
   {
-   "id": "e01284",
+   "id": "e01287",
    "t": 4271.4,
    "minute": 72,
    "period": 2,
@@ -20884,7 +21081,7 @@
    "on_player_id": "NGT-3"
   },
   {
-   "id": "e01285",
+   "id": "e01288",
    "t": 4271.4,
    "minute": 72,
    "period": 2,
@@ -20897,7 +21094,7 @@
    "y": 3.9
   },
   {
-   "id": "e01286",
+   "id": "e01289",
    "t": 4272.4,
    "minute": 72,
    "period": 2,
@@ -20915,7 +21112,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01287",
+   "id": "e01290",
    "t": 4275.9,
    "minute": 72,
    "period": 2,
@@ -20930,7 +21127,7 @@
    "speed_kmh": 31.4
   },
   {
-   "id": "e01288",
+   "id": "e01291",
    "t": 4278.4,
    "minute": 72,
    "period": 2,
@@ -20945,7 +21142,7 @@
    "speed_kmh": 32.9
   },
   {
-   "id": "e01289",
+   "id": "e01292",
    "t": 4282.8,
    "minute": 72,
    "period": 2,
@@ -20963,7 +21160,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01290",
+   "id": "e01293",
    "t": 4285.6,
    "minute": 72,
    "period": 2,
@@ -20976,7 +21173,7 @@
    "on_player_id": "RIV-7"
   },
   {
-   "id": "e01291",
+   "id": "e01294",
    "t": 4286.8,
    "minute": 72,
    "period": 2,
@@ -20994,7 +21191,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01292",
+   "id": "e01295",
    "t": 4289.1,
    "minute": 72,
    "period": 2,
@@ -21012,7 +21209,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01293",
+   "id": "e01296",
    "t": 4292.3,
    "minute": 72,
    "period": 2,
@@ -21025,7 +21222,7 @@
    "on_player_id": "RIV-7"
   },
   {
-   "id": "e01294",
+   "id": "e01297",
    "t": 4293.0,
    "minute": 72,
    "period": 2,
@@ -21043,7 +21240,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01295",
+   "id": "e01298",
    "t": 4296.1,
    "minute": 72,
    "period": 2,
@@ -21061,7 +21258,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01296",
+   "id": "e01299",
    "t": 4298.9,
    "minute": 72,
    "period": 2,
@@ -21079,7 +21276,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01297",
+   "id": "e01300",
    "t": 4302.5,
    "minute": 72,
    "period": 2,
@@ -21097,7 +21294,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01298",
+   "id": "e01301",
    "t": 4305.9,
    "minute": 72,
    "period": 2,
@@ -21115,7 +21312,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01299",
+   "id": "e01302",
    "t": 4308.3,
    "minute": 72,
    "period": 2,
@@ -21133,7 +21330,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01300",
+   "id": "e01303",
    "t": 4311.5,
    "minute": 72,
    "period": 2,
@@ -21150,7 +21347,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01301",
+   "id": "e01304",
    "t": 4313.5,
    "minute": 72,
    "period": 2,
@@ -21165,26 +21362,56 @@
    "xg": 0.23
   },
   {
-   "id": "e01302",
+   "id": "e01305",
    "t": 4366.7,
    "minute": 73,
    "period": 2,
    "type": "kickoff",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 52.5,
    "y": 34.0
   },
   {
-   "id": "e01303",
+   "id": "e01306",
+   "t": 4366.7,
+   "minute": 73,
+   "period": 2,
+   "type": "substitution",
+   "team": "RIV",
+   "player_id": "RIV-15",
+   "player": "R. Siering",
+   "player_off_id": "RIV-6",
+   "player_off": "C. Reed",
+   "player_on_id": "RIV-15",
+   "player_on": "R. Siering",
+   "role": "LCB"
+  },
+  {
+   "id": "e01307",
+   "t": 4366.7,
+   "minute": 73,
+   "period": 2,
+   "type": "substitution",
+   "team": "NGT",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
+   "player_off_id": "NGT-4",
+   "player_off": "S. Innocenti",
+   "player_on_id": "NGT-14",
+   "player_on": "O. Willems",
+   "role": "DM"
+  },
+  {
+   "id": "e01308",
    "t": 4366.7,
    "minute": 73,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 52.5,
    "y": 34.0,
    "end_x": 11.5,
@@ -21195,7 +21422,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01304",
+   "id": "e01309",
    "t": 4371.2,
    "minute": 73,
    "period": 2,
@@ -21210,7 +21437,7 @@
    "speed_kmh": 32.5
   },
   {
-   "id": "e01305",
+   "id": "e01310",
    "t": 4375.1,
    "minute": 73,
    "period": 2,
@@ -21223,7 +21450,7 @@
    "on_player_id": "NGT-11"
   },
   {
-   "id": "e01306",
+   "id": "e01311",
    "t": 4376.3,
    "minute": 73,
    "period": 2,
@@ -21237,7 +21464,7 @@
    "on_player_id": "NGT-11"
   },
   {
-   "id": "e01307",
+   "id": "e01312",
    "t": 4376.3,
    "minute": 73,
    "period": 2,
@@ -21250,7 +21477,7 @@
    "y": 27.8
   },
   {
-   "id": "e01308",
+   "id": "e01313",
    "t": 4377.9,
    "minute": 73,
    "period": 2,
@@ -21268,7 +21495,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01309",
+   "id": "e01314",
    "t": 4380.7,
    "minute": 74,
    "period": 2,
@@ -21286,7 +21513,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01310",
+   "id": "e01315",
    "t": 4383.5,
    "minute": 74,
    "period": 2,
@@ -21299,7 +21526,7 @@
    "on_player_id": "RIV-5"
   },
   {
-   "id": "e01311",
+   "id": "e01316",
    "t": 4384.0,
    "minute": 74,
    "period": 2,
@@ -21317,7 +21544,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01312",
+   "id": "e01317",
    "t": 4386.3,
    "minute": 74,
    "period": 2,
@@ -21335,7 +21562,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01313",
+   "id": "e01318",
    "t": 4389.8,
    "minute": 74,
    "period": 2,
@@ -21348,7 +21575,7 @@
    "on_player_id": "RIV-5"
   },
   {
-   "id": "e01314",
+   "id": "e01319",
    "t": 4390.3,
    "minute": 74,
    "period": 2,
@@ -21366,7 +21593,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01315",
+   "id": "e01320",
    "t": 4393.4,
    "minute": 74,
    "period": 2,
@@ -21384,7 +21611,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01316",
+   "id": "e01321",
    "t": 4396.0,
    "minute": 74,
    "period": 2,
@@ -21396,20 +21623,20 @@
    "y": 13.7,
    "end_x": 20.2,
    "end_y": 25.0,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01317",
+   "id": "e01322",
    "t": 4398.7,
    "minute": 74,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 20.2,
    "y": 25.0,
    "end_x": 12.7,
@@ -21420,7 +21647,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01318",
+   "id": "e01323",
    "t": 4401.7,
    "minute": 74,
    "period": 2,
@@ -21432,20 +21659,20 @@
    "y": 16.7,
    "end_x": 24.3,
    "end_y": 30.0,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01319",
+   "id": "e01324",
    "t": 4405.1,
    "minute": 74,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 24.3,
    "y": 30.0,
    "end_x": 38.4,
@@ -21456,7 +21683,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01320",
+   "id": "e01325",
    "t": 4407.8,
    "minute": 74,
    "period": 2,
@@ -21474,7 +21701,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01321",
+   "id": "e01326",
    "t": 4411.3,
    "minute": 74,
    "period": 2,
@@ -21492,7 +21719,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01322",
+   "id": "e01327",
    "t": 4414.2,
    "minute": 74,
    "period": 2,
@@ -21510,7 +21737,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01323",
+   "id": "e01328",
    "t": 4417.0,
    "minute": 74,
    "period": 2,
@@ -21523,7 +21750,7 @@
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01324",
+   "id": "e01329",
    "t": 4418.0,
    "minute": 74,
    "period": 2,
@@ -21536,7 +21763,7 @@
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01325",
+   "id": "e01330",
    "t": 4441.5,
    "minute": 75,
    "period": 2,
@@ -21554,7 +21781,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01326",
+   "id": "e01331",
    "t": 4444.1,
    "minute": 75,
    "period": 2,
@@ -21567,7 +21794,7 @@
    "on_player_id": "RIV-8"
   },
   {
-   "id": "e01327",
+   "id": "e01332",
    "t": 4445.1,
    "minute": 75,
    "period": 2,
@@ -21582,7 +21809,7 @@
    "speed_kmh": 27.5
   },
   {
-   "id": "e01328",
+   "id": "e01333",
    "t": 4449.6,
    "minute": 75,
    "period": 2,
@@ -21595,7 +21822,7 @@
    "on_player_id": "RIV-8"
   },
   {
-   "id": "e01329",
+   "id": "e01334",
    "t": 4450.4,
    "minute": 75,
    "period": 2,
@@ -21609,7 +21836,7 @@
    "on_player_id": "RIV-8"
   },
   {
-   "id": "e01330",
+   "id": "e01335",
    "t": 4450.4,
    "minute": 75,
    "period": 2,
@@ -21622,7 +21849,7 @@
    "y": 1.0
   },
   {
-   "id": "e01331",
+   "id": "e01336",
    "t": 4453.2,
    "minute": 75,
    "period": 2,
@@ -21637,7 +21864,7 @@
    "speed_kmh": 22.3
   },
   {
-   "id": "e01332",
+   "id": "e01337",
    "t": 4456.8,
    "minute": 75,
    "period": 2,
@@ -21652,7 +21879,7 @@
    "speed_kmh": 25.9
   },
   {
-   "id": "e01333",
+   "id": "e01338",
    "t": 4461.5,
    "minute": 75,
    "period": 2,
@@ -21665,7 +21892,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01334",
+   "id": "e01339",
    "t": 4462.1,
    "minute": 75,
    "period": 2,
@@ -21679,7 +21906,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01335",
+   "id": "e01340",
    "t": 4462.1,
    "minute": 75,
    "period": 2,
@@ -21692,7 +21919,7 @@
    "y": 10.8
   },
   {
-   "id": "e01336",
+   "id": "e01341",
    "t": 4463.8,
    "minute": 75,
    "period": 2,
@@ -21704,20 +21931,20 @@
    "y": 10.8,
    "end_x": 42.9,
    "end_y": 26.6,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01337",
+   "id": "e01342",
    "t": 4466.8,
    "minute": 75,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 42.9,
    "y": 26.6,
    "end_x": 80.7,
@@ -21728,20 +21955,20 @@
    "under_pressure": false
   },
   {
-   "id": "e01338",
+   "id": "e01343",
    "t": 4471.0,
    "minute": 75,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "reason": "interception",
    "x": 80.7,
    "y": 35.9
   },
   {
-   "id": "e01339",
+   "id": "e01344",
    "t": 4471.8,
    "minute": 75,
    "period": 2,
@@ -21751,17 +21978,17 @@
    "player": "T. Griffiths",
    "x": 80.7,
    "y": 35.9,
-   "on_player_id": "NGT-4"
+   "on_player_id": "NGT-14"
   },
   {
-   "id": "e01340",
+   "id": "e01345",
    "t": 4472.4,
    "minute": 75,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 80.7,
    "y": 35.9,
    "end_x": 46.4,
@@ -21772,20 +21999,20 @@
    "under_pressure": true
   },
   {
-   "id": "e01341",
+   "id": "e01346",
    "t": 4476.2,
    "minute": 75,
    "period": 2,
    "type": "possession_change",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "reason": "interception",
    "x": 46.4,
    "y": 32.7
   },
   {
-   "id": "e01342",
+   "id": "e01347",
    "t": 4477.2,
    "minute": 75,
    "period": 2,
@@ -21795,17 +22022,17 @@
    "player": "B. Woutersz",
    "x": 46.4,
    "y": 32.7,
-   "on_player_id": "RIV-4"
+   "on_player_id": "RIV-14"
   },
   {
-   "id": "e01343",
+   "id": "e01348",
    "t": 4478.2,
    "minute": 75,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 46.4,
    "y": 32.7,
    "end_x": 55.6,
@@ -21816,7 +22043,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01344",
+   "id": "e01349",
    "t": 4481.8,
    "minute": 75,
    "period": 2,
@@ -21828,20 +22055,20 @@
    "y": 63.0,
    "end_x": 55.6,
    "end_y": 52.0,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01345",
+   "id": "e01350",
    "t": 4484.1,
    "minute": 75,
    "period": 2,
    "type": "carry",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 55.6,
    "y": 52.0,
    "end_x": 66.7,
@@ -21849,7 +22076,7 @@
    "speed_kmh": 28.6
   },
   {
-   "id": "e01346",
+   "id": "e01351",
    "t": 4488.5,
    "minute": 75,
    "period": 2,
@@ -21859,28 +22086,28 @@
    "player": "R. Miranda",
    "x": 66.7,
    "y": 54.8,
-   "on_player_id": "RIV-4"
+   "on_player_id": "RIV-14"
   },
   {
-   "id": "e01347",
+   "id": "e01352",
    "t": 4489.1,
    "minute": 75,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 66.7,
    "y": 54.8,
    "end_x": 77.1,
    "end_y": 67,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": true
   },
   {
-   "id": "e01348",
+   "id": "e01353",
    "t": 4492.8,
    "minute": 75,
    "period": 2,
@@ -21890,10 +22117,10 @@
    "player": "J. Hagen",
    "x": 77.1,
    "y": 67,
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01349",
+   "id": "e01354",
    "t": 4493.7,
    "minute": 75,
    "period": 2,
@@ -21904,10 +22131,10 @@
    "x": 77.1,
    "y": 67,
    "outcome": "won",
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01350",
+   "id": "e01355",
    "t": 4493.7,
    "minute": 75,
    "period": 2,
@@ -21920,7 +22147,7 @@
    "y": 67.0
   },
   {
-   "id": "e01351",
+   "id": "e01356",
    "t": 4495.2,
    "minute": 75,
    "period": 2,
@@ -21935,7 +22162,7 @@
    "speed_kmh": 36.5
   },
   {
-   "id": "e01352",
+   "id": "e01357",
    "t": 4498.9,
    "minute": 75,
    "period": 2,
@@ -21948,7 +22175,7 @@
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01353",
+   "id": "e01358",
    "t": 4499.8,
    "minute": 75,
    "period": 2,
@@ -21966,7 +22193,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01354",
+   "id": "e01359",
    "t": 4503.3,
    "minute": 76,
    "period": 2,
@@ -21979,7 +22206,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01355",
+   "id": "e01360",
    "t": 4504.0,
    "minute": 76,
    "period": 2,
@@ -21997,7 +22224,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01356",
+   "id": "e01361",
    "t": 4506.6,
    "minute": 76,
    "period": 2,
@@ -22010,7 +22237,7 @@
    "y": 67.0
   },
   {
-   "id": "e01357",
+   "id": "e01362",
    "t": 4507.5,
    "minute": 76,
    "period": 2,
@@ -22023,7 +22250,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01358",
+   "id": "e01363",
    "t": 4508.5,
    "minute": 76,
    "period": 2,
@@ -22041,7 +22268,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01359",
+   "id": "e01364",
    "t": 4510.9,
    "minute": 76,
    "period": 2,
@@ -22059,7 +22286,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01360",
+   "id": "e01365",
    "t": 4513.5,
    "minute": 76,
    "period": 2,
@@ -22077,7 +22304,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01361",
+   "id": "e01366",
    "t": 4516.4,
    "minute": 76,
    "period": 2,
@@ -22090,7 +22317,7 @@
    "y": 67.0
   },
   {
-   "id": "e01362",
+   "id": "e01367",
    "t": 4517.0,
    "minute": 76,
    "period": 2,
@@ -22108,46 +22335,46 @@
    "under_pressure": false
   },
   {
-   "id": "e01363",
+   "id": "e01368",
    "t": 4520.1,
    "minute": 76,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 71.1,
    "y": 67.0,
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01364",
+   "id": "e01369",
    "t": 4520.8,
    "minute": 76,
    "period": 2,
    "type": "foul",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 71.1,
    "y": 67.0,
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01365",
+   "id": "e01370",
    "t": 4550.5,
    "minute": 76,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 71.1,
    "y": 67.0,
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01366",
+   "id": "e01371",
    "t": 4551.1,
    "minute": 76,
    "period": 2,
@@ -22165,7 +22392,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01367",
+   "id": "e01372",
    "t": 4553.6,
    "minute": 76,
    "period": 2,
@@ -22178,7 +22405,7 @@
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01368",
+   "id": "e01373",
    "t": 4554.2,
    "minute": 76,
    "period": 2,
@@ -22192,7 +22419,7 @@
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01369",
+   "id": "e01374",
    "t": 4554.2,
    "minute": 76,
    "period": 2,
@@ -22205,7 +22432,7 @@
    "y": 67.0
   },
   {
-   "id": "e01370",
+   "id": "e01375",
    "t": 4556.9,
    "minute": 76,
    "period": 2,
@@ -22217,20 +22444,20 @@
    "y": 67.0,
    "end_x": 74.3,
    "end_y": 67,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01371",
+   "id": "e01376",
    "t": 4559.5,
    "minute": 76,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 74.3,
    "y": 67,
    "end_x": 103,
@@ -22241,7 +22468,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01372",
+   "id": "e01377",
    "t": 4563.1,
    "minute": 77,
    "period": 2,
@@ -22253,13 +22480,13 @@
    "y": 45.8,
    "end_x": 103,
    "end_y": 62.8,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01373",
+   "id": "e01378",
    "t": 4566.4,
    "minute": 77,
    "period": 2,
@@ -22269,17 +22496,17 @@
    "player": "J. Hagen",
    "x": 103,
    "y": 62.8,
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01374",
+   "id": "e01379",
    "t": 4567.4,
    "minute": 77,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 103,
    "y": 62.8,
    "end_x": 103,
@@ -22290,7 +22517,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01375",
+   "id": "e01380",
    "t": 4570.4,
    "minute": 77,
    "period": 2,
@@ -22302,13 +22529,13 @@
    "y": 57.2,
    "end_x": 89.6,
    "end_y": 62.3,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01376",
+   "id": "e01381",
    "t": 4574.0,
    "minute": 77,
    "period": 2,
@@ -22318,17 +22545,17 @@
    "player": "J. Hagen",
    "x": 89.6,
    "y": 62.3,
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01377",
+   "id": "e01382",
    "t": 4575.1,
    "minute": 77,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 89.6,
    "y": 62.3,
    "end_x": 90.5,
@@ -22339,7 +22566,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01378",
+   "id": "e01383",
    "t": 4577.7,
    "minute": 77,
    "period": 2,
@@ -22352,20 +22579,20 @@
    "y": 60.3
   },
   {
-   "id": "e01379",
+   "id": "e01384",
    "t": 4578.7,
    "minute": 77,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 90.5,
    "y": 60.3,
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01380",
+   "id": "e01385",
    "t": 4579.3,
    "minute": 77,
    "period": 2,
@@ -22383,27 +22610,27 @@
    "under_pressure": true
   },
   {
-   "id": "e01381",
+   "id": "e01386",
    "t": 4583.4,
    "minute": 77,
    "period": 2,
    "type": "possession_change",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "reason": "interception",
    "x": 69.8,
    "y": 67.0
   },
   {
-   "id": "e01382",
+   "id": "e01387",
    "t": 4584.3,
    "minute": 77,
    "period": 2,
    "type": "carry",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 69.8,
    "y": 67.0,
    "end_x": 80.5,
@@ -22411,14 +22638,14 @@
    "speed_kmh": 31.1
   },
   {
-   "id": "e01383",
+   "id": "e01388",
    "t": 4589.1,
    "minute": 77,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 80.5,
    "y": 67,
    "end_x": 69.7,
@@ -22429,7 +22656,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01384",
+   "id": "e01389",
    "t": 4591.4,
    "minute": 77,
    "period": 2,
@@ -22442,7 +22669,7 @@
    "y": 67.0
   },
   {
-   "id": "e01385",
+   "id": "e01390",
    "t": 4592.5,
    "minute": 77,
    "period": 2,
@@ -22457,7 +22684,7 @@
    "speed_kmh": 28.4
   },
   {
-   "id": "e01386",
+   "id": "e01391",
    "t": 4596.4,
    "minute": 77,
    "period": 2,
@@ -22475,7 +22702,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01387",
+   "id": "e01392",
    "t": 4599.3,
    "minute": 77,
    "period": 2,
@@ -22493,7 +22720,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01388",
+   "id": "e01393",
    "t": 4603.0,
    "minute": 77,
    "period": 2,
@@ -22511,7 +22738,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01389",
+   "id": "e01394",
    "t": 4605.4,
    "minute": 77,
    "period": 2,
@@ -22524,7 +22751,7 @@
    "on_player_id": "NGT-7"
   },
   {
-   "id": "e01390",
+   "id": "e01395",
    "t": 4606.3,
    "minute": 77,
    "period": 2,
@@ -22542,7 +22769,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01391",
+   "id": "e01396",
    "t": 4608.7,
    "minute": 77,
    "period": 2,
@@ -22560,7 +22787,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01392",
+   "id": "e01397",
    "t": 4611.1,
    "minute": 77,
    "period": 2,
@@ -22578,7 +22805,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01393",
+   "id": "e01398",
    "t": 4615.0,
    "minute": 77,
    "period": 2,
@@ -22596,7 +22823,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01394",
+   "id": "e01399",
    "t": 4618.7,
    "minute": 77,
    "period": 2,
@@ -22613,7 +22840,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01395",
+   "id": "e01400",
    "t": 4620.5,
    "minute": 78,
    "period": 2,
@@ -22628,7 +22855,7 @@
    "xg": 0.08
   },
   {
-   "id": "e01396",
+   "id": "e01401",
    "t": 4673.9,
    "minute": 78,
    "period": 2,
@@ -22640,7 +22867,7 @@
    "y": 34.0
   },
   {
-   "id": "e01397",
+   "id": "e01402",
    "t": 4673.9,
    "minute": 78,
    "period": 2,
@@ -22658,7 +22885,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01398",
+   "id": "e01403",
    "t": 4676.9,
    "minute": 78,
    "period": 2,
@@ -22676,7 +22903,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01399",
+   "id": "e01404",
    "t": 4680.8,
    "minute": 79,
    "period": 2,
@@ -22694,7 +22921,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01400",
+   "id": "e01405",
    "t": 4684.4,
    "minute": 79,
    "period": 2,
@@ -22712,7 +22939,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01401",
+   "id": "e01406",
    "t": 4687.5,
    "minute": 79,
    "period": 2,
@@ -22730,7 +22957,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01402",
+   "id": "e01407",
    "t": 4691.0,
    "minute": 79,
    "period": 2,
@@ -22745,7 +22972,7 @@
    "speed_kmh": 27.3
   },
   {
-   "id": "e01403",
+   "id": "e01408",
    "t": 4694.4,
    "minute": 79,
    "period": 2,
@@ -22763,7 +22990,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01404",
+   "id": "e01409",
    "t": 4713.3,
    "minute": 79,
    "period": 2,
@@ -22776,7 +23003,7 @@
    "y": 1.6
   },
   {
-   "id": "e01405",
+   "id": "e01410",
    "t": 4713.3,
    "minute": 79,
    "period": 2,
@@ -22794,7 +23021,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01406",
+   "id": "e01411",
    "t": 4717.0,
    "minute": 79,
    "period": 2,
@@ -22807,7 +23034,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01407",
+   "id": "e01412",
    "t": 4717.5,
    "minute": 79,
    "period": 2,
@@ -22822,7 +23049,7 @@
    "speed_kmh": 27.1
   },
   {
-   "id": "e01408",
+   "id": "e01413",
    "t": 4721.4,
    "minute": 79,
    "period": 2,
@@ -22835,7 +23062,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01409",
+   "id": "e01414",
    "t": 4722.5,
    "minute": 79,
    "period": 2,
@@ -22848,7 +23075,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01410",
+   "id": "e01415",
    "t": 4757.1,
    "minute": 80,
    "period": 2,
@@ -22866,7 +23093,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01411",
+   "id": "e01416",
    "t": 4759.9,
    "minute": 80,
    "period": 2,
@@ -22884,7 +23111,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01412",
+   "id": "e01417",
    "t": 4762.6,
    "minute": 80,
    "period": 2,
@@ -22897,7 +23124,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01413",
+   "id": "e01418",
    "t": 4763.5,
    "minute": 80,
    "period": 2,
@@ -22915,7 +23142,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01414",
+   "id": "e01419",
    "t": 4766.4,
    "minute": 80,
    "period": 2,
@@ -22933,7 +23160,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01415",
+   "id": "e01420",
    "t": 4768.4,
    "minute": 80,
    "period": 2,
@@ -22951,7 +23178,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01416",
+   "id": "e01421",
    "t": 4773.0,
    "minute": 80,
    "period": 2,
@@ -22964,7 +23191,7 @@
    "y": 4.6
   },
   {
-   "id": "e01417",
+   "id": "e01422",
    "t": 4773.8,
    "minute": 80,
    "period": 2,
@@ -22982,7 +23209,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01418",
+   "id": "e01423",
    "t": 4776.6,
    "minute": 80,
    "period": 2,
@@ -23000,7 +23227,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01419",
+   "id": "e01424",
    "t": 4780.7,
    "minute": 80,
    "period": 2,
@@ -23013,7 +23240,7 @@
    "y": 1.0
   },
   {
-   "id": "e01420",
+   "id": "e01425",
    "t": 4781.2,
    "minute": 80,
    "period": 2,
@@ -23025,20 +23252,20 @@
    "y": 1.0,
    "end_x": 44.7,
    "end_y": 12.1,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01421",
+   "id": "e01426",
    "t": 4783.9,
    "minute": 80,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 44.7,
    "y": 12.1,
    "end_x": 35.8,
@@ -23049,7 +23276,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01422",
+   "id": "e01427",
    "t": 4787.0,
    "minute": 80,
    "period": 2,
@@ -23067,7 +23294,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01423",
+   "id": "e01428",
    "t": 4790.0,
    "minute": 80,
    "period": 2,
@@ -23079,20 +23306,20 @@
    "y": 43.8,
    "end_x": 8.2,
    "end_y": 44.0,
-   "receiver_id": "NGT-9",
-   "receiver": "T. Becker",
+   "receiver_id": "NGT-13",
+   "receiver": "Z. Weller",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01424",
+   "id": "e01429",
    "t": 4792.5,
    "minute": 80,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 8.2,
    "y": 44.0,
    "end_x": 6.8,
@@ -23103,7 +23330,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01425",
+   "id": "e01430",
    "t": 4794.8,
    "minute": 80,
    "period": 2,
@@ -23121,7 +23348,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01426",
+   "id": "e01431",
    "t": 4821.0,
    "minute": 81,
    "period": 2,
@@ -23134,7 +23361,7 @@
    "y": 56.8
   },
   {
-   "id": "e01427",
+   "id": "e01432",
    "t": 4821.0,
    "minute": 81,
    "period": 2,
@@ -23147,7 +23374,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01428",
+   "id": "e01433",
    "t": 4821.6,
    "minute": 81,
    "period": 2,
@@ -23159,20 +23386,20 @@
    "y": 56.8,
    "end_x": 9.4,
    "end_y": 67,
-   "receiver_id": "RIV-6",
-   "receiver": "C. Reed",
+   "receiver_id": "RIV-15",
+   "receiver": "R. Siering",
    "outcome": "complete",
    "under_pressure": true
   },
   {
-   "id": "e01429",
+   "id": "e01434",
    "t": 4824.9,
    "minute": 81,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-6",
-   "player": "C. Reed",
+   "player_id": "RIV-15",
+   "player": "R. Siering",
    "x": 9.4,
    "y": 67,
    "end_x": 23.3,
@@ -23183,7 +23410,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01430",
+   "id": "e01435",
    "t": 4828.7,
    "minute": 81,
    "period": 2,
@@ -23198,7 +23425,7 @@
    "speed_kmh": 26.4
   },
   {
-   "id": "e01431",
+   "id": "e01436",
    "t": 4832.3,
    "minute": 81,
    "period": 2,
@@ -23211,7 +23438,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01432",
+   "id": "e01437",
    "t": 4832.8,
    "minute": 81,
    "period": 2,
@@ -23229,7 +23456,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01433",
+   "id": "e01438",
    "t": 4836.0,
    "minute": 81,
    "period": 2,
@@ -23242,7 +23469,7 @@
    "y": 52.4
   },
   {
-   "id": "e01434",
+   "id": "e01439",
    "t": 4836.9,
    "minute": 81,
    "period": 2,
@@ -23254,20 +23481,20 @@
    "y": 52.4,
    "end_x": 8.7,
    "end_y": 32.9,
-   "receiver_id": "NGT-9",
-   "receiver": "T. Becker",
+   "receiver_id": "NGT-13",
+   "receiver": "Z. Weller",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01435",
+   "id": "e01440",
    "t": 4841.8,
    "minute": 81,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 8.7,
    "y": 32.9,
    "end_x": 12.6,
@@ -23278,7 +23505,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01436",
+   "id": "e01441",
    "t": 4844.0,
    "minute": 81,
    "period": 2,
@@ -23296,7 +23523,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01437",
+   "id": "e01442",
    "t": 4848.2,
    "minute": 81,
    "period": 2,
@@ -23309,7 +23536,7 @@
    "y": 55.1
   },
   {
-   "id": "e01438",
+   "id": "e01443",
    "t": 4849.4,
    "minute": 81,
    "period": 2,
@@ -23327,7 +23554,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01439",
+   "id": "e01444",
    "t": 4852.2,
    "minute": 81,
    "period": 2,
@@ -23342,7 +23569,7 @@
    "speed_kmh": 26.7
   },
   {
-   "id": "e01440",
+   "id": "e01445",
    "t": 4854.8,
    "minute": 81,
    "period": 2,
@@ -23355,7 +23582,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01441",
+   "id": "e01446",
    "t": 4855.4,
    "minute": 81,
    "period": 2,
@@ -23373,7 +23600,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01442",
+   "id": "e01447",
    "t": 4859.5,
    "minute": 81,
    "period": 2,
@@ -23386,7 +23613,7 @@
    "y": 17.3
   },
   {
-   "id": "e01443",
+   "id": "e01448",
    "t": 4860.9,
    "minute": 82,
    "period": 2,
@@ -23399,7 +23626,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01444",
+   "id": "e01449",
    "t": 4861.9,
    "minute": 82,
    "period": 2,
@@ -23412,7 +23639,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01445",
+   "id": "e01450",
    "t": 4889.8,
    "minute": 82,
    "period": 2,
@@ -23430,7 +23657,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01446",
+   "id": "e01451",
    "t": 4892.8,
    "minute": 82,
    "period": 2,
@@ -23448,7 +23675,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01447",
+   "id": "e01452",
    "t": 4895.1,
    "minute": 82,
    "period": 2,
@@ -23466,7 +23693,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01448",
+   "id": "e01453",
    "t": 4897.8,
    "minute": 82,
    "period": 2,
@@ -23484,7 +23711,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01449",
+   "id": "e01454",
    "t": 4901.6,
    "minute": 82,
    "period": 2,
@@ -23497,7 +23724,7 @@
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01450",
+   "id": "e01455",
    "t": 4902.3,
    "minute": 82,
    "period": 2,
@@ -23509,20 +23736,20 @@
    "y": 18.9,
    "end_x": 38.7,
    "end_y": 21.7,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": true
   },
   {
-   "id": "e01451",
+   "id": "e01456",
    "t": 4905.1,
    "minute": 82,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 38.7,
    "y": 21.7,
    "end_x": 35.0,
@@ -23530,14 +23757,14 @@
    "speed_kmh": 26.4
   },
   {
-   "id": "e01452",
+   "id": "e01457",
    "t": 4909.9,
    "minute": 82,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 35.0,
    "y": 19.3,
    "end_x": 39.7,
@@ -23548,7 +23775,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01453",
+   "id": "e01458",
    "t": 4912.2,
    "minute": 82,
    "period": 2,
@@ -23566,7 +23793,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01454",
+   "id": "e01459",
    "t": 4915.2,
    "minute": 82,
    "period": 2,
@@ -23584,20 +23811,20 @@
    "under_pressure": false
   },
   {
-   "id": "e01455",
+   "id": "e01460",
    "t": 4918.1,
    "minute": 82,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 23.0,
    "y": 34.7,
    "on_player_id": "NGT-10"
   },
   {
-   "id": "e01456",
+   "id": "e01461",
    "t": 4918.9,
    "minute": 82,
    "period": 2,
@@ -23614,7 +23841,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01457",
+   "id": "e01462",
    "t": 4941.7,
    "minute": 83,
    "period": 2,
@@ -23627,54 +23854,54 @@
    "y": 34
   },
   {
-   "id": "e01458",
+   "id": "e01463",
    "t": 4941.7,
    "minute": 83,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 6.0,
    "y": 34.0,
    "on_player_id": "RIV-1"
   },
   {
-   "id": "e01459",
+   "id": "e01464",
    "t": 4942.6,
    "minute": 83,
    "period": 2,
    "type": "tackle",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 6.0,
    "y": 34.0,
    "outcome": "won",
    "on_player_id": "RIV-1"
   },
   {
-   "id": "e01460",
+   "id": "e01465",
    "t": 4942.6,
    "minute": 83,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "reason": "tackle",
    "x": 6.0,
    "y": 34.0
   },
   {
-   "id": "e01461",
+   "id": "e01466",
    "t": 4944.5,
    "minute": 83,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 6.0,
    "y": 34.0,
    "end_x": 16.0,
@@ -23685,7 +23912,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01462",
+   "id": "e01467",
    "t": 4966.3,
    "minute": 83,
    "period": 2,
@@ -23698,7 +23925,22 @@
    "y": 56.1
   },
   {
-   "id": "e01463",
+   "id": "e01468",
+   "t": 4966.3,
+   "minute": 83,
+   "period": 2,
+   "type": "substitution",
+   "team": "NGT",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
+   "player_off_id": "NGT-10",
+   "player_off": "B. Woutersz",
+   "player_on_id": "NGT-15",
+   "player_on": "J. van den Wittenboer",
+   "role": "LCM"
+  },
+  {
+   "id": "e01469",
    "t": 4966.3,
    "minute": 83,
    "period": 2,
@@ -23716,7 +23958,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01464",
+   "id": "e01470",
    "t": 4969.4,
    "minute": 83,
    "period": 2,
@@ -23731,7 +23973,7 @@
    "speed_kmh": 29.5
   },
   {
-   "id": "e01465",
+   "id": "e01471",
    "t": 4972.2,
    "minute": 83,
    "period": 2,
@@ -23744,7 +23986,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01466",
+   "id": "e01472",
    "t": 4973.2,
    "minute": 83,
    "period": 2,
@@ -23762,27 +24004,27 @@
    "under_pressure": true
   },
   {
-   "id": "e01467",
+   "id": "e01473",
    "t": 4977.8,
    "minute": 83,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "reason": "interception",
    "x": 73.1,
    "y": 40.1
   },
   {
-   "id": "e01468",
+   "id": "e01474",
    "t": 4979.0,
    "minute": 83,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 73.1,
    "y": 40.1,
    "end_x": 64.6,
@@ -23793,7 +24035,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01469",
+   "id": "e01475",
    "t": 4982.0,
    "minute": 84,
    "period": 2,
@@ -23806,20 +24048,20 @@
    "y": 28.6
   },
   {
-   "id": "e01470",
+   "id": "e01476",
    "t": 4982.9,
    "minute": 84,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 64.6,
    "y": 28.6,
    "on_player_id": "RIV-8"
   },
   {
-   "id": "e01471",
+   "id": "e01477",
    "t": 4984.1,
    "minute": 84,
    "period": 2,
@@ -23837,7 +24079,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01472",
+   "id": "e01478",
    "t": 4987.4,
    "minute": 84,
    "period": 2,
@@ -23852,7 +24094,7 @@
    "speed_kmh": 33.7
   },
   {
-   "id": "e01473",
+   "id": "e01479",
    "t": 4990.3,
    "minute": 84,
    "period": 2,
@@ -23870,7 +24112,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01474",
+   "id": "e01480",
    "t": 4994.0,
    "minute": 84,
    "period": 2,
@@ -23888,7 +24130,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01475",
+   "id": "e01481",
    "t": 4998.0,
    "minute": 84,
    "period": 2,
@@ -23903,7 +24145,7 @@
    "speed_kmh": 28.5
   },
   {
-   "id": "e01476",
+   "id": "e01482",
    "t": 5002.3,
    "minute": 84,
    "period": 2,
@@ -23921,7 +24163,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01477",
+   "id": "e01483",
    "t": 5005.9,
    "minute": 84,
    "period": 2,
@@ -23934,7 +24176,7 @@
    "y": 44.8
   },
   {
-   "id": "e01478",
+   "id": "e01484",
    "t": 5007.4,
    "minute": 84,
    "period": 2,
@@ -23952,7 +24194,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01479",
+   "id": "e01485",
    "t": 5010.2,
    "minute": 84,
    "period": 2,
@@ -23970,7 +24212,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01480",
+   "id": "e01486",
    "t": 5013.5,
    "minute": 84,
    "period": 2,
@@ -23988,7 +24230,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01481",
+   "id": "e01487",
    "t": 5017.0,
    "minute": 84,
    "period": 2,
@@ -24006,54 +24248,54 @@
    "under_pressure": false
   },
   {
-   "id": "e01482",
+   "id": "e01488",
    "t": 5019.8,
    "minute": 84,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 69.5,
    "y": 67.0,
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01483",
+   "id": "e01489",
    "t": 5020.8,
    "minute": 84,
    "period": 2,
    "type": "tackle",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 69.5,
    "y": 67.0,
    "outcome": "won",
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01484",
+   "id": "e01490",
    "t": 5020.8,
    "minute": 84,
    "period": 2,
    "type": "possession_change",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "reason": "tackle",
    "x": 69.5,
    "y": 67.0
   },
   {
-   "id": "e01485",
+   "id": "e01491",
    "t": 5022.8,
    "minute": 84,
    "period": 2,
    "type": "carry",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 69.5,
    "y": 67.0,
    "end_x": 74.8,
@@ -24061,14 +24303,14 @@
    "speed_kmh": 33.7
   },
   {
-   "id": "e01486",
+   "id": "e01492",
    "t": 5025.6,
    "minute": 84,
    "period": 2,
    "type": "shot",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 74.8,
    "y": 67,
    "outcome": "off_target",
@@ -24078,7 +24320,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01487",
+   "id": "e01493",
    "t": 5037.8,
    "minute": 84,
    "period": 2,
@@ -24091,7 +24333,7 @@
    "y": 34.0
   },
   {
-   "id": "e01488",
+   "id": "e01494",
    "t": 5037.8,
    "minute": 84,
    "period": 2,
@@ -24109,7 +24351,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01489",
+   "id": "e01495",
    "t": 5041.1,
    "minute": 85,
    "period": 2,
@@ -24127,7 +24369,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01490",
+   "id": "e01496",
    "t": 5043.0,
    "minute": 85,
    "period": 2,
@@ -24145,7 +24387,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01491",
+   "id": "e01497",
    "t": 5046.0,
    "minute": 85,
    "period": 2,
@@ -24163,7 +24405,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01492",
+   "id": "e01498",
    "t": 5049.0,
    "minute": 85,
    "period": 2,
@@ -24176,7 +24418,7 @@
    "on_player_id": "NGT-6"
   },
   {
-   "id": "e01493",
+   "id": "e01499",
    "t": 5050.0,
    "minute": 85,
    "period": 2,
@@ -24188,20 +24430,20 @@
    "y": 11.4,
    "end_x": 79.9,
    "end_y": 28.3,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": true
   },
   {
-   "id": "e01494",
+   "id": "e01500",
    "t": 5054.0,
    "minute": 85,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 79.9,
    "y": 28.3,
    "end_x": 74.3,
@@ -24212,7 +24454,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01495",
+   "id": "e01501",
    "t": 5057.4,
    "minute": 85,
    "period": 2,
@@ -24224,33 +24466,33 @@
    "y": 40.1,
    "end_x": 60.7,
    "end_y": 31.3,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01496",
+   "id": "e01502",
    "t": 5060.7,
    "minute": 85,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 60.7,
    "y": 31.3,
-   "on_player_id": "NGT-4"
+   "on_player_id": "NGT-14"
   },
   {
-   "id": "e01497",
+   "id": "e01503",
    "t": 5061.8,
    "minute": 85,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 60.7,
    "y": 31.3,
    "end_x": 57.4,
@@ -24261,7 +24503,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01498",
+   "id": "e01504",
    "t": 5065.1,
    "minute": 85,
    "period": 2,
@@ -24274,7 +24516,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01499",
+   "id": "e01505",
    "t": 5065.7,
    "minute": 85,
    "period": 2,
@@ -24288,7 +24530,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01500",
+   "id": "e01506",
    "t": 5065.7,
    "minute": 85,
    "period": 2,
@@ -24301,7 +24543,7 @@
    "y": 53.3
   },
   {
-   "id": "e01501",
+   "id": "e01507",
    "t": 5067.1,
    "minute": 85,
    "period": 2,
@@ -24313,20 +24555,20 @@
    "y": 53.3,
    "end_x": 64.8,
    "end_y": 60.2,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01502",
+   "id": "e01508",
    "t": 5069.8,
    "minute": 85,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 64.8,
    "y": 60.2,
    "end_x": 73.5,
@@ -24337,7 +24579,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01503",
+   "id": "e01509",
    "t": 5073.1,
    "minute": 85,
    "period": 2,
@@ -24355,7 +24597,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01504",
+   "id": "e01510",
    "t": 5075.2,
    "minute": 85,
    "period": 2,
@@ -24368,7 +24610,7 @@
    "y": 45.0
   },
   {
-   "id": "e01505",
+   "id": "e01511",
    "t": 5076.4,
    "minute": 85,
    "period": 2,
@@ -24386,7 +24628,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01506",
+   "id": "e01512",
    "t": 5079.6,
    "minute": 85,
    "period": 2,
@@ -24398,20 +24640,20 @@
    "y": 42.7,
    "end_x": 43.6,
    "end_y": 50.5,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01507",
+   "id": "e01513",
    "t": 5082.6,
    "minute": 85,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 43.6,
    "y": 50.5,
    "end_x": 39.7,
@@ -24419,7 +24661,7 @@
    "speed_kmh": 27.5
   },
   {
-   "id": "e01508",
+   "id": "e01514",
    "t": 5085.7,
    "minute": 85,
    "period": 2,
@@ -24429,17 +24671,17 @@
    "player": "A. Barbosa",
    "x": 39.7,
    "y": 56.2,
-   "on_player_id": "NGT-4"
+   "on_player_id": "NGT-14"
   },
   {
-   "id": "e01509",
+   "id": "e01515",
    "t": 5086.8,
    "minute": 85,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 39.7,
    "y": 56.2,
    "end_x": 21.9,
@@ -24450,7 +24692,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01510",
+   "id": "e01516",
    "t": 5090.4,
    "minute": 85,
    "period": 2,
@@ -24468,7 +24710,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01511",
+   "id": "e01517",
    "t": 5092.7,
    "minute": 85,
    "period": 2,
@@ -24481,7 +24723,7 @@
    "y": 67.0
   },
   {
-   "id": "e01512",
+   "id": "e01518",
    "t": 5094.0,
    "minute": 85,
    "period": 2,
@@ -24494,7 +24736,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01513",
+   "id": "e01519",
    "t": 5095.2,
    "minute": 85,
    "period": 2,
@@ -24512,7 +24754,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01514",
+   "id": "e01520",
    "t": 5098.2,
    "minute": 85,
    "period": 2,
@@ -24527,7 +24769,7 @@
    "speed_kmh": 29.8
   },
   {
-   "id": "e01515",
+   "id": "e01521",
    "t": 5101.1,
    "minute": 86,
    "period": 2,
@@ -24545,7 +24787,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01516",
+   "id": "e01522",
    "t": 5105.3,
    "minute": 86,
    "period": 2,
@@ -24558,7 +24800,7 @@
    "y": 56.3
   },
   {
-   "id": "e01517",
+   "id": "e01523",
    "t": 5106.2,
    "minute": 86,
    "period": 2,
@@ -24571,7 +24813,7 @@
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01518",
+   "id": "e01524",
    "t": 5106.8,
    "minute": 86,
    "period": 2,
@@ -24589,7 +24831,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01519",
+   "id": "e01525",
    "t": 5109.9,
    "minute": 86,
    "period": 2,
@@ -24602,7 +24844,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01520",
+   "id": "e01526",
    "t": 5110.9,
    "minute": 86,
    "period": 2,
@@ -24620,7 +24862,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01521",
+   "id": "e01527",
    "t": 5113.8,
    "minute": 86,
    "period": 2,
@@ -24638,7 +24880,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01522",
+   "id": "e01528",
    "t": 5116.2,
    "minute": 86,
    "period": 2,
@@ -24651,7 +24893,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01523",
+   "id": "e01529",
    "t": 5116.7,
    "minute": 86,
    "period": 2,
@@ -24669,7 +24911,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01524",
+   "id": "e01530",
    "t": 5120.3,
    "minute": 86,
    "period": 2,
@@ -24687,7 +24929,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01525",
+   "id": "e01531",
    "t": 5123.9,
    "minute": 86,
    "period": 2,
@@ -24702,7 +24944,7 @@
    "speed_kmh": 27.7
   },
   {
-   "id": "e01526",
+   "id": "e01532",
    "t": 5128.4,
    "minute": 86,
    "period": 2,
@@ -24720,7 +24962,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01527",
+   "id": "e01533",
    "t": 5130.8,
    "minute": 86,
    "period": 2,
@@ -24738,7 +24980,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01528",
+   "id": "e01534",
    "t": 5132.9,
    "minute": 86,
    "period": 2,
@@ -24751,7 +24993,7 @@
    "y": 67.0
   },
   {
-   "id": "e01529",
+   "id": "e01535",
    "t": 5133.5,
    "minute": 86,
    "period": 2,
@@ -24769,7 +25011,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01530",
+   "id": "e01536",
    "t": 5136.4,
    "minute": 86,
    "period": 2,
@@ -24782,7 +25024,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01531",
+   "id": "e01537",
    "t": 5137.4,
    "minute": 86,
    "period": 2,
@@ -24800,7 +25042,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01532",
+   "id": "e01538",
    "t": 5140.3,
    "minute": 86,
    "period": 2,
@@ -24813,7 +25055,7 @@
    "y": 67.0
   },
   {
-   "id": "e01533",
+   "id": "e01539",
    "t": 5141.5,
    "minute": 86,
    "period": 2,
@@ -24831,7 +25073,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01534",
+   "id": "e01540",
    "t": 5144.9,
    "minute": 86,
    "period": 2,
@@ -24849,40 +25091,40 @@
    "under_pressure": false
   },
   {
-   "id": "e01535",
+   "id": "e01541",
    "t": 5168.8,
    "minute": 87,
    "period": 2,
    "type": "possession_change",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "reason": "out_of_play",
    "x": 23.7,
    "y": 32.7
   },
   {
-   "id": "e01536",
+   "id": "e01542",
    "t": 5168.8,
    "minute": 87,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 23.7,
    "y": 32.7,
-   "on_player_id": "RIV-4"
+   "on_player_id": "RIV-14"
   },
   {
-   "id": "e01537",
+   "id": "e01543",
    "t": 5169.4,
    "minute": 87,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 23.7,
    "y": 32.7,
    "end_x": 40.6,
@@ -24893,7 +25135,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01538",
+   "id": "e01544",
    "t": 5172.9,
    "minute": 87,
    "period": 2,
@@ -24906,7 +25148,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01539",
+   "id": "e01545",
    "t": 5173.7,
    "minute": 87,
    "period": 2,
@@ -24924,7 +25166,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01540",
+   "id": "e01546",
    "t": 5177.3,
    "minute": 87,
    "period": 2,
@@ -24937,7 +25179,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01541",
+   "id": "e01547",
    "t": 5177.9,
    "minute": 87,
    "period": 2,
@@ -24952,7 +25194,7 @@
    "speed_kmh": 35.3
   },
   {
-   "id": "e01542",
+   "id": "e01548",
    "t": 5181.0,
    "minute": 87,
    "period": 2,
@@ -24970,7 +25212,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01543",
+   "id": "e01549",
    "t": 5183.8,
    "minute": 87,
    "period": 2,
@@ -24988,7 +25230,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01544",
+   "id": "e01550",
    "t": 5186.5,
    "minute": 87,
    "period": 2,
@@ -25001,7 +25243,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01545",
+   "id": "e01551",
    "t": 5187.5,
    "minute": 87,
    "period": 2,
@@ -25013,13 +25255,13 @@
    "y": 57.5,
    "end_x": 87.9,
    "end_y": 63.7,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": true
   },
   {
-   "id": "e01546",
+   "id": "e01552",
    "t": 5191.3,
    "minute": 87,
    "period": 2,
@@ -25029,17 +25271,17 @@
    "player": "J. Hagen",
    "x": 87.9,
    "y": 63.7,
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01547",
+   "id": "e01553",
    "t": 5192.3,
    "minute": 87,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 87.9,
    "y": 63.7,
    "end_x": 94.9,
@@ -25050,7 +25292,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01548",
+   "id": "e01554",
    "t": 5213.2,
    "minute": 87,
    "period": 2,
@@ -25063,7 +25305,7 @@
    "y": 67.0
   },
   {
-   "id": "e01549",
+   "id": "e01555",
    "t": 5213.2,
    "minute": 87,
    "period": 2,
@@ -25081,7 +25323,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01550",
+   "id": "e01556",
    "t": 5215.9,
    "minute": 87,
    "period": 2,
@@ -25096,7 +25338,7 @@
    "speed_kmh": 28.6
   },
   {
-   "id": "e01551",
+   "id": "e01557",
    "t": 5220.6,
    "minute": 88,
    "period": 2,
@@ -25114,7 +25356,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01552",
+   "id": "e01558",
    "t": 5224.2,
    "minute": 88,
    "period": 2,
@@ -25132,20 +25374,20 @@
    "under_pressure": false
   },
   {
-   "id": "e01553",
+   "id": "e01559",
    "t": 5226.6,
    "minute": 88,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 76.7,
    "y": 59.9,
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01554",
+   "id": "e01560",
    "t": 5227.5,
    "minute": 88,
    "period": 2,
@@ -25163,7 +25405,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01555",
+   "id": "e01561",
    "t": 5231.4,
    "minute": 88,
    "period": 2,
@@ -25176,7 +25418,7 @@
    "y": 42.3
   },
   {
-   "id": "e01556",
+   "id": "e01562",
    "t": 5232.5,
    "minute": 88,
    "period": 2,
@@ -25191,7 +25433,7 @@
    "speed_kmh": 26.6
   },
   {
-   "id": "e01557",
+   "id": "e01563",
    "t": 5237.2,
    "minute": 88,
    "period": 2,
@@ -25203,33 +25445,33 @@
    "y": 35.0,
    "end_x": 79.9,
    "end_y": 42.9,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01558",
+   "id": "e01564",
    "t": 5240.2,
    "minute": 88,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 79.9,
    "y": 42.9,
-   "on_player_id": "RIV-11"
+   "on_player_id": "RIV-12"
   },
   {
-   "id": "e01559",
+   "id": "e01565",
    "t": 5241.3,
    "minute": 88,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 79.9,
    "y": 42.9,
    "end_x": 103,
@@ -25240,7 +25482,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01560",
+   "id": "e01566",
    "t": 5245.6,
    "minute": 88,
    "period": 2,
@@ -25258,7 +25500,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01561",
+   "id": "e01567",
    "t": 5247.7,
    "minute": 88,
    "period": 2,
@@ -25271,7 +25513,7 @@
    "on_player_id": "RIV-7"
   },
   {
-   "id": "e01562",
+   "id": "e01568",
    "t": 5248.2,
    "minute": 88,
    "period": 2,
@@ -25289,7 +25531,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01563",
+   "id": "e01569",
    "t": 5250.1,
    "minute": 88,
    "period": 2,
@@ -25307,7 +25549,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01564",
+   "id": "e01570",
    "t": 5252.6,
    "minute": 88,
    "period": 2,
@@ -25322,7 +25564,7 @@
    "speed_kmh": 25.3
   },
   {
-   "id": "e01565",
+   "id": "e01571",
    "t": 5257.3,
    "minute": 88,
    "period": 2,
@@ -25340,7 +25582,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01566",
+   "id": "e01572",
    "t": 5260.5,
    "minute": 88,
    "period": 2,
@@ -25358,7 +25600,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01567",
+   "id": "e01573",
    "t": 5264.0,
    "minute": 88,
    "period": 2,
@@ -25371,7 +25613,7 @@
    "on_player_id": "RIV-9"
   },
   {
-   "id": "e01568",
+   "id": "e01574",
    "t": 5264.8,
    "minute": 88,
    "period": 2,
@@ -25389,7 +25631,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01569",
+   "id": "e01575",
    "t": 5267.6,
    "minute": 88,
    "period": 2,
@@ -25407,7 +25649,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01570",
+   "id": "e01576",
    "t": 5271.2,
    "minute": 88,
    "period": 2,
@@ -25425,54 +25667,54 @@
    "under_pressure": false
   },
   {
-   "id": "e01571",
+   "id": "e01577",
    "t": 5275.0,
    "minute": 88,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 48.3,
    "y": 10.1,
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01572",
+   "id": "e01578",
    "t": 5276.1,
    "minute": 88,
    "period": 2,
    "type": "tackle",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 48.3,
    "y": 10.1,
    "outcome": "won",
    "on_player_id": "RIV-2"
   },
   {
-   "id": "e01573",
+   "id": "e01579",
    "t": 5276.1,
    "minute": 88,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "reason": "tackle",
    "x": 48.3,
    "y": 10.1
   },
   {
-   "id": "e01574",
+   "id": "e01580",
    "t": 5278.3,
    "minute": 88,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 48.3,
    "y": 10.1,
    "end_x": 50.5,
@@ -25483,7 +25725,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01575",
+   "id": "e01581",
    "t": 5281.0,
    "minute": 89,
    "period": 2,
@@ -25501,7 +25743,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01576",
+   "id": "e01582",
    "t": 5284.8,
    "minute": 89,
    "period": 2,
@@ -25513,20 +25755,20 @@
    "y": 1.0,
    "end_x": 33.5,
    "end_y": 1.8,
-   "receiver_id": "NGT-10",
-   "receiver": "B. Woutersz",
+   "receiver_id": "NGT-15",
+   "receiver": "J. van den Wittenboer",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01577",
+   "id": "e01583",
    "t": 5286.8,
    "minute": 89,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 33.5,
    "y": 1.8,
    "end_x": 46.6,
@@ -25537,7 +25779,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01578",
+   "id": "e01584",
    "t": 5289.8,
    "minute": 89,
    "period": 2,
@@ -25549,20 +25791,20 @@
    "y": 1.0,
    "end_x": 41.8,
    "end_y": 5.3,
-   "receiver_id": "NGT-10",
-   "receiver": "B. Woutersz",
+   "receiver_id": "NGT-15",
+   "receiver": "J. van den Wittenboer",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01579",
+   "id": "e01585",
    "t": 5292.5,
    "minute": 89,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 41.8,
    "y": 5.3,
    "end_x": 28.2,
@@ -25573,7 +25815,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01580",
+   "id": "e01586",
    "t": 5295.0,
    "minute": 89,
    "period": 2,
@@ -25588,7 +25830,7 @@
    "speed_kmh": 28.7
   },
   {
-   "id": "e01581",
+   "id": "e01587",
    "t": 5298.9,
    "minute": 89,
    "period": 2,
@@ -25600,20 +25842,20 @@
    "y": 1.0,
    "end_x": 21.7,
    "end_y": 1.0,
-   "receiver_id": "NGT-10",
-   "receiver": "B. Woutersz",
+   "receiver_id": "NGT-15",
+   "receiver": "J. van den Wittenboer",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01582",
+   "id": "e01588",
    "t": 5301.6,
    "minute": 89,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 21.7,
    "y": 1.0,
    "end_x": 13.0,
@@ -25624,7 +25866,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01583",
+   "id": "e01589",
    "t": 5305.3,
    "minute": 89,
    "period": 2,
@@ -25637,7 +25879,7 @@
    "y": 11.8
   },
   {
-   "id": "e01584",
+   "id": "e01590",
    "t": 5306.7,
    "minute": 89,
    "period": 2,
@@ -25655,7 +25897,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01585",
+   "id": "e01591",
    "t": 5309.5,
    "minute": 89,
    "period": 2,
@@ -25673,7 +25915,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01586",
+   "id": "e01592",
    "t": 5312.6,
    "minute": 89,
    "period": 2,
@@ -25691,7 +25933,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01587",
+   "id": "e01593",
    "t": 5317.2,
    "minute": 89,
    "period": 2,
@@ -25709,7 +25951,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01588",
+   "id": "e01594",
    "t": 5319.8,
    "minute": 89,
    "period": 2,
@@ -25722,7 +25964,7 @@
    "y": 16.6
   },
   {
-   "id": "e01589",
+   "id": "e01595",
    "t": 5320.8,
    "minute": 89,
    "period": 2,
@@ -25740,7 +25982,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01590",
+   "id": "e01596",
    "t": 5323.7,
    "minute": 89,
    "period": 2,
@@ -25753,7 +25995,7 @@
    "on_player_id": "NGT-6"
   },
   {
-   "id": "e01591",
+   "id": "e01597",
    "t": 5324.3,
    "minute": 89,
    "period": 2,
@@ -25771,7 +26013,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01592",
+   "id": "e01598",
    "t": 5327.8,
    "minute": 89,
    "period": 2,
@@ -25789,7 +26031,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01593",
+   "id": "e01599",
    "t": 5330.4,
    "minute": 89,
    "period": 2,
@@ -25807,7 +26049,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01594",
+   "id": "e01600",
    "t": 5335.1,
    "minute": 89,
    "period": 2,
@@ -25820,7 +26062,7 @@
    "y": 1.8
   },
   {
-   "id": "e01595",
+   "id": "e01601",
    "t": 5335.9,
    "minute": 89,
    "period": 2,
@@ -25838,7 +26080,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01596",
+   "id": "e01602",
    "t": 5339.2,
    "minute": 89,
    "period": 2,
@@ -25851,7 +26093,7 @@
    "y": 1.0
   },
   {
-   "id": "e01597",
+   "id": "e01603",
    "t": 5339.8,
    "minute": 89,
    "period": 2,
@@ -25869,7 +26111,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01598",
+   "id": "e01604",
    "t": 5344.9,
    "minute": 90,
    "period": 2,
@@ -25882,7 +26124,7 @@
    "y": 4.2
   },
   {
-   "id": "e01599",
+   "id": "e01605",
    "t": 5346.2,
    "minute": 90,
    "period": 2,
@@ -25900,7 +26142,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01600",
+   "id": "e01606",
    "t": 5349.7,
    "minute": 90,
    "period": 2,
@@ -25918,27 +26160,27 @@
    "under_pressure": false
   },
   {
-   "id": "e01601",
+   "id": "e01607",
    "t": 5353.1,
    "minute": 90,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "reason": "interception",
    "x": 51.8,
    "y": 1.0
   },
   {
-   "id": "e01602",
+   "id": "e01608",
    "t": 5354.5,
    "minute": 90,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 51.8,
    "y": 1.0,
    "end_x": 43.6,
@@ -25949,7 +26191,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01603",
+   "id": "e01609",
    "t": 5357.8,
    "minute": 90,
    "period": 2,
@@ -25961,20 +26203,20 @@
    "y": 10.0,
    "end_x": 37.8,
    "end_y": 8.0,
-   "receiver_id": "NGT-10",
-   "receiver": "B. Woutersz",
+   "receiver_id": "NGT-15",
+   "receiver": "J. van den Wittenboer",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01604",
+   "id": "e01610",
    "t": 5359.9,
    "minute": 90,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 37.8,
    "y": 8.0,
    "end_x": 32.7,
@@ -25985,7 +26227,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01605",
+   "id": "e01611",
    "t": 5362.6,
    "minute": 90,
    "period": 2,
@@ -25997,31 +26239,31 @@
    "y": 1.0,
    "end_x": 23.5,
    "end_y": 7.0,
-   "receiver_id": "NGT-10",
-   "receiver": "B. Woutersz",
+   "receiver_id": "NGT-15",
+   "receiver": "J. van den Wittenboer",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01606",
+   "id": "e01612",
    "t": 5365.1,
    "minute": 90,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 23.5,
    "y": 7.0,
    "end_x": 48.2,
    "end_y": 14.1,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01607",
+   "id": "e01613",
    "t": 5369.3,
    "minute": 90,
    "period": 2,
@@ -26031,17 +26273,17 @@
    "player": "T. Griffiths",
    "x": 48.2,
    "y": 14.1,
-   "on_player_id": "NGT-4"
+   "on_player_id": "NGT-14"
   },
   {
-   "id": "e01608",
+   "id": "e01614",
    "t": 5369.9,
    "minute": 90,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 48.2,
    "y": 14.1,
    "end_x": 35.2,
@@ -26049,14 +26291,14 @@
    "speed_kmh": 36.5
   },
   {
-   "id": "e01609",
+   "id": "e01615",
    "t": 5373.6,
    "minute": 90,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 35.2,
    "y": 18.7,
    "end_x": 25.9,
@@ -26067,7 +26309,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01610",
+   "id": "e01616",
    "t": 5377.5,
    "minute": 90,
    "period": 2,
@@ -26079,38 +26321,38 @@
    "y": 33.8,
    "end_x": 18.4,
    "end_y": 24.7,
-   "receiver_id": "NGT-9",
-   "receiver": "T. Becker",
+   "receiver_id": "NGT-13",
+   "receiver": "Z. Weller",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01611",
+   "id": "e01617",
    "t": 5380.8,
    "minute": 90,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 18.4,
    "y": 24.7,
    "end_x": 21.4,
    "end_y": 22.3,
-   "receiver_id": "NGT-10",
-   "receiver": "B. Woutersz",
+   "receiver_id": "NGT-15",
+   "receiver": "J. van den Wittenboer",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01612",
+   "id": "e01618",
    "t": 5384.0,
    "minute": 90,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 21.4,
    "y": 22.3,
    "end_x": 30.0,
@@ -26121,7 +26363,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01613",
+   "id": "e01619",
    "t": 5388.0,
    "minute": 90,
    "period": 2,
@@ -26133,20 +26375,20 @@
    "y": 4.6,
    "end_x": 2.0,
    "end_y": 16.6,
-   "receiver_id": "NGT-9",
-   "receiver": "T. Becker",
+   "receiver_id": "NGT-13",
+   "receiver": "Z. Weller",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01614",
+   "id": "e01620",
    "t": 5391.8,
    "minute": 90,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 2.0,
    "y": 16.6,
    "end_x": 2.0,
@@ -26157,7 +26399,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01615",
+   "id": "e01621",
    "t": 5394.6,
    "minute": 90,
    "period": 2,
@@ -26175,7 +26417,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01616",
+   "id": "e01622",
    "t": 5398.3,
    "minute": 90,
    "period": 2,
@@ -26188,7 +26430,7 @@
    "y": 50.6
   },
   {
-   "id": "e01617",
+   "id": "e01623",
    "t": 5398.8,
    "minute": 90,
    "period": 2,
@@ -26200,33 +26442,33 @@
    "y": 50.6,
    "end_x": 14.2,
    "end_y": 37.4,
-   "receiver_id": "RIV-6",
-   "receiver": "C. Reed",
+   "receiver_id": "RIV-15",
+   "receiver": "R. Siering",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01618",
+   "id": "e01624",
    "t": 5401.5,
    "minute": 91,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-9",
-   "player": "T. Becker",
+   "player_id": "NGT-13",
+   "player": "Z. Weller",
    "x": 14.2,
    "y": 37.4,
-   "on_player_id": "RIV-6"
+   "on_player_id": "RIV-15"
   },
   {
-   "id": "e01619",
+   "id": "e01625",
    "t": 5402.5,
    "minute": 91,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-6",
-   "player": "C. Reed",
+   "player_id": "RIV-15",
+   "player": "R. Siering",
    "x": 14.2,
    "y": 37.4,
    "end_x": 28.6,
@@ -26237,7 +26479,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01620",
+   "id": "e01626",
    "t": 5405.2,
    "minute": 91,
    "period": 2,
@@ -26250,7 +26492,7 @@
    "y": 36.1
   },
   {
-   "id": "e01621",
+   "id": "e01627",
    "t": 5406.2,
    "minute": 91,
    "period": 2,
@@ -26262,20 +26504,20 @@
    "y": 36.1,
    "end_x": 42.0,
    "end_y": 45.4,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01622",
+   "id": "e01628",
    "t": 5409.2,
    "minute": 91,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 42.0,
    "y": 45.4,
    "end_x": 44.2,
@@ -26286,7 +26528,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01623",
+   "id": "e01629",
    "t": 5411.5,
    "minute": 91,
    "period": 2,
@@ -26304,7 +26546,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01624",
+   "id": "e01630",
    "t": 5415.3,
    "minute": 91,
    "period": 2,
@@ -26319,7 +26561,7 @@
    "speed_kmh": 36.3
   },
   {
-   "id": "e01625",
+   "id": "e01631",
    "t": 5419.5,
    "minute": 91,
    "period": 2,
@@ -26337,7 +26579,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01626",
+   "id": "e01632",
    "t": 5423.2,
    "minute": 91,
    "period": 2,
@@ -26355,7 +26597,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01627",
+   "id": "e01633",
    "t": 5427.3,
    "minute": 91,
    "period": 2,
@@ -26368,7 +26610,7 @@
    "y": 65.8
   },
   {
-   "id": "e01628",
+   "id": "e01634",
    "t": 5428.7,
    "minute": 91,
    "period": 2,
@@ -26380,20 +26622,20 @@
    "y": 65.8,
    "end_x": 26.2,
    "end_y": 49.6,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01629",
+   "id": "e01635",
    "t": 5432.2,
    "minute": 91,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 26.2,
    "y": 49.6,
    "end_x": 43.9,
@@ -26404,7 +26646,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01630",
+   "id": "e01636",
    "t": 5435.6,
    "minute": 91,
    "period": 2,
@@ -26422,7 +26664,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01631",
+   "id": "e01637",
    "t": 5438.7,
    "minute": 91,
    "period": 2,
@@ -26437,7 +26679,7 @@
    "speed_kmh": 36.5
   },
   {
-   "id": "e01632",
+   "id": "e01638",
    "t": 5442.9,
    "minute": 91,
    "period": 2,
@@ -26455,7 +26697,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01633",
+   "id": "e01639",
    "t": 5445.9,
    "minute": 91,
    "period": 2,
@@ -26468,7 +26710,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01634",
+   "id": "e01640",
    "t": 5447.1,
    "minute": 91,
    "period": 2,
@@ -26482,7 +26724,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01635",
+   "id": "e01641",
    "t": 5447.1,
    "minute": 91,
    "period": 2,
@@ -26495,7 +26737,7 @@
    "y": 58.2
   },
   {
-   "id": "e01636",
+   "id": "e01642",
    "t": 5448.7,
    "minute": 91,
    "period": 2,
@@ -26513,7 +26755,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01637",
+   "id": "e01643",
    "t": 5451.7,
    "minute": 91,
    "period": 2,
@@ -26526,7 +26768,7 @@
    "y": 61.1
   },
   {
-   "id": "e01638",
+   "id": "e01644",
    "t": 5452.8,
    "minute": 91,
    "period": 2,
@@ -26539,7 +26781,7 @@
    "on_player_id": "RIV-10"
   },
   {
-   "id": "e01639",
+   "id": "e01645",
    "t": 5453.9,
    "minute": 91,
    "period": 2,
@@ -26551,20 +26793,20 @@
    "y": 61.1,
    "end_x": 39.4,
    "end_y": 48.8,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": true
   },
   {
-   "id": "e01640",
+   "id": "e01646",
    "t": 5457.5,
    "minute": 91,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 39.4,
    "y": 48.8,
    "end_x": 66.8,
@@ -26575,45 +26817,45 @@
    "under_pressure": false
   },
   {
-   "id": "e01641",
+   "id": "e01647",
    "t": 5461.8,
    "minute": 92,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "reason": "interception",
    "x": 66.8,
    "y": 30.5
   },
   {
-   "id": "e01642",
+   "id": "e01648",
    "t": 5462.5,
    "minute": 92,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 66.8,
    "y": 30.5,
    "end_x": 49.9,
    "end_y": 28.3,
-   "receiver_id": "NGT-10",
-   "receiver": "B. Woutersz",
+   "receiver_id": "NGT-15",
+   "receiver": "J. van den Wittenboer",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01643",
+   "id": "e01649",
    "t": 5465.4,
    "minute": 92,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 49.9,
    "y": 28.3,
    "end_x": 32.4,
@@ -26624,27 +26866,27 @@
    "under_pressure": false
   },
   {
-   "id": "e01644",
+   "id": "e01650",
    "t": 5468.5,
    "minute": 92,
    "period": 2,
    "type": "possession_change",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "reason": "interception",
    "x": 32.4,
    "y": 32.7
   },
   {
-   "id": "e01645",
+   "id": "e01651",
    "t": 5469.3,
    "minute": 92,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 32.4,
    "y": 32.7,
    "end_x": 36.8,
@@ -26655,7 +26897,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01646",
+   "id": "e01652",
    "t": 5471.5,
    "minute": 92,
    "period": 2,
@@ -26667,13 +26909,13 @@
    "y": 37.3,
    "end_x": 33.5,
    "end_y": 36.8,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01647",
+   "id": "e01653",
    "t": 5473.7,
    "minute": 92,
    "period": 2,
@@ -26683,17 +26925,17 @@
    "player": "R. Miranda",
    "x": 33.5,
    "y": 36.8,
-   "on_player_id": "RIV-4"
+   "on_player_id": "RIV-14"
   },
   {
-   "id": "e01648",
+   "id": "e01654",
    "t": 5474.4,
    "minute": 92,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-4",
-   "player": "L. Jones",
+   "player_id": "RIV-14",
+   "player": "I. Berry",
    "x": 33.5,
    "y": 36.8,
    "end_x": 38.6,
@@ -26704,20 +26946,20 @@
    "under_pressure": true
   },
   {
-   "id": "e01649",
+   "id": "e01655",
    "t": 5477.2,
    "minute": 92,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 38.6,
    "y": 26.1,
    "on_player_id": "RIV-8"
   },
   {
-   "id": "e01650",
+   "id": "e01656",
    "t": 5478.1,
    "minute": 92,
    "period": 2,
@@ -26735,7 +26977,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01651",
+   "id": "e01657",
    "t": 5482.3,
    "minute": 92,
    "period": 2,
@@ -26747,20 +26989,20 @@
    "y": 37.3,
    "end_x": 84.9,
    "end_y": 54.8,
-   "receiver_id": "RIV-11",
-   "receiver": "H. van den Nuwenhuijzen",
+   "receiver_id": "RIV-12",
+   "receiver": "A. Madsen",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01652",
+   "id": "e01658",
    "t": 5485.1,
    "minute": 92,
    "period": 2,
    "type": "pass",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 84.9,
    "y": 54.8,
    "end_x": 103,
@@ -26771,7 +27013,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01653",
+   "id": "e01659",
    "t": 5488.1,
    "minute": 92,
    "period": 2,
@@ -26784,20 +27026,20 @@
    "y": 67.0
   },
   {
-   "id": "e01654",
+   "id": "e01660",
    "t": 5489.1,
    "minute": 92,
    "period": 2,
    "type": "pressure",
    "team": "RIV",
-   "player_id": "RIV-11",
-   "player": "H. van den Nuwenhuijzen",
+   "player_id": "RIV-12",
+   "player": "A. Madsen",
    "x": 103.0,
    "y": 67.0,
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01655",
+   "id": "e01661",
    "t": 5490.3,
    "minute": 92,
    "period": 2,
@@ -26815,7 +27057,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01656",
+   "id": "e01662",
    "t": 5493.8,
    "minute": 92,
    "period": 2,
@@ -26833,7 +27075,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01657",
+   "id": "e01663",
    "t": 5498.1,
    "minute": 92,
    "period": 2,
@@ -26846,7 +27088,7 @@
    "y": 62.0
   },
   {
-   "id": "e01658",
+   "id": "e01664",
    "t": 5498.8,
    "minute": 92,
    "period": 2,
@@ -26861,7 +27103,7 @@
    "speed_kmh": 27.1
   },
   {
-   "id": "e01659",
+   "id": "e01665",
    "t": 5503.3,
    "minute": 92,
    "period": 2,
@@ -26879,7 +27121,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01660",
+   "id": "e01666",
    "t": 5505.9,
    "minute": 92,
    "period": 2,
@@ -26892,7 +27134,7 @@
    "y": 67.0
   },
   {
-   "id": "e01661",
+   "id": "e01667",
    "t": 5506.7,
    "minute": 92,
    "period": 2,
@@ -26905,7 +27147,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01662",
+   "id": "e01668",
    "t": 5507.3,
    "minute": 92,
    "period": 2,
@@ -26919,7 +27161,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01663",
+   "id": "e01669",
    "t": 5507.3,
    "minute": 92,
    "period": 2,
@@ -26932,7 +27174,7 @@
    "y": 67.0
   },
   {
-   "id": "e01664",
+   "id": "e01670",
    "t": 5509.7,
    "minute": 92,
    "period": 2,
@@ -26947,7 +27189,7 @@
    "speed_kmh": 36.5
   },
   {
-   "id": "e01665",
+   "id": "e01671",
    "t": 5512.4,
    "minute": 92,
    "period": 2,
@@ -26965,7 +27207,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01666",
+   "id": "e01672",
    "t": 5515.9,
    "minute": 92,
    "period": 2,
@@ -26983,7 +27225,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01667",
+   "id": "e01673",
    "t": 5519.0,
    "minute": 92,
    "period": 2,
@@ -26996,7 +27238,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01668",
+   "id": "e01674",
    "t": 5520.1,
    "minute": 93,
    "period": 2,
@@ -27014,7 +27256,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01669",
+   "id": "e01675",
    "t": 5522.8,
    "minute": 93,
    "period": 2,
@@ -27027,7 +27269,7 @@
    "y": 67.0
   },
   {
-   "id": "e01670",
+   "id": "e01676",
    "t": 5524.1,
    "minute": 93,
    "period": 2,
@@ -27045,7 +27287,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01671",
+   "id": "e01677",
    "t": 5527.4,
    "minute": 93,
    "period": 2,
@@ -27058,7 +27300,7 @@
    "on_player_id": "NGT-8"
   },
   {
-   "id": "e01672",
+   "id": "e01678",
    "t": 5527.9,
    "minute": 93,
    "period": 2,
@@ -27076,7 +27318,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01673",
+   "id": "e01679",
    "t": 5531.0,
    "minute": 93,
    "period": 2,
@@ -27089,7 +27331,7 @@
    "y": 67.0
   },
   {
-   "id": "e01674",
+   "id": "e01680",
    "t": 5531.7,
    "minute": 93,
    "period": 2,
@@ -27107,7 +27349,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01675",
+   "id": "e01681",
    "t": 5534.3,
    "minute": 93,
    "period": 2,
@@ -27120,7 +27362,7 @@
    "on_player_id": "RIV-3"
   },
   {
-   "id": "e01676",
+   "id": "e01682",
    "t": 5535.0,
    "minute": 93,
    "period": 2,
@@ -27138,7 +27380,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01677",
+   "id": "e01683",
    "t": 5538.9,
    "minute": 93,
    "period": 2,
@@ -27151,7 +27393,7 @@
    "y": 60.6
   },
   {
-   "id": "e01678",
+   "id": "e01684",
    "t": 5539.6,
    "minute": 93,
    "period": 2,
@@ -27169,7 +27411,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01679",
+   "id": "e01685",
    "t": 5542.6,
    "minute": 93,
    "period": 2,
@@ -27187,7 +27429,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01680",
+   "id": "e01686",
    "t": 5545.7,
    "minute": 93,
    "period": 2,
@@ -27202,7 +27444,7 @@
    "speed_kmh": 28.0
   },
   {
-   "id": "e01681",
+   "id": "e01687",
    "t": 5549.8,
    "minute": 93,
    "period": 2,
@@ -27217,7 +27459,7 @@
    "speed_kmh": 33.2
   },
   {
-   "id": "e01682",
+   "id": "e01688",
    "t": 5552.6,
    "minute": 93,
    "period": 2,
@@ -27230,7 +27472,7 @@
    "on_player_id": "NGT-2"
   },
   {
-   "id": "e01683",
+   "id": "e01689",
    "t": 5553.3,
    "minute": 93,
    "period": 2,
@@ -27248,7 +27490,7 @@
    "under_pressure": true
   },
   {
-   "id": "e01684",
+   "id": "e01690",
    "t": 5555.7,
    "minute": 93,
    "period": 2,
@@ -27260,20 +27502,20 @@
    "y": 53.6,
    "end_x": 56.5,
    "end_y": 42.6,
-   "receiver_id": "NGT-4",
-   "receiver": "S. Innocenti",
+   "receiver_id": "NGT-14",
+   "receiver": "O. Willems",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01685",
+   "id": "e01691",
    "t": 5559.1,
    "minute": 93,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-4",
-   "player": "S. Innocenti",
+   "player_id": "NGT-14",
+   "player": "O. Willems",
    "x": 56.5,
    "y": 42.6,
    "end_x": 45.6,
@@ -27284,7 +27526,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01686",
+   "id": "e01692",
    "t": 5577.1,
    "minute": 93,
    "period": 2,
@@ -27297,20 +27539,20 @@
    "y": 10.7
   },
   {
-   "id": "e01687",
+   "id": "e01693",
    "t": 5577.1,
    "minute": 93,
    "period": 2,
    "type": "pressure",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 45.6,
    "y": 10.7,
    "on_player_id": "RIV-8"
   },
   {
-   "id": "e01688",
+   "id": "e01694",
    "t": 5578.3,
    "minute": 93,
    "period": 2,
@@ -27328,27 +27570,27 @@
    "under_pressure": true
   },
   {
-   "id": "e01689",
+   "id": "e01695",
    "t": 5580.5,
    "minute": 94,
    "period": 2,
    "type": "possession_change",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "reason": "interception",
    "x": 54.3,
    "y": 14.5
   },
   {
-   "id": "e01690",
+   "id": "e01696",
    "t": 5581.5,
    "minute": 94,
    "period": 2,
    "type": "carry",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 54.3,
    "y": 14.5,
    "end_x": 49.6,
@@ -27356,14 +27598,14 @@
    "speed_kmh": 23.1
   },
   {
-   "id": "e01691",
+   "id": "e01697",
    "t": 5586.5,
    "minute": 94,
    "period": 2,
    "type": "pass",
    "team": "NGT",
-   "player_id": "NGT-10",
-   "player": "B. Woutersz",
+   "player_id": "NGT-15",
+   "player": "J. van den Wittenboer",
    "x": 49.6,
    "y": 14.6,
    "end_x": 53.8,
@@ -27374,7 +27616,7 @@
    "under_pressure": false
   },
   {
-   "id": "e01692",
+   "id": "e01698",
    "t": 5610.3,
    "minute": 94,
    "period": 2,
@@ -27387,7 +27629,7 @@
    "y": 36.3
   },
   {
-   "id": "e01693",
+   "id": "e01699",
    "t": 5610.3,
    "minute": 94,
    "period": 2,
@@ -27399,13 +27641,13 @@
    "y": 36.3,
    "end_x": 37.1,
    "end_y": 26.5,
-   "receiver_id": "RIV-4",
-   "receiver": "L. Jones",
+   "receiver_id": "RIV-14",
+   "receiver": "I. Berry",
    "outcome": "complete",
    "under_pressure": false
   },
   {
-   "id": "e01694",
+   "id": "e01700",
    "t": 5612.1,
    "minute": 94,
    "period": 2,

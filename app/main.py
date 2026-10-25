@@ -27,6 +27,7 @@ from .generator import generate_match  # noqa: E402
 from .moments import Candidate, MomentDetector  # noqa: E402
 from .stats import MatchState, attacking_x  # noqa: E402
 from .decisions import DecisionLens  # noqa: E402
+from .ratings import man_of_the_match, ratings  # noqa: E402
 from .fan import answer_question, facts_for_graphic  # noqa: E402
 from .templates import FEEDS, TEMPLATES  # noqa: E402
 from . import tts  # noqa: E402
@@ -130,6 +131,11 @@ class Session:
             await self.broadcast("match_event", ev)
             await self.expire_stale()
             new = list(self.detector.check(ev))
+            if ev["type"] == "substitution":
+                self.lens.substitute(ev)
+                new.append(self._substitution_candidate(ev))
+            if ev["type"] == "full_time" and (motm := man_of_the_match(self.state, self.lens)):
+                new.append(self._motm_candidate(motm))
             flag = self._decision(ev)
             if flag:
                 await self.broadcast("decision", flag)
@@ -155,7 +161,7 @@ class Session:
                 await self.broadcast("status", self.status())
         self.running = False
         for sug in self.suggestions.values():
-            if sug["status"] == "queued":
+            if sug["status"] == "queued" and sug["candidate"]["kind"] != "man_of_match":
                 sug["status"], sug["dropped_reason"] = "dropped", "expired: full time"
                 await self.broadcast("suggestion", sug)
         await self.broadcast("status", self.status())
@@ -167,7 +173,25 @@ class Session:
         await self.queue.put((-c.priority, c.t, next(self._seq), c.id))
 
     def stats_payload(self) -> dict:
-        return {**self.state.snapshot(), "vision": self.lens.leaderboard()}
+        rows = ratings(self.state, self.lens)
+        return {**self.state.snapshot(), "vision": self.lens.leaderboard(),
+                "ratings": [{k: r[k] for k in ("player_id", "rating", "minutes_played", "vision_score_pct", "goals")} for r in rows],
+                "motm": man_of_the_match(self.state, self.lens, rows)}
+
+    def _substitution_candidate(self, ev: dict) -> Candidate:
+        p_off, p_on = self.state.players[ev["player_off_id"]], self.state.players[ev["player_on_id"]]
+        return self.detector._make(
+            "substitution", ev["team"], ev["player_on_id"], f"Substitution - {self.state.teams[ev['team']]['short']}",
+            {"player_off": ev["player_off"], "player_off_number": p_off["number"], "player_on": ev["player_on"],
+             "player_on_number": p_on["number"], "position": ev.get("role"),
+             "player_off_minutes": self.state.minutes_played(ev["player_off_id"])}, [ev["id"]])
+
+    def _motm_candidate(self, m: dict) -> Candidate:
+        return self.detector._make(
+            "man_of_match", m["team"], m["player_id"], f"Man of the Match - {m['player']}",
+            {"player": m["player"], "player_number": m["number"], "match_rating": m["rating"], "goals": m["goals"],
+             "xg": m["xg"], "vision_score_pct": m["vision_score_pct"], "brave_passes": m["brave_passes"],
+             "missed_options": m["missed_options"], "why": m["why"], "rating_components": m["components"]}, [])
 
     def _decision(self, ev: dict) -> dict | None:
         """Decision Lens: rate each pass against the estimated options the passer had."""
@@ -199,7 +223,7 @@ class Session:
             if not c or not sug or sug["status"] != "queued":
                 continue
             limit = STALE_GOAL_S if c.kind == "goal" else STALE_S
-            if self.state.finished or self.state.t - c.t > limit:
+            if (self.state.finished and c.kind != "man_of_match") or self.state.t - c.t > limit:
                 # Too late to air: drafting it now would only show the producer an old moment.
                 sug["status"] = "dropped"
                 sug["dropped_reason"] = "expired: the match moved on before the agents reached it"
@@ -364,6 +388,9 @@ class Session:
         s = self.state
         score = f"{s.teams[s.home]['short']} {s.score[s.home]}-{s.score[s.away]} {s.teams[s.away]['short']}"
         totals = {s.teams[t]["short"]: s.totals(t) for t in (s.home, s.away)}
+        if (m := man_of_the_match(s, self.lens)):
+            label = "man_of_the_match" if s.finished else "best_player_so_far"
+            totals[label] = {"player": m["player"], "team": s.teams[m["team"]]["short"], "rating": m["rating"], "why": m["why"]}
         pkg = await studio_package(self.gw, phase, approved, totals, score)
         pkg["created_minute"] = s.snapshot()["minute"]
         self.packages.append(pkg)

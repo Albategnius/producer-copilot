@@ -23,6 +23,7 @@ A live graphics producer has a few seconds to decide what goes on screen. Under 
 | **Personalize** | The `FeedAdapter` agent rewrites each approved graphic for TV, a fan app for newcomers (plain words, no jargon) and a chosen club's own channel (first-person, partisan). Each version is fact-checked line by line and gets its own on-screen look. |
 | **Ask the Match** | A fan-app agent answers fans' questions ("what happened at minute 30?", "who is making the best decisions?") in their own language by calling tools over the live match, so it knows nothing beyond the current minute. Every number is fact-checked. A verified answer can be sent to the producer as an on-screen **fan request**. |
 | **Decision Lens** | Every pass is rated against the passer's other options with a simplified expected-threat model: missed forward options during attacking moments, brave forward passes, and a vision score per player. Teammate positions are estimated from the formation (event data has no off-ball tracking), and the UI says so. |
+| **Substitutions & ratings** | Each team makes three second-half substitutions (the player coming on really plays: passes, shots and Decision Lens ratings). Every player gets a match rating from goals, chance quality, shots on target, defending, passing and the Decision Lens score; the Man of the Match is the top rating, explained component by component, and becomes a full-time graphic. |
 | **Commentate** | Play-by-play and colour commentary built from the live events and computed stats, spoken by an Azure AI Speech neural voice whose style follows the moment: chat, excited, shouting for goals. |
 
 ## The agent team
@@ -123,7 +124,7 @@ For the neural commentator, add the Azure AI Speech (or Foundry AIServices) key 
 
 ## Synthetic data
 
-`app/generator.py` is a seeded possession state machine: zone-dependent pass, carry and shot probabilities, team pressing spells, and player passing, finishing and pace ratings. Its output is tuned so each match lands near typical top-flight averages: about 400-500 passes per team at about 80% accuracy, 9-16 shots per team, and realistic xG and shot speeds. The clubs, players and venue are all fictional; player names come from Faker. The same seed always produces the same match.
+`app/generator.py` is a seeded possession state machine with benches and three second-half substitutions per team (drawn from a separate random stream, so the match itself is unchanged by them): zone-dependent pass, carry and shot probabilities, team pressing spells, and player passing, finishing and pace ratings. Its output is tuned so each match lands near typical top-flight averages: about 400-500 passes per team at about 80% accuracy, 9-16 shots per team, and realistic xG and shot speeds. The clubs, players and venue are all fictional; player names come from Faker. The same seed always produces the same match.
 
 ```bash
 uv run python -m app.generator --seed 1    # writes data/match_1.json

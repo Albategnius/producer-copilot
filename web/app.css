@@ -461,3 +461,30 @@ body:not(.demo-running) .demo-cursor { display: none; }
 .dc-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .dc-tags span { border: 1px solid rgba(255, 255, 255, .18); border-radius: 999px; padding: 6px 14px; font-weight: 700; color: #dfe8ff; background: rgba(255, 255, 255, .05); }
 body.demo-running .toasts { bottom: 110px; }
+
+/* ---------- substitutions, ratings, Man of the Match ---------- */
+.lineup h4 { margin: 12px 0 6px; font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+.lineup li.unused { opacity: .45; }
+.lineup li.subbed > span:nth-child(2) { color: var(--ink-2); }
+.subtag { font-size: .7rem; font-weight: 800; margin-left: 6px; padding: 1px 5px; border-radius: 4px; }
+.subtag.off { color: #ff9aa4; background: #ff475722; } .subtag.on { color: #7ff0c4; background: #2fd39a22; }
+.lineup .rt { color: var(--ink); font-variant-numeric: tabular-nums; }
+.motm-star { color: var(--cue); }
+.motm-box { margin-bottom: 16px; }
+.motm-card { border: 1px solid color-mix(in srgb, var(--teamc) 60%, transparent); border-radius: 12px; padding: 14px 16px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--teamc) 22%, transparent), rgba(8, 12, 22, .6)); display: grid; gap: 6px; }
+.motm-kicker { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--cue); }
+.motm-name { display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 800; }
+.motm-name .num { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--teamc); font-size: .85rem; }
+.motm-name b { margin-left: auto; font-size: 1.6rem; font-variant-numeric: tabular-nums; }
+.motm-why { margin: 0; color: var(--ink-2); }
+.motm-comp { display: flex; flex-wrap: wrap; gap: 6px; }
+.motm-comp span { font-size: .74rem; padding: 2px 8px; border-radius: 999px; background: rgba(255, 255, 255, .06); font-variant-numeric: tabular-nums; }
+.motm-comp .pos { color: #7ff0c4; } .motm-comp .neg { color: #ff9aa4; }
+.motm-box h4 { font-size: .78rem; margin: 12px 0 6px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .06em; }
+.rating-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.rating-list li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto 40px; gap: 8px; align-items: center; font-size: .86rem; }
+.rating-list .num { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .74rem; background: var(--teamc); }
+.rating-list b { text-align: right; font-variant-numeric: tabular-nums; }
+.br-motm { text-align: center; font-size: .9rem; color: #ffe2b0; border-top: 1px solid rgba(255, 255, 255, .07); padding-top: 6px; }
+.ticker li.sub span:last-child { color: #bfe9ff; }

@@ -20,6 +20,8 @@ PRIORITY = {
     "hard_pass": 40,
     "sprint": 30,
     "fan_request": 65,
+    "man_of_match": 90,
+    "substitution": 50,
     "missed_option": 35,
 }
 

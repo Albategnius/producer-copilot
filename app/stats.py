@@ -58,6 +58,10 @@ class MatchState:
         self.period = 1
         self.finished = False
         self.player_totals: dict[str, dict] = defaultdict(lambda: defaultdict(float))
+        # Who is on the pitch: starters from kick-off, substitutes from the moment they come on.
+        self.on_since = {p["id"]: 0.0 for t in meta["teams"] for p in t["players"] if not p.get("bench")}
+        self.off_at: dict[str, float] = {}
+        self.subs: list[dict] = []
 
     def other(self, team: str) -> str:
         return self.away if team == self.home else self.home
@@ -75,6 +79,11 @@ class MatchState:
             ev["difficulty"] = pass_difficulty(self.meta, ev)
         if ev["type"] == "goal":
             self.score = dict(ev["score"])
+        if ev["type"] == "substitution":
+            self.off_at[ev["player_off_id"]] = ev["t"]
+            self.on_since[ev["player_on_id"]] = ev["t"]
+            self.subs.append({"minute": ev["minute"], "team": ev["team"], "off_id": ev["player_off_id"], "off": ev["player_off"],
+                              "on_id": ev["player_on_id"], "on": ev["player_on"], "event_id": ev["id"]})
         if ev["type"] in ("half_end", "full_time"):
             self._switch_possession(None, ev["t"])
             self.finished = ev["type"] == "full_time"
@@ -95,6 +104,8 @@ class MatchState:
                 pt["tackles"] += 1
             elif ev["type"] == "pressure":
                 pt["pressures"] += 1
+            elif ev["type"] == "possession_change" and ev.get("reason") == "interception":
+                pt["interceptions"] += 1
             elif ev["type"] == "carry":
                 pt["top_speed_kmh"] = max(pt["top_speed_kmh"], ev["speed_kmh"])
         self.events.append(ev)
@@ -178,6 +189,15 @@ class MatchState:
         changes = self.window(self.home, seconds, end_t)["possession_changes"]
         return Stat(round(changes.value / (seconds / 60), 1), changes.source_event_ids)
 
+    def minutes_played(self, player_id: str) -> int:
+        if player_id not in self.on_since:
+            return 0
+        end = self.off_at.get(player_id, self.t)
+        return max(0, int(round((end - self.on_since[player_id]) / 60)))
+
+    def on_pitch(self, player_id: str) -> bool:
+        return player_id in self.on_since and player_id not in self.off_at
+
     def player(self, player_id: str) -> dict:
         p = self.players[player_id]
         pt = self.player_totals.get(player_id, {})
@@ -194,6 +214,9 @@ class MatchState:
             "tackles": int(pt.get("tackles", 0)),
             "pressures": int(pt.get("pressures", 0)),
             "top_speed_kmh": round(pt.get("top_speed_kmh", 0.0), 1),
+            "interceptions": int(pt.get("interceptions", 0)),
+            "minutes_played": self.minutes_played(player_id),
+            "status": "on the pitch" if self.on_pitch(player_id) else ("substituted off" if player_id in self.off_at else "on the bench"),
         }
 
     def snapshot(self) -> dict:
@@ -208,4 +231,5 @@ class MatchState:
             "momentum": self.momentum().value,
             "chaos": self.chaos_index().value,
             "finished": self.finished,
+            "subs": self.subs,
         }

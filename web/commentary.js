@@ -46,6 +46,9 @@ const Commentary = (() => {
     if (!ctx) return;
     const tm = ctx.team(e.team);
     switch (e.type) {
+      case "substitution":
+        return say(pick([`Change for ${tm.short}: ${surname(e.player_off)} makes way, ${surname(e.player_on)} comes on.`,
+          `${tm.short} make a substitution. ${surname(e.player_on)} on, ${surname(e.player_off)} off.`]), P.BIG);
       case "kickoff":
         return e.minute <= 1
           ? say(pick([`And we're under way here at ${ctx.meta.venue.replace(/ \(fictional\)/, "")}!`, "The referee blows, and we're off!"]), P.BIG)

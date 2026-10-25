@@ -82,6 +82,7 @@ function renderBreak() {
     <div class="br-score"><span>${esc(h.short)}</span><strong>${sc[h.id]}–${sc[a.id]}</strong><span>${esc(a.short)}</span></div>
     ${row("Possession %", Math.round(th.possession_pct), Math.round(ta.possession_pct))}
     ${row("Shots", th.shots, ta.shots)}${row("xG (simulated)", th.xg, ta.xg)}${row("Pass accuracy %", Math.round(th.pass_accuracy_pct), Math.round(ta.pass_accuracy_pct))}
+    ${S.stats.motm ? `<div class="br-motm">${fin ? "★ Man of the Match" : "Best player so far"}: <b>#${S.stats.motm.number} ${esc(S.stats.motm.player)}</b> (${esc(team(S.stats.motm.team).short)}) · ${S.stats.motm.rating.toFixed(1)} · ${esc(S.stats.motm.why)}</div>` : ""}
     <div class="br-foot">${fin ? "The studio rundown is in the Studio package tab." : "Second half starts shortly. The half-time rundown is in the Studio package tab."}</div>`;
   el.hidden = false;
 }
@@ -189,9 +190,20 @@ function renderStats() {
 }
 
 function renderLineups() {
-  $("lineups").innerHTML = S.meta.teams.map((t) => `<div class="lineup"><h3><span class="sw" style="background:${t.color}"></span>${esc(t.name)}</h3><ol>${
-    t.players.map((p) => { const v = (S.stats?.vision || []).find((r) => r.player_id === p.id);
-      return `<li><span class="num" style="--teamc:${t.color}">${p.number}</span><span>${esc(p.name)}</span><span class="muted small">${esc(p.role)}${v ? ` · vision ${v.vision_score_pct}%` : ""}</span></li>`; }).join("")}</ol></div>`).join("");
+  const subs = S.stats?.subs || [];
+  const rating = new Map((S.stats?.ratings || []).map((r) => [r.player_id, r]));
+  const offAt = new Map(subs.map((x) => [x.off_id, x.minute])), onAt = new Map(subs.map((x) => [x.on_id, x.minute]));
+  const row = (p, t) => {
+    const r = rating.get(p.id), off = offAt.get(p.id), on = onAt.get(p.id), unused = p.bench && !on;
+    const motm = S.stats?.motm?.player_id === p.id;
+    return `<li class="${unused ? "unused" : ""}${off ? " subbed" : ""}"><span class="num" style="--teamc:${t.color}">${p.number}</span>
+      <span>${esc(p.name)}${motm ? ' <span class="motm-star" title="Man of the Match">★</span>' : ""}
+        ${off ? `<span class="subtag off">▼ ${off}'</span>` : ""}${on ? `<span class="subtag on">▲ ${on}'</span>` : ""}</span>
+      <span class="muted small">${unused ? "bench" : esc(p.role)}${r ? ` · <b class="rt">${r.rating.toFixed(1)}</b>` : ""}</span></li>`;
+  };
+  $("lineups").innerHTML = S.meta.teams.map((t) => `<div class="lineup"><h3><span class="sw" style="background:${t.color}"></span>${esc(t.name)}</h3>
+    <ol>${t.players.filter((p) => !p.bench).map((p) => row(p, t)).join("")}</ol>
+    <h4>Substitutes</h4><ol class="bench">${t.players.filter((p) => p.bench).map((p) => row(p, t)).join("")}</ol></div>`).join("");
 }
 
 // --- Decision Lens -------------------------------------------------------------
@@ -202,7 +214,25 @@ function lensLine(f) {
     : `<b>#${f.number} ${esc(f.player)}</b> picked the brave option: forward to ${esc(f.receiver || "a teammate")}`;
 }
 
+function renderMotm() {
+  const m = S.stats?.motm, box = $("motm-box");
+  if (!m) { box.innerHTML = `<p class="muted small">Man of the Match appears once players have played 20 minutes.</p>`; return; }
+  const t = team(m.team), final = m.final;
+  const comp = Object.entries(m.components).map(([k, v]) => `<span class="${v >= 0 ? "pos" : "neg"}">${esc(k.replace(/_/g, " "))} ${v >= 0 ? "+" : ""}${v.toFixed(2)}</span>`).join("");
+  const top = (S.stats.ratings || []).slice(0, 5).map((r) => { const p = player(r.player_id); const tt = team(p.team);
+    return `<li><span class="num" style="--teamc:${tt.color}">${p.number}</span><span>${esc(p.name)}</span><span class="muted small">vision ${r.vision_score_pct ?? "–"}%</span><b>${r.rating.toFixed(1)}</b></li>`; }).join("");
+  box.innerHTML = `<div class="motm-card" style="--teamc:${t.color}">
+      <div class="motm-kicker">${final ? "★ Man of the Match" : "Man of the Match race · leader"}</div>
+      <div class="motm-name"><span class="num">${m.number}</span>${esc(m.player)} <span class="muted">${esc(t.short)}</span><b>${m.rating.toFixed(1)}</b></div>
+      <p class="motm-why">${esc(m.why)}</p>
+      <div class="motm-comp" title="Rating = 6.0 + these components">${comp}</div>
+    </div>
+    <h4>Top ratings</h4><ol class="rating-list">${top}</ol>
+    <p class="muted small">Ratings start at 6.0; the Decision Lens component uses the same vision score, brave passes and missed options shown here, so the two always agree.</p>`;
+}
+
 function renderLens() {
+  renderMotm();
   const flags = S.decisions.slice(-14).reverse();
   if (flags.length) {
     $("lens-flags").innerHTML = flags.map((f) => `<li class="lf ${f.kind}"><span class="m">${f.minute}'</span>
@@ -242,6 +272,7 @@ function tickerLine(e) {
     case "tackle": return ["", `Tackle won by ${who} (${tm})`];
     case "foul": return ["", `Foul by ${who} (${tm})`];
     case "kickoff": return ["", `Kick-off ${tm}`];
+    case "substitution": return ["sub", `🔁 ${tm}: ${shirt(e.player_off_id, e.player_off)} off · ${shirt(e.player_on_id, e.player_on)} on`];
     case "half_start": return ["goal", `Period ${e.period} starts`];
     case "half_end": return ["goal", "Half-time"];
     case "full_time": return ["goal", "Full-time"];
@@ -535,6 +566,7 @@ function connect() {
     if (e.type === "goal") toast(`Goal! ${team(e.team).short} — ${player(e.player_id) ? `#${player(e.player_id).number} ` : ""}${e.player}`);
     soundFor(e);
     Commentary.onEvent(e);
+    if (e.type === "substitution") { toast(`🔁 ${team(e.team).short}: ${e.player_off} off, ${e.player_on} on`); renderLineups(); }
   });
   on("stats", (st) => { S.stats = st; renderScorebug(); renderStats(); renderBreak(); if (!$("lens-flags").closest("[hidden]")) renderLens();
     if (!$("lineups").closest("[hidden]") && performance.now() - (S.lineupsAt || 0) > 3000) { S.lineupsAt = performance.now(); renderLineups(); } });
@@ -627,6 +659,8 @@ document.addEventListener("click", async (ev) => {
   if (b.dataset.tab) {
     document.querySelectorAll("[data-tab]").forEach((t) => t.setAttribute("aria-selected", String(t === b)));
     document.querySelectorAll("[data-pane]").forEach((p) => { p.hidden = p.dataset.pane !== b.dataset.tab; });
+    if (b.dataset.tab === "lens") renderLens();
+    if (b.dataset.tab === "stats") renderLineups();
     return;
   }
   if (b.dataset.feed) {

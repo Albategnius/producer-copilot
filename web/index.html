@@ -121,7 +121,7 @@
       <div class="panel tabs-panel">
         <div class="tabs" role="tablist" aria-label="Match details">
           <button role="tab" type="button" aria-selected="true" data-tab="stats">Match stats</button>
-          <button role="tab" type="button" aria-selected="false" data-tab="lens">Decision Lens</button>
+          <button role="tab" type="button" aria-selected="false" data-tab="lens">Decision Lens · MOTM</button>
           <button role="tab" type="button" aria-selected="false" data-tab="events">Event log</button>
           <button role="tab" type="button" aria-selected="false" data-tab="package">Studio package</button>
           <button role="tab" type="button" aria-selected="false" data-tab="audit">Audit log</button>
@@ -134,6 +134,7 @@
         </div>
         <div class="tab" data-pane="lens" hidden>
           <p class="muted small lens-note">Was each pass the best choice? Every pass is compared with the options the passer had, using a simplified expected-threat model. Teammate positions are <b>estimated from the formation</b>, not tracked, so treat these as indicators.</p>
+          <div class="motm-box" id="motm-box"></div>
           <div class="lens-grid">
             <div><h3>Moments</h3><ol class="lens-flags" id="lens-flags"><li class="muted">Flags appear as the match is played.</li></ol></div>
             <div><h3>Vision score</h3><div id="vision-board" class="vision-board"><p class="muted small">Players need 8 rated passes.</p></div></div>

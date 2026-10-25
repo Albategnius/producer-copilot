@@ -42,7 +42,8 @@ class DecisionLens:
         self.meta = meta
         self.home = meta["home"]
         self.players = {p["id"]: p for t in meta["teams"] for p in t["players"]}
-        self.squads = {t["id"]: t["players"] for t in meta["teams"]}
+        # Only players on the pitch can be passing options; substitutions update this.
+        self.squads = {t["id"]: [p for p in t["players"] if not p.get("bench")] for t in meta["teams"]}
         self.flags: list[dict] = []
         self.per_player: dict[str, dict] = defaultdict(lambda: {"passes": 0, "good": 0, "missed": 0, "brave": 0, "quality_sum": 0.0})
 
@@ -65,6 +66,14 @@ class DecisionLens:
             ay = min(66.0, max(2.0, p["base_y"] + (ball_ay - 34.0) * 0.3))
             out.append({"player_id": p["id"], "ax": ax, "ay": ay})
         return out
+
+    def substitute(self, ev: dict) -> None:
+        squad = self.squads[ev["team"]]
+        for i, p in enumerate(squad):
+            if p["id"] == ev["player_off_id"]:
+                on = dict(self.players[ev["player_on_id"]])
+                on.update(role=p["role"], base_x=p["base_x"], base_y=p["base_y"])
+                squad[i] = on
 
     # --- per event -------------------------------------------------------------
 

@@ -17,6 +17,7 @@ from typing import Annotated, Any
 from agent_framework import Agent, tool
 
 from .decisions import DecisionLens
+from .ratings import man_of_the_match, player_rating, ratings
 from .factcheck import NUMBER_RE, allowed_numbers
 from .stats import MatchState
 
@@ -29,11 +30,12 @@ FAN_INSTRUCTIONS = (
     "based on formation positions, say so when you use them. If a question contains a claim, check it against "
     "the tool results and correct it plainly when it is wrong (start with 'No'). Name players with their team. "
     "Reply in the same language as the question. "
+    "For the best player or Man of the Match, use player_ratings and give the reasons it lists. "
     "If asked about real clubs, real players, betting or anything outside this match, say you can only "
     "talk about this match."
 )
 
-KEY_TYPES = {"goal", "shot", "foul", "tackle", "half_start", "half_end", "full_time"}
+KEY_TYPES = {"goal", "shot", "foul", "tackle", "substitution", "half_start", "half_end", "full_time"}
 
 
 class MatchTools:
@@ -82,7 +84,7 @@ class MatchTools:
         line = {"minute": e["minute"], "type": e["type"], "team": self.s.teams[e["team"]]["short"] if e.get("team") else None}
         if p:
             line["player"] = f"#{p['number']} {p['name']}"
-        for k in ("outcome", "xg", "score", "reason", "receiver", "difficulty", "length_m"):
+        for k in ("outcome", "xg", "score", "reason", "receiver", "difficulty", "length_m", "player_off", "player_on"):
             if k in e:
                 line[k] = e[k]
         return line
@@ -126,6 +128,8 @@ class MatchTools:
             stats = self.s.player(p["id"])
             stats["team"] = self.s.teams[p["team"]]["short"]
             stats["decision_lens"] = self.lens.vision(p["id"])
+            r = player_rating(self.s, self.lens, p["id"])
+            stats["match_rating"] = r["rating"] if r else None
             stats["recent_decisions"] = [self._flag_line(f) for f in self.lens.flags if f["player_id"] == p["id"]][-3:]
             out.append(stats)
         self.team_hint, self.player_hint = hits[0]["team"], hits[0]["id"]
@@ -158,6 +162,22 @@ class MatchTools:
         if tid:
             self.team_hint = tid
         return self._record("decision_lens", {"player": player, "team": team}, result)
+
+    def player_ratings(self) -> dict:
+        rows = ratings(self.s, self.lens)
+        m = man_of_the_match(self.s, self.lens, rows)
+        team = lambda tid: self.s.teams[tid]["short"]  # noqa: E731
+        result = {
+            "method": "Rating starts at 6.0; goals, chance quality (xG), shots on target, defending, passing and the "
+                      "Decision Lens score move it up or down. Man of the Match needs 20+ minutes.",
+            "man_of_the_match" if self.s.finished else "leader_so_far":
+                {"player": f"#{m['number']} {m['player']} ({team(m['team'])})", "rating": m["rating"], "why": m["why"],
+                 "components": m["components"]} if m else None,
+            "top_ratings": [{"player": f"#{r['number']} {r['player']} ({team(r['team'])})", "rating": r["rating"],
+                             "vision_score_pct": r["vision_score_pct"], "minutes": r["minutes_played"]} for r in rows[:6]],
+            "substitutions": [{"minute": x["minute"], "team": team(x["team"]), "off": x["off"], "on": x["on"]} for x in self.s.subs],
+        }
+        return self._record("player_ratings", {}, result)
 
     def _flag_line(self, f: dict) -> dict:
         if f["kind"] == "missed_option":
@@ -196,7 +216,12 @@ class MatchTools:
             """Decision Lens: were passes the best available choice? Missed options, brave passes, vision scores."""
             return json.dumps(mt.decision_lens(player, team))
 
-        return [match_overview, events_between, player_report, team_report, decision_lens]
+        @tool
+        def player_ratings() -> str:
+            """Player match ratings, the Man of the Match (or current leader) with the reasons, and substitutions so far."""
+            return json.dumps(mt.player_ratings())
+
+        return [match_overview, events_between, player_report, team_report, decision_lens, player_ratings]
 
 
 # --- answering ------------------------------------------------------------------
@@ -223,6 +248,19 @@ def fallback_answer(question: str, tools: MatchTools) -> str:
         if not lines:
             return f"Between minutes {r['from_minute']} and {r['to_minute']} it was mostly build-up play: {r['total_events']} events, no shots or goals."
         return "Around then: " + "; ".join(lines) + "."
+    if not any(w in q for w in ("decision", "keputusan", "vision", "visi")) and any(
+            w in q for w in ("man of the match", "motm", "best player", "rating", "pemain terbaik", "terbaik")):
+        r = tools.player_ratings()
+        m = r.get("man_of_the_match") or r.get("leader_so_far")
+        if not m:
+            return "It's too early to pick a Man of the Match."
+        title = "Man of the Match" if "man_of_the_match" in r else "Man of the Match so far"
+        return f"{title}: {m['player']}, rated {m['rating']} ({m['why']})."
+    if any(w in q for w in ("substitut", "pergantian", "sub ", "subs", "diganti")):
+        subs = tools.player_ratings()["substitutions"]
+        if not subs:
+            return "No substitutions yet."
+        return "Substitutions: " + "; ".join(f"{x['minute']}' {x['team']}: {x['off']} off, {x['on']} on" for x in subs) + "."
     if any(w in q for w in ("decision", "vision", "keputusan", "visi")):
         r = tools.decision_lens()
         best = r["best_vision"][0] if r["best_vision"] else None

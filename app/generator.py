@@ -59,6 +59,9 @@ class Team:
     color: str
     players: list[Player] = field(default_factory=list)
     press_spells: list[tuple[float, float]] = field(default_factory=list)
+    starters: list[Player] = field(default_factory=list)
+    bench: list[Player] = field(default_factory=list)
+    subs_plan: list[tuple[float, str]] = field(default_factory=list)   # (match seconds, player id coming off)
 
 
 def _clamp(v: float, lo: float, hi: float) -> float:
@@ -75,6 +78,10 @@ class MatchGenerator:
         self.score = {}
         self.teams = self._build_teams()
         self.score = {t.id: 0 for t in self.teams}
+        # Benches and substitutions use their own random stream, so adding them leaves the match itself
+        # (every pass, shot and goal) exactly as before; only who is on the pitch changes.
+        self.sub_rng = random.Random(seed * 7919 + 13)
+        self._plan_substitutions()
 
     def _build_teams(self) -> list[Team]:
         teams = []
@@ -106,6 +113,40 @@ class MatchGenerator:
                 team.press_spells.append((start, start + self.rng.uniform(4 * 60, 6 * 60)))
             teams.append(team)
         return teams
+
+    def _plan_substitutions(self) -> None:
+        for team in self.teams:
+            team.starters = list(team.players)
+            numbers = self.sub_rng.sample(range(12, 24), 5)
+            for num in sorted(numbers):
+                fake = Faker(self.sub_rng.choice(FAKER_LOCALES))
+                fake.seed_instance(self.sub_rng.randint(0, 10**9))
+                team.bench.append(Player(id=f"{team.id}-{num}", name=f"{fake.first_name_male()[0]}. {fake.last_name()}",
+                                         team=team.id, number=num, role="SUB", base_x=0.0, base_y=0.0,
+                                         passing=0.0, finishing=0.0, pace=0.0))
+            by_role = {r: [p for p in team.players if p.role in r] for r in (("RW", "ST", "LW"), ("DM", "RCM", "LCM"))}
+            outfield = [p for p in team.players if p.role != "GK"]
+            off = [self.sub_rng.choice(by_role[("RW", "ST", "LW")]), self.sub_rng.choice(by_role[("DM", "RCM", "LCM")])]
+            off.append(self.sub_rng.choice([p for p in outfield if p not in off]))
+            times = sorted(self.sub_rng.uniform(57 * 60, 84 * 60) for _ in off)
+            team.subs_plan = list(zip(times, [p.id for p in off]))
+
+    def _maybe_substitute(self, carrier: Player) -> Player:
+        """Make any substitution that is due; the player coming on takes the same role and position."""
+        for team in self.teams:
+            while team.subs_plan and team.subs_plan[0][0] <= self.t:
+                _, off_id = team.subs_plan.pop(0)
+                idx = next(i for i, p in enumerate(team.players) if p.id == off_id)
+                off_p = team.players[idx]
+                on_p = next(p for p in team.bench if p.role == "SUB")
+                on_p.role, on_p.base_x, on_p.base_y = off_p.role, off_p.base_x, off_p.base_y
+                on_p.passing, on_p.finishing, on_p.pace = off_p.passing, off_p.finishing, off_p.pace
+                team.players[idx] = on_p
+                self._emit("substitution", team.id, on_p, player_off_id=off_p.id, player_off=off_p.name,
+                           player_on_id=on_p.id, player_on=on_p.name, role=off_p.role)
+                if carrier is off_p:
+                    carrier = on_p
+        return carrier
 
     # --- coordinate helpers -------------------------------------------------
 
@@ -176,6 +217,7 @@ class MatchGenerator:
         self._emit("kickoff", team_id, carrier, x=x, y=y)
 
         while self.t < end_t:
+            carrier = self._maybe_substitute(carrier)
             opp = self._opp(team_id)
             press = self._press(opp.id)
             own_half = ax < 52.5
@@ -327,7 +369,8 @@ class MatchGenerator:
                 "away": away.id,
                 "teams": [
                     {"id": t.id, "name": t.name, "short": t.short, "color": t.color,
-                     "players": [p.__dict__ for p in t.players]}
+                     "players": [{**p.__dict__, "bench": False} for p in t.starters]
+                                + [{**p.__dict__, "bench": True} for p in t.bench]}
                     for t in self.teams
                 ],
             },
