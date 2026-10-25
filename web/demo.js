@@ -5,14 +5,14 @@
 // "Record demo" captures this tab with its audio and downloads the video when the tour ends.
 const Demo = (() => {
   const LINES = {
-    intro: "Live TV graphics get seconds to be right, and one wrong number on air is a real problem. Producer Co-pilot is an AI graphics desk where agents propose and a human producer decides.",
+    intro: "Live TV graphics get seconds to be right. Producer Co-pilot is an AI graphics desk where agents propose and a human producer decides.",
     agents: "Agents built on Microsoft Agent Framework watch the live match. They spot the moment, explain why it matters and write the graphic, using GPT-5 mini on Microsoft Foundry.",
     check: "A deterministic Fact Checker verifies every number. In test mode we planted a wrong one: it was caught and sent back until the draft was right.",
     approve: "One key approves it, and it airs instantly. The FeedAdapter agent then rewrites it for TV, a fan app and the club's channel, each version checked again.",
     ask: "Fans get Ask the Match: an agent that answers from the live data through tools. It only knows what has happened so far, it works in any language, and every number is checked.",
-    request: "A fan can even ask for it on screen. The request lands in the producer's queue, and the producer still decides.",
+    request: "Fans can even request it on screen; the producer still decides.",
     lens: "Decision Lens rates every pass against the player's options using expected threat, flagging missed forward options and brave passes, with a vision score per player.",
-    fulltime: "Fast-forward to full time. Substitutions come through live, and every player gets a match rating. The Man of the Match is the top rating, built partly on the Decision Lens score, so the two always agree.",
+    fulltime: "At full time: substitutions arrived live, every player has a rating, and the Man of the Match is built partly on the Decision Lens score.",
     outro: "Producer Co-pilot. Built with Agent Framework, Microsoft Foundry, Azure AI Speech and Container Apps.",
   };
   const QUESTION = "What happened around minute 9?";
@@ -201,8 +201,9 @@ const Demo = (() => {
     caption.classList.remove("show");
     Sound.setVoice(false);
 
-    // 6. Ask the Match
+    // 6. Ask the Match (the match speeds up from here so the closing scenes reach full time)
     mark("ask");
+    await control({ speed: 120 });
     await scrollToEl("#fan-panel");
     const ask = say("ask");
     await typeInto("#ask-input", QUESTION);
@@ -245,9 +246,9 @@ const Demo = (() => {
     await sleep(1200);
     await scrollToEl(".tabs-panel");
     await click("[data-tab=lens]");
-    await sleep(500);
+    await sleep(400);
     await pointAt(document.querySelector(".motm-card"));
-    await sleep(2200);
+    await sleep(1200);
 
     // 10. Close
     mark("outro");
