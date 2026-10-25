@@ -178,7 +178,7 @@ const Demo = (() => {
     window.scrollTo({ top: 0 });
     await control({ action: "reset" });
     await waitFor(() => S.status && S.status.progress === 0 && !S.status.running, 8000);
-    await control({ inject_faults: true, speed: 30 });
+    await control({ inject_faults: true, speed: 45 });   // reach the first moment quickly, so the agents start early
     setView(true);
     document.querySelector("[data-tab=stats]")?.click();
     document.querySelector("[data-feed=main]")?.click();
