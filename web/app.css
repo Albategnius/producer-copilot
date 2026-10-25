@@ -550,3 +550,10 @@ body.demo-running { overflow-x: hidden; }
 .op-flash { position: absolute; inset: 0; background: radial-gradient(circle at 50% 46%, #fff, rgba(170, 205, 255, .5) 25%, transparent 60%);
   opacity: 0; animation: opFlash .7s 2.12s ease-out forwards; }
 @keyframes opFlash { 0% { opacity: 0; } 15% { opacity: .9; } 100% { opacity: 0; } }
+
+/* Demo: highlight box around the feature the narrator is explaining. Drawn on the element's own edge
+   (negative offset) so a scrolling or clipped parent never cuts it off. */
+.demo-focus { outline: 4px solid #FFD84A !important; outline-offset: -2px; border-radius: 14px;
+  box-shadow: inset 0 0 0 1px rgba(255, 216, 74, .5), inset 0 0 26px rgba(255, 216, 74, .16), 0 0 28px rgba(255, 216, 74, .35) !important;
+  animation: demoFocus .55s cubic-bezier(.2, .9, .2, 1); }
+@keyframes demoFocus { 0% { outline-color: rgba(255, 216, 74, 0); outline-offset: 16px; } 100% { outline-color: #FFD84A; outline-offset: -2px; } }

@@ -163,13 +163,28 @@ const Demo = (() => {
     parts.forEach((p) => stage.appendChild(p));
   }
   function dropStage() {
+    clearFocus();
     if (!stage) return;
     [...stage.children].forEach((c) => stage.before(c));
     stage.remove(); stage = null; cam = { x: 0, y: 0, s: 1 };
   }
+  // A highlight box around the feature being explained. It sits on the element inside the stage,
+  // so it zooms with the camera.
+  let focusEl = null;
+  function focusBox(t) {
+    if (focusEl === t) return;
+    clearFocus();
+    if (!t) return;
+    focusEl = t;
+    t.classList.remove("demo-focus"); void t.offsetWidth;   // restart the draw-in animation
+    t.classList.add("demo-focus");
+  }
+  function clearFocus() { focusEl?.classList.remove("demo-focus"); focusEl = null; }
+
   async function zoom(target, maxScale = 1.8) {
     const t = typeof target === "string" ? document.querySelector(target) : target;
     if (!t || !stage) return;
+    focusBox(t);
     const r = t.getBoundingClientRect();
     const origin = { x: -window.scrollX, y: -window.scrollY };              // stage's untransformed top-left on screen
     const q = { x: (r.left + r.width / 2 - origin.x - cam.x) / cam.s, y: (r.top + r.height / 2 - origin.y - cam.y) / cam.s };
@@ -181,6 +196,7 @@ const Demo = (() => {
     await sleep(850);
   }
   async function unzoom() {
+    clearFocus();
     if (!stage || cam.s === 1) return;
     cam = { x: 0, y: 0, s: 1 };
     stage.style.transform = "none";
