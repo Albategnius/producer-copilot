@@ -47,26 +47,14 @@ const Demo = (() => {
   const hideCard = () => { card.classList.remove("show"); setTimeout(() => { if (!card.classList.contains("show")) { cancelAnimationFrame(opRaf); } }, 900); };
 
   // --- opening: an original broadcast-style title sequence ------------------------------------
-  // Floodlight beams over a dark bowl; a football made of light assembles from thousands of particles
-  // and turns towards the camera; a hit (flash, shockwave, anamorphic flare) bursts it, and a metallic
-  // title lands. Everything is drawn live (canvas + CSS) and the cue is synthesised (Sound.opening),
-  // so the screen recording captures picture and music together.
-  const OP = { HIT: 2.45, LEN: 6.5 };
+  // A night stadium comes alive: four floodlight towers switch on one by one, the camera swoops down
+  // over the bowl while thousands of camera flashes spark in the stands, AI tracking lines race across
+  // the pitch, and on the orchestral hit the title lands. Drawn live on a canvas (3D projected by hand)
+  // with a synthesised cue (Sound.opening), so the screen recording captures picture and music together.
+  const OP = { ON: [0.3, 0.62, 0.94, 1.26], HIT: 3.35, LEN: 7.5 };
   let opRaf = 0;
-  function footballEdges() {
-    const f = (1 + Math.sqrt(5)) / 2, base = [[0, 1, 3 * f], [1, 2 + f, 2 * f], [f, 2, 2 * f + 1]], V = [];
-    for (const [x, y, z] of base) for (const [a, b, c] of [[x, y, z], [y, z, x], [z, x, y]])
-      for (const sa of [1, -1]) for (const sb of [1, -1]) for (const sc of [1, -1]) {
-        const v = [a * sa, b * sb, c * sc];
-        if (!V.some((w) => Math.hypot(w[0] - v[0], w[1] - v[1], w[2] - v[2]) < 1e-6)) V.push(v);
-      }
-    const E = [];
-    for (let i = 0; i < V.length; i++) for (let j = i + 1; j < V.length; j++)
-      if (Math.abs(Math.hypot(V[i][0] - V[j][0], V[i][1] - V[j][1], V[i][2] - V[j][2]) - 2) < 1e-6) E.push([V[i], V[j]]);
-    return E;                                                       // 90 edges of a truncated icosahedron
-  }
   function opening() {
-    card.innerHTML = `<div class="op"><canvas></canvas>
+    card.innerHTML = `<div class="op"><canvas></canvas><div class="op-scrim"></div>
       <div class="op-title"><div class="op-kicker"><i></i><span>Inside the Game</span><i></i></div>
         <h1>Producer Co-pilot</h1><p>AI agents propose · You decide</p>
         <small>Microsoft × Premier League hackathon</small></div><div class="op-vignette"></div></div>`;
@@ -74,105 +62,137 @@ const Demo = (() => {
     Sound.opening?.();
     const cv = card.querySelector("canvas"), g = cv.getContext("2d");
     const dpr = Math.min(2, devicePixelRatio || 1);
-    const W = cv.width = innerWidth * dpr, H = cv.height = innerHeight * dpr;
-    const cx = W / 2, cy = H * 0.45, unit = Math.min(W, H) * 0.052;
-    // grain tile
-    const grain = document.createElement("canvas"); grain.width = grain.height = 160;
-    const gg = grain.getContext("2d"), id = gg.createImageData(160, 160);
-    for (let i = 0; i < id.data.length; i += 4) { const v = Math.random() * 255; id.data[i] = id.data[i + 1] = id.data[i + 2] = v; id.data[i + 3] = 255; }
-    gg.putImageData(id, 0, 0);
-    // particles that settle on the football's edges
-    const parts = [];
-    for (const [p, q] of footballEdges()) for (let k = 0; k < 9; k++) {
-      const u = (k + Math.random() * 0.6) / 9.3, tx = p[0] + (q[0] - p[0]) * u, ty = p[1] + (q[1] - p[1]) * u, tz = p[2] + (q[2] - p[2]) * u;
-      const a = Math.random() * Math.PI * 2, e = Math.acos(2 * Math.random() - 1), r = 18 + Math.random() * 26;
-      parts.push({ t: [tx, ty, tz], s: [r * Math.sin(e) * Math.cos(a), r * Math.sin(e) * Math.sin(a) * 0.6, r * Math.cos(e)],
-        d: Math.random() * 0.55, size: 0.7 + Math.random() * 1.3, burst: 1.5 + Math.random() * 2.5 });
+    const W = cv.width = innerWidth * dpr, H = cv.height = innerHeight * dpr, cx = W / 2, cy = H * 0.52, F = W * 0.62;
+    const ease = (x) => { x = Math.min(1, Math.max(0, x)); return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+    const lerp = (a, b, k) => a + (b - a) * k;
+    // stadium bowl: tiers of seats as a rounded rectangle (superellipse), rising outwards
+    const crowd = [];
+    const rim = (k, u) => { const th = u * Math.PI * 2, c = Math.cos(th), s2 = Math.sin(th), rx = 64 + k * 3.1, rz = 45 + k * 2.9;
+      return [rx * Math.sign(c) * Math.pow(Math.abs(c), 0.55), k * 2.1, rz * Math.sign(s2) * Math.pow(Math.abs(s2), 0.55)]; };
+    for (let k = 0; k < 16; k++) {
+      const rx = 64 + k * 3.1, rz = 45 + k * 2.9, y = 0.4 + k * 2.1, n = 380 + k * 14;
+      for (let i = 0; i < n; i++) {
+        const th = (i / n) * Math.PI * 2 + Math.random() * 0.01, c = Math.cos(th), s2 = Math.sin(th);
+        crowd.push({ p: [rx * Math.sign(c) * Math.pow(Math.abs(c), 0.55), y, rz * Math.sign(s2) * Math.pow(Math.abs(s2), 0.55)],
+          hue: Math.random(), flash: 0 });
+      }
     }
-    const edges = footballEdges();
-    const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+    const towers = [[-74, 0, -54], [74, 0, -54], [74, 0, 54], [-74, 0, 54]].map((b) => ({ base: b, top: [b[0], 62, b[2]] }));
+    const streams = Array.from({ length: 9 }, (_, i) => {           // tracking lines: passes and runs across the pitch
+      const pts = []; let x = -45 + Math.random() * 90, z = -28 + Math.random() * 56;
+      for (let j = 0; j < 6; j++) { pts.push([x, 0.3, z]); x += (Math.random() - 0.5) * 40; z += (Math.random() - 0.5) * 26; x = Math.max(-50, Math.min(50, x)); z = Math.max(-32, Math.min(32, z)); }
+      return { pts, at: 2.25 + i * 0.09, col: i % 3 === 0 ? [255, 210, 120] : [120, 200, 255] };
+    });
+    const sparks = Array.from({ length: 140 }, () => ({ x: Math.random(), y: 1 + Math.random() * 0.3, v: 0.05 + Math.random() * 0.12, s: 0.6 + Math.random() * 1.6 }));
     const start = performance.now();
     const frame = (now) => {
-      const t = (now - start) / 1000, hit = OP.HIT, after = t - hit;
+      const t = (now - start) / 1000, after = t - OP.HIT;
+      // camera: a high, wide orbit swooping down and round, then a slow drift behind the title
+      const k = ease(t / OP.HIT);
+      const ang = lerp(-2.45, -1.35, ease(t / 6)), dist = lerp(250, 135, k), h = lerp(165, 52, k) + Math.max(0, after) * 4;
+      const C = [Math.cos(ang) * dist, h, Math.sin(ang) * dist], T = [0, lerp(-10, 2, k), 0];
+      let f = [T[0] - C[0], T[1] - C[1], T[2] - C[2]]; const fl = Math.hypot(...f); f = f.map((v) => v / fl);
+      let r = [-f[2], 0, f[0]]; const rl = Math.hypot(...r); r = r.map((v) => v / rl);   // right = f × up
+      const u = [r[1] * f[2] - r[2] * f[1], r[2] * f[0] - r[0] * f[2], r[0] * f[1] - r[1] * f[0]];
+      const P = (p) => { const d = [p[0] - C[0], p[1] - C[1], p[2] - C[2]], z = d[0] * f[0] + d[1] * f[1] + d[2] * f[2];
+        if (z < 2) return null; return [cx + (d[0] * r[0] + d[1] * r[1] + d[2] * r[2]) * F / z, cy - (d[0] * u[0] + d[1] * u[1] + d[2] * u[2]) * F / z, z]; };
+      const lit = OP.ON.reduce((a, on) => a + Math.min(1, Math.max(0, (t - on) / 0.18)), 0) / 4;   // 0..1 as towers come on
+      const dim = after > 0 ? lerp(1, 0.5, Math.min(1, after / 0.8)) : 1;
+      const L = lit * dim;
       g.globalCompositeOperation = "source-over";
-      const bg = g.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.75);
-      bg.addColorStop(0, "#0b1430"); bg.addColorStop(0.55, "#050a1a"); bg.addColorStop(1, "#010208");
-      g.fillStyle = bg; g.fillRect(0, 0, W, H);
-      g.globalCompositeOperation = "lighter";
-      // floodlight beams from the top, slowly sweeping
-      const beamA = Math.min(1, t / 0.8) * (after > 0 ? 1 + Math.max(0, 0.8 - after) : 1);
-      for (let i = 0; i < 6; i++) {
-        const side = i < 3 ? -1 : 1, k = i % 3, ox = cx + side * W * (0.18 + k * 0.13), sway = Math.sin(t * 0.7 + i) * 0.06;
-        const ang = Math.PI / 2 - side * (0.32 + k * 0.1 + sway), len = H * 1.25, spread = 0.07;
-        const bx = ox + Math.cos(ang) * len, by = -H * 0.05 + Math.sin(ang) * len;
-        const lg = g.createLinearGradient(ox, -H * 0.05, bx, by);
-        lg.addColorStop(0, `rgba(170, 200, 255, ${0.16 * beamA})`); lg.addColorStop(1, "rgba(170, 200, 255, 0)");
-        g.fillStyle = lg; g.beginPath(); g.moveTo(ox, -H * 0.05);
-        g.lineTo(ox + Math.cos(ang - spread) * len, -H * 0.05 + Math.sin(ang - spread) * len);
-        g.lineTo(ox + Math.cos(ang + spread) * len, -H * 0.05 + Math.sin(ang + spread) * len); g.closePath(); g.fill();
+      const sky = g.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0, `rgb(${2 + 8 * L | 0}, ${4 + 12 * L | 0}, ${12 + 30 * L | 0})`); sky.addColorStop(1, "#010205");
+      g.fillStyle = sky; g.fillRect(0, 0, W, H);
+      // pitch: run-off surround, mown stripes, then the lines
+      { const q = [[-60, 0, -41], [60, 0, -41], [60, 0, 41], [-60, 0, 41]].map(P);
+        if (!q.some((v) => !v)) { g.fillStyle = `rgb(${14 * (0.1 + L) | 0}, ${58 * (0.1 + 0.9 * L) | 0}, ${26 * (0.1 + 0.9 * L) | 0})`;
+          g.beginPath(); q.forEach((v, j) => (j ? g.lineTo(v[0], v[1]) : g.moveTo(v[0], v[1]))); g.closePath(); g.fill(); } }
+      for (let i = 0; i < 14; i++) {
+        const x0 = -52.5 + i * 7.5, q = [[x0, 0, -34], [x0 + 7.5, 0, -34], [x0 + 7.5, 0, 34], [x0, 0, 34]].map(P);
+        if (q.some((v) => !v)) continue;
+        const base = i % 2 ? [34, 120, 52] : [28, 104, 44];
+        g.fillStyle = `rgb(${base[0] * (0.05 + 0.95 * L) | 0}, ${base[1] * (0.05 + 0.95 * L) | 0}, ${base[2] * (0.05 + 0.95 * L) | 0})`;
+        g.beginPath(); q.forEach((v, j) => (j ? g.lineTo(v[0], v[1]) : g.moveTo(v[0], v[1]))); g.closePath(); g.fill();
       }
-      // the football: rotate, push towards camera, project
-      const ry = 0.6 + t * 1.05, rx = 0.35 + Math.sin(t * 0.6) * 0.15, dolly = 30 - ease(t / hit) * 12;
-      const cyR = Math.cos(ry), syR = Math.sin(ry), cxR = Math.cos(rx), sxR = Math.sin(rx);
-      const proj = (x, y, z) => {
-        const x1 = x * cyR + z * syR, z1 = -x * syR + z * cyR, y1 = y * cxR - z1 * sxR, z2 = y * sxR + z1 * cxR;
-        const zz = z2 + dolly, f = 22 / zz;
-        return [cx + x1 * unit * f, cy + y1 * unit * f, f];
-      };
-      const fadeOut = after > 0 ? Math.max(0, 1 - after / 0.35) : 1;
-      if (t > 1.35 && fadeOut > 0) {                                  // glowing seams once the particles have arrived
-        const ea = Math.min(1, (t - 1.35) / 0.6) * fadeOut;
-        for (const [w, lw] of [[0.07, 16 * dpr], [0.16, 6 * dpr], [0.75, 1.8 * dpr]]) {
-          g.strokeStyle = `rgba(255, 228, 170, ${w * ea})`; g.lineWidth = lw; g.beginPath();
-          for (const [p, q] of edges) { const a = proj(...p), b = proj(...q); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); }
+      g.strokeStyle = `rgba(235, 245, 235, ${0.08 + 0.7 * L})`; g.lineWidth = 1.4 * dpr;
+      const line = (pts) => { const q = pts.map(P); if (q.some((v) => !v)) return; g.beginPath(); q.forEach((v, j) => (j ? g.lineTo(v[0], v[1]) : g.moveTo(v[0], v[1]))); g.stroke(); };
+      line([[-52.5, 0, -34], [52.5, 0, -34], [52.5, 0, 34], [-52.5, 0, 34], [-52.5, 0, -34]]); line([[0, 0, -34], [0, 0, 34]]);
+      line(Array.from({ length: 41 }, (_, i) => [Math.cos(i / 40 * Math.PI * 2) * 9.15, 0, Math.sin(i / 40 * Math.PI * 2) * 9.15]));
+      for (const sx of [-1, 1]) { line([[sx * 52.5, 0, -20.2], [sx * 36, 0, -20.2], [sx * 36, 0, 20.2], [sx * 52.5, 0, 20.2]]); line([[sx * 52.5, 0, -9.2], [sx * 47, 0, -9.2], [sx * 47, 0, 9.2], [sx * 52.5, 0, 9.2]]); }
+      g.globalCompositeOperation = "lighter";
+      // light pool over the pitch
+      const c0 = P([0, 0, 0]);
+      if (c0 && L > 0) { const pool = g.createRadialGradient(c0[0], c0[1], 0, c0[0], c0[1], W * 0.55);
+        pool.addColorStop(0, `rgba(190, 220, 255, ${0.16 * L})`); pool.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = pool; g.fillRect(0, 0, W, H); }
+      // the stands: a sloped ring of terraces between the inner and outer tier, plus the roof edge
+      for (let i = 0; i < 72; i++) {
+        const q = [rim(0, i / 72), rim(0, (i + 1) / 72), rim(15, (i + 1) / 72), rim(15, i / 72)].map(P);
+        if (q.some((v) => !v)) continue;
+        g.globalCompositeOperation = "source-over";
+        g.fillStyle = `rgba(${18 + 40 * L | 0}, ${22 + 46 * L | 0}, ${34 + 62 * L | 0}, 1)`;
+        g.beginPath(); q.forEach((v, j) => (j ? g.lineTo(v[0], v[1]) : g.moveTo(v[0], v[1]))); g.closePath(); g.fill();
+      }
+      g.globalCompositeOperation = "lighter";
+      g.strokeStyle = `rgba(170, 200, 255, ${0.1 + 0.35 * L})`; g.lineWidth = 2 * dpr;
+      line(Array.from({ length: 97 }, (_, i) => rim(15, i / 96).map((v, j) => (j === 1 ? v + 3 : v))));
+      // crowd with camera flashes
+      const flashRate = t > 1.3 ? (after > 0 ? 0.004 : 0.0025 + 0.004 * Math.min(1, (t - 1.3) / 2)) : 0;
+      for (const c of crowd) {
+        const q = P(c.p); if (!q) continue;
+        if (Math.random() < flashRate) c.flash = 1;
+        const sz = Math.max(1, 1.6 * dpr * 90 / q[2]);
+        if (c.flash > 0.02) { g.fillStyle = `rgba(255, 255, 255, ${c.flash})`; g.fillRect(q[0] - sz, q[1] - sz, sz * 2.2, sz * 2.2); c.flash *= 0.72; }
+        else { const v = (0.08 + 0.6 * L) * (0.5 + c.hue * 0.5); const warm = c.hue > 0.7;
+          g.fillStyle = warm ? `rgba(255, 170, 120, ${v})` : `rgba(${150 + c.hue * 80 | 0}, ${165 + c.hue * 40 | 0}, 225, ${v})`; g.fillRect(q[0], q[1], sz, sz); }
+      }
+      // floodlight towers: mast, then a blazing head with an anamorphic streak when it switches on
+      towers.forEach((tw, i) => {
+        const a = P(tw.base), b = P(tw.top); if (!a || !b) return;
+        g.strokeStyle = `rgba(120, 140, 170, ${0.25 + 0.3 * L})`; g.lineWidth = 2 * dpr; g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
+        const on = Math.min(1, Math.max(0, (t - OP.ON[i]) / 0.12)); if (!on) return;
+        const surge = 1 + 2.2 * Math.max(0, 1 - (t - OP.ON[i]) / 0.5);
+        const rad = Math.min(W * 0.2, 40 * dpr * 160 / b[2]) * surge;
+        const hg = g.createRadialGradient(b[0], b[1], 0, b[0], b[1], rad);
+        hg.addColorStop(0, `rgba(255, 255, 255, ${on})`); hg.addColorStop(0.2, `rgba(220, 235, 255, ${0.55 * on * dim})`); hg.addColorStop(1, "rgba(0,0,0,0)");
+        g.fillStyle = hg; g.fillRect(b[0] - rad, b[1] - rad, rad * 2, rad * 2);
+        const sl = g.createLinearGradient(b[0] - W * 0.45, 0, b[0] + W * 0.45, 0);
+        sl.addColorStop(0, "rgba(110,160,255,0)"); sl.addColorStop(0.5, `rgba(180, 210, 255, ${0.55 * on * Math.min(1, surge - 0.6) * dim})`); sl.addColorStop(1, "rgba(110,160,255,0)");
+        g.fillStyle = sl; g.fillRect(b[0] - W * 0.45, b[1] - 1.5 * dpr, W * 0.9, 3 * dpr);
+        // the beam down onto the pitch
+        if (c0) { const bg = g.createLinearGradient(b[0], b[1], c0[0], c0[1]); bg.addColorStop(0, `rgba(200, 225, 255, ${0.12 * on * dim})`); bg.addColorStop(1, "rgba(200,225,255,0)");
+          g.fillStyle = bg; g.beginPath(); g.moveTo(b[0], b[1]); g.lineTo(c0[0] - W * 0.12, c0[1]); g.lineTo(c0[0] + W * 0.12, c0[1]); g.closePath(); g.fill(); }
+        // a whole-frame bloom on each switch-on
+        const bl = Math.max(0, 1 - (t - OP.ON[i]) / 0.35) * 0.18; if (bl > 0) { g.fillStyle = `rgba(200, 220, 255, ${bl})`; g.fillRect(0, 0, W, H); }
+      });
+      // AI tracking lines racing across the pitch
+      for (const st of streams) {
+        const pr = Math.min(1, Math.max(0, (t - st.at) / 0.7)); if (!pr) continue;
+        const fade = after > 0 ? Math.max(0, 1 - after / 1.2) : 1, q = st.pts.map(P); if (q.some((v) => !v)) continue;
+        const segs = (q.length - 1) * pr;
+        for (const [w, al] of [[7 * dpr, 0.15], [2 * dpr, 0.9]]) {
+          g.strokeStyle = `rgba(${st.col[0]}, ${st.col[1]}, ${st.col[2]}, ${al * fade})`; g.lineWidth = w; g.beginPath(); g.moveTo(q[0][0], q[0][1]);
+          for (let j = 1; j <= Math.ceil(segs); j++) { const kk = Math.min(1, segs - (j - 1)); g.lineTo(q[j - 1][0] + (q[j][0] - q[j - 1][0]) * kk, q[j - 1][1] + (q[j][1] - q[j - 1][1]) * kk); }
           g.stroke();
         }
       }
-      for (const p of parts) {
-        let x, y, z, alpha;
-        if (after < 0) {
-          const e = ease((t - p.d) / 1.5);
-          x = p.s[0] + (p.t[0] - p.s[0]) * e; y = p.s[1] + (p.t[1] - p.s[1]) * e; z = p.s[2] + (p.t[2] - p.s[2]) * e;
-          alpha = Math.min(1, (t - p.d + 0.2) * 2);
-        } else {
-          const k = 1 + after * p.burst * 2.2; x = p.t[0] * k; y = p.t[1] * k; z = p.t[2] * k;
-          alpha = Math.max(0, 1 - after / 1.1);
-        }
-        if (alpha <= 0) continue;
-        const [sx, sy, f] = proj(x, y, z);
-        const r = p.size * dpr * Math.max(0.4, f * 1.3);
-        g.fillStyle = `rgba(255, ${226 + p.size * 15 | 0}, ${178 + p.size * 30 | 0}, ${0.85 * alpha})`;
-        g.fillRect(sx - r / 2, sy - r / 2, r, r);
-      }
-      if (after > 0) {
-        // flash
-        const fl = Math.max(0, 1 - after / 0.45);
-        const fg = g.createRadialGradient(cx, cy, 0, cx, cy, W * 0.6);
-        fg.addColorStop(0, `rgba(255, 245, 220, ${0.95 * fl})`); fg.addColorStop(0.35, `rgba(255, 210, 140, ${0.35 * fl})`); fg.addColorStop(1, "rgba(0,0,0,0)");
+      if (after > 0) {                                               // the hit: flash, shockwave, gold sparks rising
+        const fl = Math.max(0, 1 - after / 0.5);
+        const fg = g.createRadialGradient(cx, H * 0.45, 0, cx, H * 0.45, W * 0.7);
+        fg.addColorStop(0, `rgba(255, 246, 225, ${0.9 * fl})`); fg.addColorStop(0.4, `rgba(255, 205, 130, ${0.3 * fl})`); fg.addColorStop(1, "rgba(0,0,0,0)");
         g.fillStyle = fg; g.fillRect(0, 0, W, H);
-        // shockwave ring
-        const rr = after * W * 0.75, ra = Math.max(0, 1 - after / 0.9);
-        g.strokeStyle = `rgba(255, 220, 160, ${0.55 * ra})`; g.lineWidth = 3 * dpr;
-        g.beginPath(); g.ellipse(cx, cy, rr, rr * 0.32, 0, 0, Math.PI * 2); g.stroke();
-        // anamorphic flare: a long horizontal streak through the centre
-        const sa = Math.max(0, 1 - after / 1.6) * Math.min(1, after / 0.05);
-        const sg = g.createLinearGradient(0, cy, W, cy);
-        sg.addColorStop(0, "rgba(120,170,255,0)"); sg.addColorStop(0.5, `rgba(200, 225, 255, ${0.75 * sa})`); sg.addColorStop(1, "rgba(120,170,255,0)");
-        g.fillStyle = sg; g.fillRect(0, cy - 2 * dpr, W, 4 * dpr);
-        g.fillStyle = `rgba(150, 190, 255, ${0.10 * sa})`; g.fillRect(0, cy - 26 * dpr, W, 52 * dpr);
-        // warm afterglow behind the title
-        const ag = g.createRadialGradient(cx, cy, 0, cx, cy, W * 0.42);
-        ag.addColorStop(0, `rgba(255, 200, 120, ${0.16 * Math.min(1, after / 0.4)})`); ag.addColorStop(1, "rgba(0,0,0,0)");
-        g.fillStyle = ag; g.fillRect(0, 0, W, H);
+        const rr = after * W * 0.9, ra = Math.max(0, 1 - after / 1);
+        g.strokeStyle = `rgba(255, 215, 150, ${0.5 * ra})`; g.lineWidth = 3 * dpr; g.beginPath(); g.ellipse(cx, H * 0.45, rr, rr * 0.28, 0, 0, Math.PI * 2); g.stroke();
+        for (const sp of sparks) {
+          const y = (sp.y - after * sp.v) * H, al = Math.min(1, after * 2) * Math.max(0, 1 - (after - 2.5) / 1.5);
+          if (al <= 0) continue; g.fillStyle = `rgba(255, ${200 + sp.s * 25 | 0}, 140, ${0.7 * al})`;
+          g.fillRect(sp.x * W + Math.sin(after * 2 + sp.s * 9) * 12 * dpr, y, sp.s * dpr * 1.6, sp.s * dpr * 1.6);
+        }
       }
-      // film grain
-      g.globalCompositeOperation = "overlay"; g.globalAlpha = 0.07;
-      g.fillStyle = g.createPattern(grain, "repeat"); g.save(); g.translate(Math.random() * 160, Math.random() * 160);
-      g.fillRect(-160, -160, W + 320, H + 320); g.restore(); g.globalAlpha = 1;
       if (t < OP.LEN && card.classList.contains("show")) opRaf = requestAnimationFrame(frame);
     };
     opRaf = requestAnimationFrame(frame);
   }
+
 
 
   // --- narration --------------------------------------------------------------------
@@ -336,7 +356,7 @@ const Demo = (() => {
     }, 150);
     S.started = true;
     await control({ action: "start" });
-    await sleep(4300);                            // the opening plays; the title lands at ~2.5 s
+    await sleep(5000);                            // the opening plays; the title lands at ~3.35 s
     const intro = say("intro");
     await sleep(1000);
     hideCard();

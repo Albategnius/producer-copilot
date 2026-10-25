@@ -90,64 +90,71 @@ const Sound = (() => {
     });
   }
 
-  // Opening music for the demo title sequence: an original ~5 s cue. Strings and an airy choir swell
-  // over a rising cymbal, a timpani hit with a brass chord as the title lands, then a fade under the narrator.
+  // Opening music for the demo title sequence: an original ~7 s cue in a big hall. Four deep booms as
+  // the floodlights switch on, a build (tremolo strings, rising brass, a timpani roll, a riser), then a
+  // triumphant D-major hit with choir and bells, which settles under the narrator.
   function opening() {
     if (!ctx || !enabled) return;
-    const t0 = ctx.currentTime + 0.05, HIT = 2.45, END = 6.2;
-    const bus = ctx.createGain(); bus.gain.value = 1.4; bus.connect(master);
+    const t0 = ctx.currentTime + 0.05, ON = [0.3, 0.62, 0.94, 1.26], HIT = 3.35, END = 7.2;
     const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
-    // Simple hall: a few feedback-free delayed copies.
-    [0.045, 0.083, 0.131].forEach((d, i) => { const dl = ctx.createDelay(); dl.delayTime.value = d; const g = ctx.createGain(); g.gain.value = 0.22 - i * 0.05; bus.connect(dl).connect(g).connect(master); });
+    const bus = ctx.createGain(); bus.gain.value = 1.3; bus.connect(master);
+    // hall reverb from a generated impulse (decaying stereo noise)
+    const ir = ctx.createBuffer(2, ctx.sampleRate * 3, ctx.sampleRate);
+    for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3.2); }
+    const verb = ctx.createConvolver(); verb.buffer = ir; const wet = ctx.createGain(); wet.gain.value = 0.55;
+    const send = ctx.createGain(); send.connect(verb).connect(wet).connect(master); bus.connect(send); send.gain.value = 0.9;
 
-    function voice(midi, type, from, to, peak, filterFrom, filterTo, detune = 7, formants = null) {
-      const g = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = 0.8;
-      lp.frequency.setValueAtTime(filterFrom, t0 + from); lp.frequency.exponentialRampToValueAtTime(filterTo, t0 + Math.min(to, from + 2.2));
-      g.gain.setValueAtTime(0, t0 + from); g.gain.linearRampToValueAtTime(peak, t0 + from + Math.min(1.6, (to - from) * 0.5));
-      g.gain.setValueAtTime(peak, t0 + to - 0.6); g.gain.linearRampToValueAtTime(0, t0 + to);
-      let out = lp;
-      if (formants) { const mix = ctx.createGain(); mix.gain.value = 1; formants.forEach((f) => { const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = f; bp.Q.value = 6; lp.connect(bp).connect(mix); }); out = mix; }
-      out.connect(g).connect(bus);
-      [-detune, detune].forEach((d) => { const o = ctx.createOscillator(); o.type = type; o.frequency.value = hz(midi); o.detune.value = d; o.connect(lp); o.start(t0 + from); o.stop(t0 + to + 0.05); });
+    function voice(midi, type, from, to, peak, f0, f1, detune = 8, opts = {}) {
+      const g = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = 0.7;
+      lp.frequency.setValueAtTime(f0, t0 + from); lp.frequency.exponentialRampToValueAtTime(f1, t0 + Math.max(from + 0.05, opts.fTo ?? to));
+      const atk = opts.atk ?? Math.min(1.4, (to - from) * 0.5);
+      g.gain.setValueAtTime(0.0001, t0 + from); g.gain.exponentialRampToValueAtTime(peak, t0 + from + atk);
+      g.gain.setValueAtTime(peak, t0 + Math.max(from + atk, to - (opts.rel ?? 0.8))); g.gain.exponentialRampToValueAtTime(0.0001, t0 + to);
+      let node = lp;
+      if (opts.trem) { const tg = ctx.createGain(), lfo = ctx.createOscillator(), lg = ctx.createGain(); lfo.frequency.value = opts.trem; lg.gain.value = 0.5; tg.gain.value = 0.6; lfo.connect(lg).connect(tg.gain); lp.connect(tg); node = tg; lfo.start(t0 + from); lfo.stop(t0 + to); }
+      if (opts.formants) { const mix = ctx.createGain(); opts.formants.forEach((fq) => { const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = fq; bp.Q.value = 5; node.connect(bp).connect(mix); }); node = mix; }
+      node.connect(g).connect(bus);
+      [-detune, 0, detune].forEach((d) => { const o = ctx.createOscillator(); o.type = type; o.frequency.value = hz(midi); o.detune.value = d; o.connect(lp); o.start(t0 + from); o.stop(t0 + to + 0.05); });
     }
-    // Rise: D minor strings + choir
-    [50, 57, 62, 65].forEach((m) => voice(m, "sawtooth", 0, HIT + 0.25, 0.028, 250, 2600));
-    [74, 77].forEach((m) => voice(m, "sawtooth", 0.4, HIT + 0.3, 0.05, 900, 3000, 9, [800, 1150]));
-    // Hit: B-flat major brass-like stab resolving to F major, fading under the narration
-    [46, 53, 58, 62, 65].forEach((m) => voice(m, "sawtooth", HIT, HIT + 1.4, 0.05, 2800, 1200, 5));
-    [41, 48, 53, 57, 60, 65].forEach((m) => voice(m, "sawtooth", HIT + 1.1, END, 0.032, 1400, 700, 6));
-    [72, 77].forEach((m) => voice(m, "triangle", HIT + 1.1, END, 0.03, 3000, 2000, 4, [800, 1150]));
-    // Cymbal swell (rising noise) into the hit, and a crash after it
-    const sw = ctx.createBufferSource(); sw.buffer = noiseBuffer(HIT + 0.2);
-    const swf = ctx.createBiquadFilter(); swf.type = "highpass"; swf.frequency.setValueAtTime(2500, t0); swf.frequency.exponentialRampToValueAtTime(7000, t0 + HIT);
-    const swg = ctx.createGain(); swg.gain.setValueAtTime(0.0001, t0); swg.gain.exponentialRampToValueAtTime(0.16, t0 + HIT - 0.02); swg.gain.linearRampToValueAtTime(0, t0 + HIT + 0.05);
-    sw.connect(swf).connect(swg).connect(bus); sw.start(t0);
-    const cr = ctx.createBufferSource(); cr.buffer = noiseBuffer(2.4);
-    const crf = ctx.createBiquadFilter(); crf.type = "highpass"; crf.frequency.value = 3500;
-    const crg = ctx.createGain(); crg.gain.setValueAtTime(0.2, t0 + HIT); crg.gain.exponentialRampToValueAtTime(0.0005, t0 + HIT + 2.3);
-    cr.connect(crf).connect(crg).connect(bus); cr.start(t0 + HIT);
-    // Timpani: a low sine with a falling pitch, plus a soft mallet click
-    [0, 0.09].forEach((off, i) => {
+    function boom(at, level, pitch = 52) {
       const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine";
-      o.frequency.setValueAtTime(i ? 58 : 74, t0 + HIT + off); o.frequency.exponentialRampToValueAtTime(40, t0 + HIT + off + 1.2);
-      g.gain.setValueAtTime(0, t0 + HIT + off); g.gain.linearRampToValueAtTime(i ? 0.22 : 0.38, t0 + HIT + off + 0.01); g.gain.exponentialRampToValueAtTime(0.001, t0 + HIT + off + 1.5);
-      o.connect(g).connect(bus); o.start(t0 + HIT + off); o.stop(t0 + HIT + off + 1.6);
+      o.frequency.setValueAtTime(pitch, t0 + at); o.frequency.exponentialRampToValueAtTime(30, t0 + at + 1.1);
+      g.gain.setValueAtTime(0.0001, t0 + at); g.gain.exponentialRampToValueAtTime(level, t0 + at + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + 1.4);
+      o.connect(g).connect(bus); o.start(t0 + at); o.stop(t0 + at + 1.5);
+      const n = ctx.createBufferSource(); n.buffer = noiseBuffer(0.4); const nf = ctx.createBiquadFilter(); nf.type = "lowpass"; nf.frequency.value = 900;
+      const ng = ctx.createGain(); ng.gain.setValueAtTime(level * 0.6, t0 + at); ng.gain.exponentialRampToValueAtTime(0.0001, t0 + at + 0.35);
+      n.connect(nf).connect(ng).connect(bus); n.start(t0 + at);
+    }
+    // 1. floodlights: four booms, each a little bigger
+    ON.forEach((at, i) => boom(at, 0.16 + i * 0.03, 50 + i * 3));
+    // 2. the build: low drone, tremolo strings climbing (Dm -> Bb -> Gm -> A), brass swelling into the hit
+    voice(38, "sawtooth", 0.2, HIT + 0.1, 0.035, 120, 500);
+    [[62, 65, 69], [62, 65, 70], [62, 67, 70], [61, 64, 69]].forEach((ch, i) => {
+      const from = 1.3 + i * 0.5, to = from + 0.56;
+      ch.forEach((m) => voice(m, "sawtooth", from, to, 0.02 + i * 0.006, 800 + i * 500, 2400 + i * 600, 9, { trem: 14, atk: 0.12, rel: 0.1 }));
     });
-    // Sub boom under the hit, and a low drone that builds during the rise
-    const sub = ctx.createOscillator(), sg = ctx.createGain(); sub.type = "sine";
-    sub.frequency.setValueAtTime(55, t0 + HIT); sub.frequency.exponentialRampToValueAtTime(28, t0 + HIT + 1.8);
-    sg.gain.setValueAtTime(0, t0 + HIT); sg.gain.linearRampToValueAtTime(0.3, t0 + HIT + 0.02); sg.gain.exponentialRampToValueAtTime(0.001, t0 + HIT + 2.2);
-    sub.connect(sg).connect(bus); sub.start(t0 + HIT); sub.stop(t0 + HIT + 2.3);
-    voice(38, "sawtooth", 0, HIT + 0.1, 0.05, 120, 420, 4);
-    // Bell sparkles as the title lands (F major arpeggio, high and soft)
-    [[77, 0.15], [81, 0.3], [84, 0.45], [89, 0.62]].forEach(([m, at]) => {
-      const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine"; o2.type = "sine";
-      o.frequency.value = hz(m); o2.frequency.value = hz(m) * 2.76;               // inharmonic partial gives the bell colour
-      const t = t0 + HIT + at; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0005, t + 1.6);
-      o.connect(g); o2.connect(g); g.connect(bus); o.start(t); o2.start(t); o.stop(t + 1.7); o2.stop(t + 1.7);
+    [50, 57].forEach((m) => voice(m, "sawtooth", 1.6, HIT + 0.08, 0.05, 300, 2600, 6, { fTo: HIT }));
+    for (let i = 0, at = 2.35; at < HIT - 0.04; i++, at += Math.max(0.045, 0.14 - i * 0.012)) boom(at, 0.05 + (at - 2.35) * 0.12, 70);   // timpani roll
+    const rs = ctx.createBufferSource(); rs.buffer = noiseBuffer(HIT); const rf = ctx.createBiquadFilter(); rf.type = "bandpass"; rf.Q.value = 2;
+    rf.frequency.setValueAtTime(400, t0 + 1.4); rf.frequency.exponentialRampToValueAtTime(7000, t0 + HIT);
+    const rg = ctx.createGain(); rg.gain.setValueAtTime(0.0001, t0 + 1.4); rg.gain.exponentialRampToValueAtTime(0.12, t0 + HIT - 0.02); rg.gain.linearRampToValueAtTime(0, t0 + HIT + 0.03);
+    rs.connect(rf).connect(rg).connect(bus); rs.start(t0 + 1.4);
+    // 3. the hit: D major, brass + strings + choir, timpani and sub, a crash; it settles under the narrator
+    boom(HIT, 0.42, 62); boom(HIT + 0.08, 0.25, 48);
+    [38, 45, 50, 54, 57, 62].forEach((m) => voice(m, "sawtooth", HIT, END, 0.045, 3200, 900, 7, { atk: 0.03, rel: 1.6, fTo: HIT + 2.2 }));
+    [66, 69, 74].forEach((m) => voice(m, "sawtooth", HIT, END, 0.035, 2600, 1400, 10, { atk: 0.25, rel: 1.6, formants: [700, 1100, 2500] }));
+    const cr = ctx.createBufferSource(); cr.buffer = noiseBuffer(3); const cf = ctx.createBiquadFilter(); cf.type = "highpass"; cf.frequency.value = 3000;
+    const cg = ctx.createGain(); cg.gain.setValueAtTime(0.22, t0 + HIT); cg.gain.exponentialRampToValueAtTime(0.0005, t0 + HIT + 2.8);
+    cr.connect(cf).connect(cg).connect(bus); cr.start(t0 + HIT);
+    [[78, 0.35], [81, 0.5], [86, 0.65], [90, 0.85]].forEach(([m, at]) => {
+      const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(); o.type = o2.type = "sine";
+      o.frequency.value = hz(m); o2.frequency.value = hz(m) * 2.76;
+      const t = t0 + HIT + at; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.045, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0003, t + 1.8);
+      o.connect(g); o2.connect(g); g.connect(bus); o.start(t); o2.start(t); o.stop(t + 1.9); o2.stop(t + 1.9);
     });
-    // Duck the whole cue when the narrator starts (~4.3 s)
-    bus.gain.setValueAtTime(1.4, t0 + 4.1); bus.gain.linearRampToValueAtTime(0.45, t0 + 4.7);
+    // duck under the narrator (~5.0 s)
+    bus.gain.setValueAtTime(1.3, t0 + 4.8); bus.gain.linearRampToValueAtTime(0.4, t0 + 5.4);
+    send.gain.setValueAtTime(0.9, t0 + 4.8); send.gain.linearRampToValueAtTime(0.3, t0 + 5.4);
   }
 
   let chosenVoice = null;
