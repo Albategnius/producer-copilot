@@ -94,7 +94,7 @@ const Sound = (() => {
   // over a rising cymbal, a timpani hit with a brass chord as the title lands, then a fade under the narrator.
   function opening() {
     if (!ctx || !enabled) return;
-    const t0 = ctx.currentTime + 0.05, HIT = 2.15, END = 5.6;
+    const t0 = ctx.currentTime + 0.05, HIT = 2.45, END = 6.2;
     const bus = ctx.createGain(); bus.gain.value = 1.4; bus.connect(master);
     const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
     // Simple hall: a few feedback-free delayed copies.
@@ -133,8 +133,21 @@ const Sound = (() => {
       g.gain.setValueAtTime(0, t0 + HIT + off); g.gain.linearRampToValueAtTime(i ? 0.22 : 0.38, t0 + HIT + off + 0.01); g.gain.exponentialRampToValueAtTime(0.001, t0 + HIT + off + 1.5);
       o.connect(g).connect(bus); o.start(t0 + HIT + off); o.stop(t0 + HIT + off + 1.6);
     });
-    // Duck the whole cue when the narrator starts (~3.9 s)
-    bus.gain.setValueAtTime(1.4, t0 + 3.7); bus.gain.linearRampToValueAtTime(0.5, t0 + 4.3);
+    // Sub boom under the hit, and a low drone that builds during the rise
+    const sub = ctx.createOscillator(), sg = ctx.createGain(); sub.type = "sine";
+    sub.frequency.setValueAtTime(55, t0 + HIT); sub.frequency.exponentialRampToValueAtTime(28, t0 + HIT + 1.8);
+    sg.gain.setValueAtTime(0, t0 + HIT); sg.gain.linearRampToValueAtTime(0.3, t0 + HIT + 0.02); sg.gain.exponentialRampToValueAtTime(0.001, t0 + HIT + 2.2);
+    sub.connect(sg).connect(bus); sub.start(t0 + HIT); sub.stop(t0 + HIT + 2.3);
+    voice(38, "sawtooth", 0, HIT + 0.1, 0.05, 120, 420, 4);
+    // Bell sparkles as the title lands (F major arpeggio, high and soft)
+    [[77, 0.15], [81, 0.3], [84, 0.45], [89, 0.62]].forEach(([m, at]) => {
+      const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine"; o2.type = "sine";
+      o.frequency.value = hz(m); o2.frequency.value = hz(m) * 2.76;               // inharmonic partial gives the bell colour
+      const t = t0 + HIT + at; g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(0.05, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0005, t + 1.6);
+      o.connect(g); o2.connect(g); g.connect(bus); o.start(t); o2.start(t); o.stop(t + 1.7); o2.stop(t + 1.7);
+    });
+    // Duck the whole cue when the narrator starts (~4.3 s)
+    bus.gain.setValueAtTime(1.4, t0 + 4.1); bus.gain.linearRampToValueAtTime(0.45, t0 + 4.7);
   }
 
   let chosenVoice = null;
