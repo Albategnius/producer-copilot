@@ -116,7 +116,7 @@ Keyboard shortcuts: `a` approves and `r` rejects the highest-priority pending su
 From Azure Cloud Shell (no local Docker needed):
 
 ```bash
-git clone <this repo> && cd pl-football-hackathon
+git clone https://github.com/Albategnius/producer-copilot && cd producer-copilot
 bash infra/deploy-azure.sh                       # deterministic templates only
 LLM_BASE_URL=https://<resource>.openai.azure.com/openai/v1/ LLM_API_KEY=<key> LLM_MODEL=<deployment> \
   bash infra/deploy-azure.sh                     # with a Microsoft Foundry model
