@@ -90,91 +90,52 @@ const Sound = (() => {
     });
   }
 
-  // Opening music for the demo title sequence: an original ~7 s cue in a big hall. Four deep booms as
-  // the floodlights switch on, a build (tremolo strings, rising brass, a timpani roll, a riser), then a
-  // triumphant D-major hit with choir and bells, which settles under the narrator.
-  function opening() {
-    if (!ctx || !enabled) return;
-    const t0 = ctx.currentTime + 0.05, ON = [0.3, 0.62, 0.94, 1.26], HIT = 3.35, END = 7.2;
-    const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
-    const bus = ctx.createGain(); bus.gain.value = 1.3; bus.connect(master);
-    // hall reverb from a generated impulse (decaying stereo noise)
-    const ir = ctx.createBuffer(2, ctx.sampleRate * 3, ctx.sampleRate);
-    for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 3.2); }
-    const verb = ctx.createConvolver(); verb.buffer = ir; const wet = ctx.createGain(); wet.gain.value = 0.55;
-    const send = ctx.createGain(); send.connect(verb).connect(wet).connect(master); bus.connect(send); send.gain.value = 0.9;
-
-    function voice(midi, type, from, to, peak, f0, f1, detune = 8, opts = {}) {
-      const g = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.Q.value = 0.7;
-      lp.frequency.setValueAtTime(f0, t0 + from); lp.frequency.exponentialRampToValueAtTime(f1, t0 + Math.max(from + 0.05, opts.fTo ?? to));
-      const atk = opts.atk ?? Math.min(1.4, (to - from) * 0.5);
-      g.gain.setValueAtTime(0.0001, t0 + from); g.gain.exponentialRampToValueAtTime(peak, t0 + from + atk);
-      g.gain.setValueAtTime(peak, t0 + Math.max(from + atk, to - (opts.rel ?? 0.8))); g.gain.exponentialRampToValueAtTime(0.0001, t0 + to);
-      let node = lp;
-      if (opts.trem) { const tg = ctx.createGain(), lfo = ctx.createOscillator(), lg = ctx.createGain(); lfo.frequency.value = opts.trem; lg.gain.value = 0.5; tg.gain.value = 0.6; lfo.connect(lg).connect(tg.gain); lp.connect(tg); node = tg; lfo.start(t0 + from); lfo.stop(t0 + to); }
-      if (opts.formants) { const mix = ctx.createGain(); opts.formants.forEach((fq) => { const bp = ctx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = fq; bp.Q.value = 5; node.connect(bp).connect(mix); }); node = mix; }
-      node.connect(g).connect(bus);
-      [-detune, 0, detune].forEach((d) => { const o = ctx.createOscillator(); o.type = type; o.frequency.value = hz(midi); o.detune.value = d; o.connect(lp); o.start(t0 + from); o.stop(t0 + to + 0.05); });
-    }
-    function boom(at, level, pitch = 52) {
-      const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine";
-      o.frequency.setValueAtTime(pitch, t0 + at); o.frequency.exponentialRampToValueAtTime(30, t0 + at + 1.1);
-      g.gain.setValueAtTime(0.0001, t0 + at); g.gain.exponentialRampToValueAtTime(level, t0 + at + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t0 + at + 1.4);
-      o.connect(g).connect(bus); o.start(t0 + at); o.stop(t0 + at + 1.5);
-      const n = ctx.createBufferSource(); n.buffer = noiseBuffer(0.4); const nf = ctx.createBiquadFilter(); nf.type = "lowpass"; nf.frequency.value = 900;
-      const ng = ctx.createGain(); ng.gain.setValueAtTime(level * 0.6, t0 + at); ng.gain.exponentialRampToValueAtTime(0.0001, t0 + at + 0.35);
-      n.connect(nf).connect(ng).connect(bus); n.start(t0 + at);
-    }
-    // 1. floodlights: four booms, each a little bigger
-    ON.forEach((at, i) => boom(at, 0.16 + i * 0.03, 50 + i * 3));
-    // 2. the build: low drone, tremolo strings climbing (Dm -> Bb -> Gm -> A), brass swelling into the hit
-    voice(38, "sawtooth", 0.2, HIT + 0.1, 0.035, 120, 500);
-    [[62, 65, 69], [62, 65, 70], [62, 67, 70], [61, 64, 69]].forEach((ch, i) => {
-      const from = 1.3 + i * 0.5, to = from + 0.56;
-      ch.forEach((m) => voice(m, "sawtooth", from, to, 0.02 + i * 0.006, 800 + i * 500, 2400 + i * 600, 9, { trem: 14, atk: 0.12, rel: 0.1 }));
-    });
-    [50, 57].forEach((m) => voice(m, "sawtooth", 1.6, HIT + 0.08, 0.05, 300, 2600, 6, { fTo: HIT }));
-    for (let i = 0, at = 2.35; at < HIT - 0.04; i++, at += Math.max(0.045, 0.14 - i * 0.012)) boom(at, 0.05 + (at - 2.35) * 0.12, 70);   // timpani roll
-    const rs = ctx.createBufferSource(); rs.buffer = noiseBuffer(HIT); const rf = ctx.createBiquadFilter(); rf.type = "bandpass"; rf.Q.value = 2;
-    rf.frequency.setValueAtTime(400, t0 + 1.4); rf.frequency.exponentialRampToValueAtTime(7000, t0 + HIT);
-    const rg = ctx.createGain(); rg.gain.setValueAtTime(0.0001, t0 + 1.4); rg.gain.exponentialRampToValueAtTime(0.12, t0 + HIT - 0.02); rg.gain.linearRampToValueAtTime(0, t0 + HIT + 0.03);
-    rs.connect(rf).connect(rg).connect(bus); rs.start(t0 + 1.4);
-    // 3. the hit: D major, brass + strings + choir, timpani and sub, a crash; it settles under the narrator
-    boom(HIT, 0.42, 62); boom(HIT + 0.08, 0.25, 48);
-    [38, 45, 50, 54, 57, 62].forEach((m) => voice(m, "sawtooth", HIT, END, 0.045, 3200, 900, 7, { atk: 0.03, rel: 1.6, fTo: HIT + 2.2 }));
-    [66, 69, 74].forEach((m) => voice(m, "sawtooth", HIT, END, 0.035, 2600, 1400, 10, { atk: 0.25, rel: 1.6, formants: [700, 1100, 2500] }));
-    const cr = ctx.createBufferSource(); cr.buffer = noiseBuffer(3); const cf = ctx.createBiquadFilter(); cf.type = "highpass"; cf.frequency.value = 3000;
-    const cg = ctx.createGain(); cg.gain.setValueAtTime(0.22, t0 + HIT); cg.gain.exponentialRampToValueAtTime(0.0005, t0 + HIT + 2.8);
-    cr.connect(cf).connect(cg).connect(bus); cr.start(t0 + HIT);
-    [[78, 0.35], [81, 0.5], [86, 0.65], [90, 0.85]].forEach(([m, at]) => {
-      const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(); o.type = o2.type = "sine";
-      o.frequency.value = hz(m); o2.frequency.value = hz(m) * 2.76;
-      const t = t0 + HIT + at; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.045, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0003, t + 1.8);
-      o.connect(g); o2.connect(g); g.connect(bus); o.start(t); o2.start(t); o.stop(t + 1.9); o2.stop(t + 1.9);
-    });
-    // duck under the narrator (~5.0 s)
-    bus.gain.setValueAtTime(1.3, t0 + 4.8); bus.gain.linearRampToValueAtTime(0.4, t0 + 5.4);
-    send.gain.setValueAtTime(0.9, t0 + 4.8); send.gain.linearRampToValueAtTime(0.3, t0 + 5.4);
-  }
-
-  // Closing chord for the end card: a warm D-major swell with bells, in the same hall.
-  function outro() {
+  // Keynote-style music bed for the demo opening and closing (original): a warm Dmaj9 pad, a light
+  // plucked arpeggio with a soft pulse, a whoosh into the product reveal and a soft impact with shimmer.
+  // It sits under the narrator.
+  function keynote({ len, impact, level = 1 }) {
     if (!ctx || !enabled) return;
     const t0 = ctx.currentTime + 0.05, hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
-    const bus = ctx.createGain(); bus.gain.value = 0.9; bus.connect(master);
-    [38, 45, 50, 54, 57, 62, 66].forEach((m, i) => {
-      const g = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1600;
-      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.03, t0 + 1.2); g.gain.setValueAtTime(0.03, t0 + 5); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 8);
-      [-7, 7].forEach((d) => { const o = ctx.createOscillator(); o.type = i < 3 ? "sawtooth" : "triangle"; o.frequency.value = hz(m); o.detune.value = d; o.connect(lp); o.start(t0); o.stop(t0 + 8.1); });
+    const bus = ctx.createGain(); bus.connect(master);
+    bus.gain.setValueAtTime(0.0001, t0); bus.gain.exponentialRampToValueAtTime(level, t0 + 0.6);
+    bus.gain.setValueAtTime(level, t0 + len - 1.6); bus.gain.exponentialRampToValueAtTime(0.0001, t0 + len);
+    const ir = ctx.createBuffer(2, ctx.sampleRate * 2.4, ctx.sampleRate);
+    for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 2.6); }
+    const verb = ctx.createConvolver(); verb.buffer = ir; const wet = ctx.createGain(); wet.gain.value = 0.5; bus.connect(verb).connect(wet).connect(master);
+    // pad: Dmaj9 voiced warm and wide
+    [38, 50, 57, 61, 64, 66, 69].forEach((m, i) => {
+      const lp = ctx.createBiquadFilter(), g = ctx.createGain(); lp.type = "lowpass"; lp.Q.value = 0.5;
+      lp.frequency.setValueAtTime(500, t0); lp.frequency.exponentialRampToValueAtTime(2200, t0 + impact + 0.4);
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(i ? 0.018 : 0.03, t0 + 1.8); g.gain.setValueAtTime(i ? 0.018 : 0.03, t0 + len - 1.5); g.gain.exponentialRampToValueAtTime(0.0001, t0 + len);
+      [-6, 6].forEach((d) => { const o = ctx.createOscillator(); o.type = i === 0 ? "sine" : "sawtooth"; o.frequency.value = hz(m); o.detune.value = d; o.connect(lp); o.start(t0); o.stop(t0 + len + 0.1); });
       lp.connect(g).connect(bus);
     });
-    [[74, 0.3], [78, 0.55], [81, 0.8], [86, 1.1]].forEach(([m, at]) => {
-      const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(); o.type = o2.type = "sine";
-      o.frequency.value = hz(m); o2.frequency.value = hz(m) * 2.76; const t = t0 + at;
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.04, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0003, t + 2);
-      o.connect(g); o2.connect(g); g.connect(bus); o.start(t); o2.start(t); o.stop(t + 2.1); o2.stop(t + 2.1);
-    });
+    // plucked arpeggio (eighths at 112 bpm) and a soft pulse on each beat, both rising in level
+    const step = 60 / 112 / 2, arp = [62, 66, 69, 73, 76, 73, 69, 66];
+    for (let i = 0, t = 0.25; t < len - 1.2; i++, t += step) {
+      const k = Math.min(1, t / impact), o = ctx.createOscillator(), g = ctx.createGain(); o.type = "triangle"; o.frequency.value = hz(arp[i % 8] + (t > impact ? 12 : 0));
+      g.gain.setValueAtTime(0.0001, t0 + t); g.gain.exponentialRampToValueAtTime(0.012 + 0.02 * k, t0 + t + 0.005); g.gain.exponentialRampToValueAtTime(0.0001, t0 + t + 0.32);
+      o.connect(g).connect(bus); o.start(t0 + t); o.stop(t0 + t + 0.35);
+      if (i % 2 === 0) { const p = ctx.createOscillator(), pg = ctx.createGain(); p.type = "sine";
+        p.frequency.setValueAtTime(70, t0 + t); p.frequency.exponentialRampToValueAtTime(42, t0 + t + 0.18);
+        pg.gain.setValueAtTime(0.0001, t0 + t); pg.gain.exponentialRampToValueAtTime(0.03 + 0.07 * k, t0 + t + 0.005); pg.gain.exponentialRampToValueAtTime(0.0001, t0 + t + 0.25);
+        p.connect(pg).connect(bus); p.start(t0 + t); p.stop(t0 + t + 0.3); }
+    }
+    // whoosh into the reveal, then a soft impact with a shimmer
+    const w = ctx.createBufferSource(); w.buffer = noiseBuffer(1.4); const wf = ctx.createBiquadFilter(); wf.type = "bandpass"; wf.Q.value = 1.4;
+    wf.frequency.setValueAtTime(300, t0 + impact - 1.1); wf.frequency.exponentialRampToValueAtTime(6000, t0 + impact);
+    const wg = ctx.createGain(); wg.gain.setValueAtTime(0.0001, t0 + impact - 1.1); wg.gain.exponentialRampToValueAtTime(0.09, t0 + impact - 0.03); wg.gain.exponentialRampToValueAtTime(0.0001, t0 + impact + 0.35);
+    w.connect(wf).connect(wg).connect(bus); w.start(t0 + impact - 1.1);
+    const b = ctx.createOscillator(), bg = ctx.createGain(); b.type = "sine";
+    b.frequency.setValueAtTime(64, t0 + impact); b.frequency.exponentialRampToValueAtTime(36, t0 + impact + 0.9);
+    bg.gain.setValueAtTime(0.0001, t0 + impact); bg.gain.exponentialRampToValueAtTime(0.32, t0 + impact + 0.01); bg.gain.exponentialRampToValueAtTime(0.0001, t0 + impact + 1.2);
+    b.connect(bg).connect(bus); b.start(t0 + impact); b.stop(t0 + impact + 1.3);
+    [86, 90, 93, 98].forEach((m, i) => { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = "sine"; o.frequency.value = hz(m); const t = t0 + impact + i * 0.07;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.02, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+      o.connect(g).connect(bus); o.start(t); o.stop(t + 1.7); });
   }
+  const opening = () => keynote({ len: 9.5, impact: 3.0, level: 1.1 });
+  const outro = () => keynote({ len: 8.5, impact: 0.75, level: 1.0 });
 
   let chosenVoice = null;
   function pickVoice() {
