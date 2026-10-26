@@ -85,6 +85,8 @@ The human producer stays in control. Edits made by hand are fact-checked too, an
 
 Every visitor gets their own console (match, queue and audit log), so several judges can test the public demo at the same time without affecting each other.
 
+**Guided tour:** open the demo with `?demo=1` and press **Play without recording** for a two-minute narrated walkthrough of the live app (Azure AI Speech narrator, chapter titles, a highlight box on each feature). **Record demo** records the same tour from the tab; the demo video was made this way, with real agents and real voices, not edited footage.
+
 ## Run it
 
 Requires Python 3.12 and [uv](https://docs.astral.sh/uv/).
