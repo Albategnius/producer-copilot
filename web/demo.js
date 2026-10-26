@@ -5,7 +5,7 @@
 // "Record demo" captures this tab with its audio and downloads the video when the tour ends.
 const Demo = (() => {
   const LINES = {
-    intro: "Live TV graphics get seconds to be right. Producer Co-pilot is an AI graphics desk where agents propose and a human producer decides.",
+    intro: "During a live match, the stats on screen get only seconds to be right. Producer Co-pilot is an AI graphics desk where agents propose and a human producer decides.",
     agents: "Agents built on Microsoft Agent Framework watch the live match. They spot the moment, explain why it matters and write the graphic, using GPT-5 mini on Microsoft Foundry.",
     check: "A deterministic Fact Checker verifies every number. In test mode we planted a wrong one: it was caught and sent back until the draft was right.",
     approve: "One key approves it, and it airs instantly. The FeedAdapter agent then rewrites it for TV, a fan app and the club's channel, each version checked again.",
@@ -59,10 +59,10 @@ const Demo = (() => {
     stage.dataset.kn = state;                     // "in" (off, tilted), "float" (presented), "flat" (full screen)
     if (state === "flat") setTimeout(() => { if (stage?.dataset.kn === "flat") { stage.classList.remove("kn"); delete stage.dataset.kn; } }, 1300);
   }
-  function title(html) {
+  function title(html, cls = "") {
     cursor.style.transitionDuration = "0ms"; cursor.style.transform = "translate(-60px, -60px)";
     card.className = "demo-card show clear";
-    card.innerHTML = `<div class="kn-title">${html}</div>`;
+    card.innerHTML = `<div class="kn-title ${cls}">${html}</div>`;
   }
 
   // Chapters: a big keynote headline over the dimmed app, which then settles into a corner tag.
@@ -247,10 +247,12 @@ const Demo = (() => {
     Sound.opening?.();
     await sleep(350);
     const intro = say("intro", { subtitle: false });
-    words("Live TV graphics");
+    words("During a live match,");
+    await sleep(1250);
+    words("the stats on screen");
     await sleep(1150);
     words("get <em>seconds</em><br>to be right.");
-    await sleep(1500);
+    await sleep(1550);
     title(`<h1>Producer <em>Co-pilot</em></h1>`);   // the narrator says the name as the product appears
     floatStage("float");
     await sleep(2300);
@@ -386,12 +388,12 @@ const Demo = (() => {
     clearInterval(watch);
     await control({ action: "pause" });
     await unzoom();
-    floatStage("float");
+    floatStage("outro");                          // lower and smaller than the opening, so the end titles have room
     Sound.outro?.();
     await sleep(700);
     title(`<h1>Producer <em>Co-pilot</em></h1><p>AI proposes. Every number is checked. You decide.</p>
       <div class="kn-tech"><span>Microsoft Agent Framework</span><span>Microsoft Foundry</span><span>Azure AI Speech</span><span>Azure Container Apps</span></div>
-      <small>Try it live · ${location.host}</small>`);
+      <small>Try it live · ${location.host}</small>`, "end");
     await say("outro", { subtitle: false });
     await sleep(1400);
     showCard("black");
