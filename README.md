@@ -6,7 +6,7 @@ Built for the Microsoft x Premier League **Inside the Game** developer hackathon
 
 **Live demo (Azure Container Apps):** https://producer-copilot.politefield-ec1b9bf6.southeastasia.azurecontainerapps.io — no login or install needed. Press **Start match**.
 
-**Demo video (1:45):** https://youtu.be/uln4tPr0E_E (also in the repo at [`docs/producer-copilot-demo.mp4`](docs/producer-copilot-demo.mp4))
+**Demo video (1:45):** https://youtu.be/3wKCUjBkaGA (also in the repo at [`docs/producer-copilot-demo.mp4`](docs/producer-copilot-demo.mp4))
 
 ![Producer Console](docs/console.png)
 
