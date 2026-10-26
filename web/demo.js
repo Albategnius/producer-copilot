@@ -37,13 +37,20 @@ const Demo = (() => {
   const status = (t) => { const s = document.getElementById("demo-status"); if (s) s.textContent = t; };
 
   function showCard(kind) {
-    card.classList.toggle("opening", kind === "intro");
-    if (kind === "intro") { opening(); return; }
-    card.innerHTML = `<div class="dc-inner"><span class="dc-dot"></span><h1>Producer Co-pilot</h1><p>AI proposes, every number is checked, you decide.</p>
-         <div class="dc-tags"><span>Microsoft Agent Framework</span><span>Microsoft Foundry</span><span>Azure AI Speech</span><span>Azure Container Apps</span></div>
-         <small>Try it live: ${location.host}</small></div>`;
-    card.classList.add("show");
+    cursor.style.transitionDuration = "0ms"; cursor.style.transform = "translate(-60px, -60px)";   // no cursor over full-screen cards
+    card.classList.add("opening");
+    card.classList.remove("blackout", "fade-black");
+    if (kind === "black") { cancelAnimationFrame(opRaf); card.innerHTML = ""; card.classList.add("blackout", "show"); return; }
+    opening(kind === "outro" ? "outro" : "intro");
   }
+  // Chapter titles: a gold number and a name, top-left, for each part of the tour
+  const chapterEl = el("div", "demo-chapter");
+  function chapter(n, name) {
+    chapterEl.classList.remove("show"); void chapterEl.offsetWidth;
+    chapterEl.innerHTML = `<b>${String(n).padStart(2, "0")}</b><span><i></i>${name}</span>`;
+    chapterEl.classList.add("show");
+  }
+  const endChapter = () => chapterEl.classList.remove("show");
   const hideCard = () => { card.classList.remove("show"); setTimeout(() => { if (!card.classList.contains("show")) { cancelAnimationFrame(opRaf); } }, 900); };
 
   // --- opening: an original broadcast-style title sequence ------------------------------------
@@ -53,13 +60,20 @@ const Demo = (() => {
   // with a synthesised cue (Sound.opening), so the screen recording captures picture and music together.
   const OP = { ON: [0.3, 0.62, 0.94, 1.26], HIT: 3.35, LEN: 7.5 };
   let opRaf = 0;
-  function opening() {
-    card.innerHTML = `<div class="op"><canvas></canvas><div class="op-scrim"></div>
-      <div class="op-title"><div class="op-kicker"><i></i><span>Inside the Game</span><i></i></div>
-        <h1>Producer Co-pilot</h1><p>AI agents propose · You decide</p>
-        <small>Microsoft × Premier League hackathon</small></div><div class="op-vignette"></div></div>`;
+  function opening(mode = "intro") {
+    const outro = mode === "outro";
+    card.innerHTML = outro
+      ? `<div class="op outro"><canvas></canvas><div class="op-scrim"></div>
+        <div class="op-title"><div class="op-kicker"><i></i><span>AI proposes · Every number is checked · You decide</span><i></i></div>
+          <h1>Producer Co-pilot</h1>
+          <div class="op-tech"><span>Microsoft Agent Framework</span><span>Microsoft Foundry</span><span>Azure AI Speech</span><span>Azure Container Apps</span></div>
+          <small>Try it live · ${location.host}</small></div><div class="op-vignette"></div></div>`
+      : `<div class="op"><canvas></canvas><div class="op-scrim"></div>
+        <div class="op-title"><div class="op-kicker"><i></i><span>Inside the Game</span><i></i></div>
+          <h1>Producer Co-pilot</h1><p>AI agents propose · You decide</p>
+          <small>Microsoft × Premier League hackathon</small></div><div class="op-vignette"></div></div>`;
     card.classList.add("show");
-    Sound.opening?.();
+    if (outro) Sound.outro?.(); else Sound.opening?.();
     const cv = card.querySelector("canvas"), g = cv.getContext("2d");
     const dpr = Math.min(2, devicePixelRatio || 1);
     const W = cv.width = innerWidth * dpr, H = cv.height = innerHeight * dpr, cx = W / 2, cy = H * 0.52, F = W * 0.62;
@@ -84,7 +98,8 @@ const Demo = (() => {
       return { pts, at: 2.25 + i * 0.09, col: i % 3 === 0 ? [255, 210, 120] : [120, 200, 255] };
     });
     const sparks = Array.from({ length: 140 }, () => ({ x: Math.random(), y: 1 + Math.random() * 0.3, v: 0.05 + Math.random() * 0.12, s: 0.6 + Math.random() * 1.6 }));
-    const start = performance.now();
+    const start = performance.now() - (outro ? (OP.HIT + 1.2) * 1000 : 0);
+    if (outro) sparks.forEach((sp) => { sp.y = 0.6 + Math.random() * 0.8; });
     const frame = (now) => {
       const t = (now - start) / 1000, after = t - OP.HIT;
       // camera: a high, wide orbit swooping down and round, then a slow drift behind the title
@@ -188,7 +203,7 @@ const Demo = (() => {
           g.fillRect(sp.x * W + Math.sin(after * 2 + sp.s * 9) * 12 * dpr, y, sp.s * dpr * 1.6, sp.s * dpr * 1.6);
         }
       }
-      if (t < OP.LEN && card.classList.contains("show")) opRaf = requestAnimationFrame(frame);
+      if ((outro || t < OP.LEN) && card.classList.contains("show")) opRaf = requestAnimationFrame(frame);
     };
     opRaf = requestAnimationFrame(frame);
   }
@@ -364,6 +379,7 @@ const Demo = (() => {
 
     // 2. The agents get to work
     mark("agents");
+    chapter(1, "The agent team");
     const agents = say("agents");
     await scrollToEl(".agents-panel", 300);
     await zoom(".agents-panel", 1.7);
@@ -375,6 +391,7 @@ const Demo = (() => {
     mark("wait-first-card");
     await waitFor(() => pending().length > 0, 45000);
     mark("check");
+    chapter(2, "Every number fact-checked");
     const checked = say("check");
     await click(".card.pending.top details summary");
     await zoom(".card.pending.top", 1.7);
@@ -384,6 +401,7 @@ const Demo = (() => {
 
     // 4. Approve -> on air -> three feeds (switching feeds while the narrator explains them)
     mark("approve");
+    chapter(3, "One key · three feeds");
     const approved = say("approve");
     await click(".card.pending.top [data-act=approve]");
     await sleep(700);
@@ -401,6 +419,7 @@ const Demo = (() => {
 
     // 5. Goal: the commentator takes over
     mark("goal");
+    chapter(4, "Live AI commentary");
     await scrollToEl(".monitor-panel");
     goalScene = true;
     Sound.setVoice(true);
@@ -416,6 +435,7 @@ const Demo = (() => {
 
     // 6. Ask the Match (the match speeds up from here so the closing scenes reach full time)
     mark("ask");
+    chapter(5, "Ask the Match");
     await control({ speed: 120 });
     await scrollToEl("#fan-panel");
     const ask = say("ask");
@@ -443,6 +463,7 @@ const Demo = (() => {
 
     // 8. Decision Lens (the match fast-forwards from here, so the next scene reaches full time)
     mark("lens");
+    chapter(6, "Decision Lens");
     await control({ speed: 240 });
     await scrollToEl(".tabs-panel");
     const lens = say("lens");
@@ -455,6 +476,7 @@ const Demo = (() => {
 
     // 9. Full time: substitutions, ratings, Man of the Match
     mark("fulltime");
+    chapter(7, "Full time · Man of the Match");
     const ft = say("fulltime");
     await click("[data-tab=stats]");
     await scrollToEl("#lineups", 140);
@@ -476,11 +498,15 @@ const Demo = (() => {
 
     // 10. Close
     mark("outro");
+    endChapter();
     clearInterval(watch);
     await control({ action: "pause" });
     showCard("outro");
+    await sleep(1800);                            // let the closing title land before the narrator
     await say("outro");
-    await sleep(500);
+    await sleep(1600);
+    card.classList.add("fade-black");             // fade out to black
+    await sleep(1300);
     Sound.setVoice(voicePref);
     dropStage();
     mark("end");
@@ -494,12 +520,15 @@ const Demo = (() => {
     busy = true;
     if (!Sound.enabled) toggleSound(true);       // inside the click, so the browser allows audio
     let rec = null, chunks = [], stream = null;
+    panel.classList.add("hidden");
+    document.body.classList.add("demo-running");
+    showCard("black");                             // the video starts on black, never on the console
     if (record) {
       try {
         stream = await navigator.mediaDevices.getDisplayMedia({
           video: { frameRate: 30, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false,
           preferCurrentTab: true, selfBrowserSurface: "include" });
-      } catch (_) { busy = false; status("Recording cancelled."); return; }
+      } catch (_) { busy = false; hideCard(); panel.classList.remove("hidden"); document.body.classList.remove("demo-running"); status("Recording cancelled."); return; }
       // Sound comes straight from the app's own audio mix (narrator, commentator, crowd), not from tab capture.
       const mix = Sound.recordStream();
       if (mix) stream = new MediaStream([...stream.getVideoTracks(), ...mix.getAudioTracks()]);
@@ -507,19 +536,18 @@ const Demo = (() => {
       rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 8_000_000 });
       rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
       rec.start(1000);
+      await sleep(1200);                           // a beat of black before the opening
     }
-    panel.classList.add("hidden");
-    document.body.classList.add("demo-running");
     let secs = 0;
     try { secs = await tour(); } finally {
+      if (rec && rec.state !== "inactive") await new Promise((r) => { rec.onstop = r; rec.stop(); });   // stop on black, before the console returns
       document.body.classList.remove("demo-running");
-      dropStage();
+      dropStage(); endChapter();
       hideCard(); caption.classList.remove("show");
       panel.classList.remove("hidden");
       busy = false;
     }
     if (rec) {
-      await new Promise((r) => { rec.onstop = r; rec.stop(); });
       stream.getTracks().forEach((t) => t.stop());
       const url = URL.createObjectURL(new Blob(chunks, { type: rec.mimeType }));
       const a = Object.assign(document.createElement("a"), { href: url, download: "producer-copilot-demo.webm" });
@@ -530,7 +558,7 @@ const Demo = (() => {
 
   function init() {
     if (!new URLSearchParams(location.search).has("demo")) return;
-    document.body.append(panel, caption, cursor, card);
+    document.body.append(panel, caption, cursor, card, chapterEl);
     document.getElementById("demo-record").onclick = () => start(true);
     document.getElementById("demo-play").onclick = () => start(false);
     prefetch();

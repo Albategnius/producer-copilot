@@ -157,6 +157,25 @@ const Sound = (() => {
     send.gain.setValueAtTime(0.9, t0 + 4.8); send.gain.linearRampToValueAtTime(0.3, t0 + 5.4);
   }
 
+  // Closing chord for the end card: a warm D-major swell with bells, in the same hall.
+  function outro() {
+    if (!ctx || !enabled) return;
+    const t0 = ctx.currentTime + 0.05, hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    const bus = ctx.createGain(); bus.gain.value = 0.9; bus.connect(master);
+    [38, 45, 50, 54, 57, 62, 66].forEach((m, i) => {
+      const g = ctx.createGain(), lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1600;
+      g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(0.03, t0 + 1.2); g.gain.setValueAtTime(0.03, t0 + 5); g.gain.exponentialRampToValueAtTime(0.0001, t0 + 8);
+      [-7, 7].forEach((d) => { const o = ctx.createOscillator(); o.type = i < 3 ? "sawtooth" : "triangle"; o.frequency.value = hz(m); o.detune.value = d; o.connect(lp); o.start(t0); o.stop(t0 + 8.1); });
+      lp.connect(g).connect(bus);
+    });
+    [[74, 0.3], [78, 0.55], [81, 0.8], [86, 1.1]].forEach(([m, at]) => {
+      const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(); o.type = o2.type = "sine";
+      o.frequency.value = hz(m); o2.frequency.value = hz(m) * 2.76; const t = t0 + at;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.04, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0003, t + 2);
+      o.connect(g); o2.connect(g); g.connect(bus); o.start(t); o2.start(t); o.stop(t + 2.1); o2.stop(t + 2.1);
+    });
+  }
+
   let chosenVoice = null;
   function pickVoice() {
     const voices = window.speechSynthesis.getVoices();
@@ -255,7 +274,7 @@ const Sound = (() => {
     get enabled() { return enabled; },
     get voice() { return voice; },
     wantedByDefault: () => pref("pc_sound", true),
-    setEnabled, setVoice, setRunning, swell, whistle, sting, opening, speak, isSpeaking, route, recordStream,
+    setEnabled, setVoice, setRunning, swell, whistle, sting, opening, outro, speak, isSpeaking, route, recordStream,
     setNeural: (on) => { neural = !!on; },
     get neural() { return neural; },
   };

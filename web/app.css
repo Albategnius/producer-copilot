@@ -441,9 +441,13 @@ body::before { content: ""; position: fixed; inset: -20%; z-index: -1; pointer-e
 .demo-panel { position: fixed; left: 16px; bottom: 16px; z-index: 60; width: 300px; display: grid; gap: 8px; padding: 14px;
   background: var(--surface-2); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
 .demo-panel.hidden { display: none; }
-.demo-caption { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 12px); z-index: 70; max-width: min(1100px, 86vw);
-  padding: 12px 20px; border-radius: 12px; background: rgba(5, 8, 16, .88); color: #fff; font-size: clamp(.95rem, 1.5vw, 1.25rem);
-  line-height: 1.45; text-align: center; opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none; backdrop-filter: blur(6px); }
+.demo-caption { position: fixed; left: 50%; bottom: 30px; transform: translate(-50%, 12px); z-index: 70; max-width: min(1080px, 84vw);
+  padding: 14px 26px 15px; border-radius: 10px; background: linear-gradient(180deg, rgba(10, 14, 28, .9), rgba(4, 6, 14, .92)); color: #f4f6fb;
+  font-size: clamp(1rem, 1.55vw, 1.3rem); font-weight: 500; letter-spacing: .005em;
+  line-height: 1.45; text-align: center; opacity: 0; transition: opacity .35s, transform .35s; pointer-events: none; backdrop-filter: blur(10px);
+  border: 1px solid rgba(231, 207, 150, .22); box-shadow: 0 18px 40px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06); }
+.demo-caption::before { content: ""; position: absolute; left: 50%; top: -1px; width: 120px; height: 2px; transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, #e7cf96, transparent); }
 .demo-caption.show { opacity: 1; transform: translate(-50%, 0); }
 /* Demo cursor: a standard arrow pointer; its tip (top-left of the SVG) is the hotspot. */
 .demo-cursor { position: fixed; left: 0; top: 0; z-index: 80; width: 34px; height: 34px; pointer-events: none;
@@ -544,3 +548,29 @@ body.demo-running { overflow-x: hidden; }
   box-shadow: inset 0 0 0 1px rgba(255, 216, 74, .5), inset 0 0 26px rgba(255, 216, 74, .16), 0 0 28px rgba(255, 216, 74, .35) !important;
   animation: demoFocus .55s cubic-bezier(.2, .9, .2, 1); }
 @keyframes demoFocus { 0% { outline-color: rgba(255, 216, 74, 0); outline-offset: 16px; } 100% { outline-color: #FFD84A; outline-offset: -2px; } }
+
+/* Demo: chapter titles and the black pre-roll */
+.demo-card.blackout { background: #000; }
+.demo-chapter { position: fixed; left: 34px; top: 26px; z-index: 72; display: flex; align-items: center; gap: 14px; pointer-events: none;
+  opacity: 0; transform: translateX(-14px); transition: opacity .45s, transform .45s cubic-bezier(.2, .9, .2, 1); }
+body:not(.demo-running) .demo-chapter { display: none; }
+.demo-chapter.show { opacity: 1; transform: none; }
+.demo-chapter b { font-size: 3rem; font-weight: 900; line-height: 1; letter-spacing: -.02em;
+  background: linear-gradient(170deg, #fff4d6, #d4b064 55%, #9a7634); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .6)); }
+.demo-chapter span { display: grid; gap: 6px; padding: 9px 16px 10px; border-radius: 8px; background: rgba(4, 6, 14, .82); backdrop-filter: blur(8px);
+  color: #f4f6fb; font-weight: 700; font-size: 1.2rem; letter-spacing: .14em; text-transform: uppercase; border: 1px solid rgba(231, 207, 150, .22); }
+.demo-chapter span i { display: block; height: 2px; width: 0; background: linear-gradient(90deg, #e7cf96, transparent); transition: width .7s .2s ease-out; }
+.demo-chapter.show span i { width: 100%; }
+/* closing scene */
+.op.outro .op-title h1, .op.outro .op-kicker, .op.outro .op-kicker i, .op.outro .op-tech, .op.outro small, .op.outro .op-scrim { animation-delay: 0s !important; }
+.op.outro .op-title h1 { animation: opTitle 1.2s .15s cubic-bezier(.12, .9, .18, 1) forwards, opSheen 2.6s .5s ease-in-out forwards !important; }
+.op.outro .op-kicker { animation: opUp .8s .7s ease-out forwards !important; letter-spacing: .3em; }
+.op.outro .op-kicker i { animation: opRule .9s .7s ease-out forwards !important; }
+.op.outro small { animation: opUp .8s 1.5s ease-out forwards !important; color: #c9d4ec; font-size: 1rem; }
+.op.outro .op-scrim { animation: opUp .6s 0s ease-out forwards !important; }
+.op-tech { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; opacity: 0; animation: opUp .8s 1.1s ease-out forwards; }
+.op-tech span { border: 1px solid rgba(231, 207, 150, .35); border-radius: 999px; padding: 7px 16px; color: #f1e3bd; font-weight: 600; letter-spacing: .04em;
+  background: rgba(10, 12, 20, .55); backdrop-filter: blur(4px); }
+.demo-card.fade-black::after { content: ""; position: absolute; inset: 0; background: #000; z-index: 5; animation: fadeBlack 1.1s ease-in forwards; }
+@keyframes fadeBlack { from { opacity: 0; } to { opacity: 1; } }
